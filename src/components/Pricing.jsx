@@ -1,59 +1,94 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiStar, FiExternalLink } from 'react-icons/fi';
+import { FiCheck, FiArrowRight, FiClock, FiUsers, FiTrendingUp } from 'react-icons/fi';
 
-const TrustedClients = () => {
-    const trustedClient = {
-        company: 'CIWUW',
-        ceo: 'Grace',
-        ceoTitle: 'CEO & Founder',
-        logo: '/logos/ciwuw-logo.png', // Add CIWUW logo to public/logos/
-        testimonial: 'WebCraft Pro has been instrumental in our digital transformation. Their expertise in creating both our marketplace and tattoo booking platform has helped us establish a strong online presence. The quality of work and attention to detail is exceptional.',
-        rating: 5,
-        projects: [
-            {
-                name: 'CIWUW Marketplace',
-                description: 'Multi-vendor e-commerce platform',
-                url: 'https://github.com/Windyphan/CIWUW_market_web',
-                tech: ['React', 'Node.js', 'MongoDB', 'Stripe']
-            },
-            {
-                name: 'CIWUW Tattoo Platform',
-                description: 'Tattoo artist booking and portfolio system',
-                url: 'https://github.com/Windyphan/CIWUW_tatoo_web',
-                tech: ['React', 'Express', 'PostgreSQL', 'Calendar API']
-            },
-            {
-                name: 'Internal Email Platform',
-                description: 'Custom email management system',
-                url: 'https://github.com/Windyphan/internal-email-platform',
-                tech: ['Node.js', 'React', 'Email APIs', 'Authentication']
-            }
-        ],
-        partnership: 'Ongoing since 2024',
-        industry: 'E-commerce & Beauty Services'
-    };
+const Pricing = () => {
+    const [selectedPlan, setSelectedPlan] = useState('professional');
 
-    const additionalTestimonials = [
+    const plans = [
         {
-            name: 'Sarah Johnson',
-            role: 'Marketing Director',
-            company: 'TechStart Solutions',
-            content: 'Exceptional web development services. The team delivered exactly what we needed.',
-            rating: 5,
-            image: 'https://images.unsplash.com/photo-1494790108755-2616b612b06c?auto=format&fit=crop&w=400&q=80'
+            id: 'starter',
+            name: 'Starter Package',
+            price: '£1,500',
+            duration: '2-3 weeks',
+            description: 'Perfect for small businesses and personal websites',
+            features: [
+                'Up to 5 pages',
+                'Responsive design',
+                'Basic SEO optimization',
+                'Contact form integration',
+                'Mobile-friendly',
+                '3 months free support',
+                'Basic analytics setup'
+            ],
+            popular: false,
+            buttonText: 'Get Started'
         },
         {
-            name: 'Michael Chen',
-            role: 'Operations Manager',
-            company: 'GrowthCorp',
-            content: 'Professional, reliable, and incredibly skilled. Highly recommended for any web project.',
-            rating: 5,
-            image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80'
+            id: 'professional',
+            name: 'Professional Package',
+            price: '£3,500',
+            duration: '4-6 weeks',
+            description: 'Ideal for growing businesses with advanced features',
+            features: [
+                'Up to 15 pages',
+                'Custom design & branding',
+                'Advanced SEO optimization',
+                'CMS integration',
+                'E-commerce functionality (up to 50 products)',
+                'Payment gateway integration',
+                'Advanced analytics',
+                '6 months free support',
+                'Performance optimization',
+                'Security features'
+            ],
+            popular: true,
+            buttonText: 'Most Popular'
+        },
+        {
+            id: 'enterprise',
+            name: 'Enterprise Package',
+            price: '£7,500+',
+            duration: '8-12 weeks',
+            description: 'Comprehensive solutions for large businesses',
+            features: [
+                'Unlimited pages',
+                'Custom web application',
+                'Advanced e-commerce (unlimited products)',
+                'Multi-vendor marketplace',
+                'Custom integrations & APIs',
+                'Advanced user management',
+                'Real-time chat integration',
+                'Email marketing platform',
+                '12 months free support',
+                'Dedicated project manager',
+                'Training sessions included',
+                'Ongoing consultation'
+            ],
+            popular: false,
+            buttonText: 'Contact Us'
         }
     ];
 
+    const addOns = [
+        { name: 'Additional Page', price: '£150', description: 'Extra custom page design' },
+        { name: 'Blog Setup', price: '£300', description: 'Complete blog system with CMS' },
+        { name: 'Multi-language Support', price: '£500', description: 'Support for multiple languages' },
+        { name: 'Advanced Analytics', price: '£200', description: 'Detailed tracking and reporting' },
+        { name: 'Live Chat Integration', price: '£250', description: 'Real-time customer support' },
+        { name: 'Social Media Integration', price: '£180', description: 'Connect all social platforms' }
+    ];
+
+    const handleGetQuote = (planId) => {
+        // Scroll to contact section or open contact modal
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+            contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     return (
-        <section id="trusted-clients" className="section-padding bg-white">
+        <section id="pricing" className="section-padding bg-gray-50">
             <div className="container-max">
                 {/* Header */}
                 <motion.div
@@ -61,139 +96,139 @@ const TrustedClients = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true }}
-                    className="text-center mb-16"
+                    className="text-center mb-12"
                 >
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                        Our Trusted Partners
+                        Transparent Pricing
                     </h2>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Building long-term partnerships with businesses who trust us with their digital success
+                        Choose the perfect package for your business needs. All prices include hosting setup and SSL certificate.
                     </p>
                 </motion.div>
 
-                {/* Featured Client - CIWUW */}
+                {/* Pricing Cards */}
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    {plans.map((plan, index) => (
+                        <motion.div
+                            key={plan.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: index * 0.1 }}
+                            viewport={{ once: true }}
+                            className={`relative bg-white rounded-2xl shadow-lg p-8 ${
+                                plan.popular ? 'ring-2 ring-primary-500 scale-105' : ''
+                            }`}
+                        >
+                            {plan.popular && (
+                                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                                    <span className="bg-primary-500 text-white px-4 py-1 rounded-full text-sm font-medium">
+                                        Most Popular
+                                    </span>
+                                </div>
+                            )}
+
+                            <div className="text-center mb-8">
+                                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                                    {plan.name}
+                                </h3>
+                                <div className="text-4xl font-bold text-primary-600 mb-2">
+                                    {plan.price}
+                                </div>
+                                <div className="flex items-center justify-center text-gray-500 mb-4">
+                                    <FiClock className="mr-2" size={16} />
+                                    <span>{plan.duration}</span>
+                                </div>
+                                <p className="text-gray-600">
+                                    {plan.description}
+                                </p>
+                            </div>
+
+                            <ul className="space-y-4 mb-8">
+                                {plan.features.map((feature, featureIndex) => (
+                                    <li key={featureIndex} className="flex items-start">
+                                        <FiCheck className="text-green-500 mr-3 mt-1 flex-shrink-0" size={16} />
+                                        <span className="text-gray-700">{feature}</span>
+                                    </li>
+                                ))}
+                            </ul>
+
+                            <button
+                                onClick={() => handleGetQuote(plan.id)}
+                                className={`w-full py-3 px-6 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center ${
+                                    plan.popular
+                                        ? 'bg-primary-600 hover:bg-primary-700 text-white'
+                                        : 'bg-gray-100 hover:bg-gray-200 text-gray-900'
+                                }`}
+                            >
+                                {plan.buttonText}
+                                <FiArrowRight className="ml-2" size={16} />
+                            </button>
+                        </motion.div>
+                    ))}
+                </div>
+
+                {/* Add-ons Section */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true }}
-                    className="bg-gradient-to-br from-primary-50 to-white rounded-3xl p-8 md:p-12 mb-16 border border-primary-100"
+                    className="bg-white rounded-2xl shadow-lg p-8"
                 >
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
-                        {/* Client Info */}
-                        <div>
-                            <div className="flex items-center mb-6">
-                                <div className="bg-white p-4 rounded-2xl shadow-sm mr-4">
-                                    <div className="text-2xl font-bold text-primary-600">CIWUW</div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+                        Additional Services
+                    </h3>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {addOns.map((addOn, index) => (
+                            <div key={index} className="border border-gray-200 rounded-lg p-4">
+                                <div className="flex justify-between items-start mb-2">
+                                    <h4 className="font-semibold text-gray-900">{addOn.name}</h4>
+                                    <span className="text-primary-600 font-bold">{addOn.price}</span>
                                 </div>
-                                <div>
-                                    <div className="text-sm text-gray-600 uppercase tracking-wide">Featured Client</div>
-                                    <div className="font-semibold text-gray-900">{trustedClient.industry}</div>
-                                </div>
+                                <p className="text-gray-600 text-sm">{addOn.description}</p>
                             </div>
-
-                            <blockquote className="text-lg text-gray-700 mb-6 italic">
-                                "{trustedClient.testimonial}"
-                            </blockquote>
-
-                            <div className="flex items-center mb-6">
-                                <img
-                                    src="https://images.unsplash.com/photo-1494790108755-2616b612b06c?auto=format&fit=crop&w=400&q=80"
-                                    alt={trustedClient.ceo}
-                                    className="w-12 h-12 rounded-full mr-4 object-cover"
-                                />
-                                <div>
-                                    <div className="font-semibold text-gray-900">{trustedClient.ceo}</div>
-                                    <div className="text-gray-600">{trustedClient.ceoTitle}, {trustedClient.company}</div>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center mb-6">
-                                {[...Array(trustedClient.rating)].map((_, i) => (
-                                    <FiStar key={i} className="text-yellow-400 fill-current" size={20} />
-                                ))}
-                                <span className="ml-2 text-gray-600">Partnership: {trustedClient.partnership}</span>
-                            </div>
-                        </div>
-
-                        {/* Projects */}
-                        <div>
-                            <h3 className="text-xl font-bold text-gray-900 mb-6">Projects Delivered</h3>
-                            <div className="space-y-4">
-                                {trustedClient.projects.map((project, index) => (
-                                    <motion.div
-                                        key={index}
-                                        initial={{ opacity: 0, x: 20 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
-                                        transition={{ duration: 0.8, delay: index * 0.1 }}
-                                        viewport={{ once: true }}
-                                        className="bg-white rounded-xl p-6 shadow-sm border border-gray-100"
-                                    >
-                                        <div className="flex justify-between items-start mb-3">
-                                            <h4 className="font-semibold text-gray-900">{project.name}</h4>
-                                            <a
-                                                href={project.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-primary-600 hover:text-primary-700 transition-colors"
-                                            >
-                                                <FiExternalLink size={16} />
-                                            </a>
-                                        </div>
-                                        <p className="text-gray-600 mb-3">{project.description}</p>
-                                        <div className="flex flex-wrap gap-2">
-                                            {project.tech.map((tech, techIndex) => (
-                                                <span
-                                                    key={techIndex}
-                                                    className="bg-primary-100 text-primary-600 px-2 py-1 rounded text-xs font-medium"
-                                                >
-                                                    {tech}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </motion.div>
 
-                {/* Additional Testimonials */}
-                <div className="grid md:grid-cols-2 gap-8">
-                    {additionalTestimonials.map((testimonial, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: index * 0.1 }}
-                            viewport={{ once: true }}
-                            className="bg-gray-50 rounded-xl p-6"
-                        >
-                            <div className="flex items-center mb-4">
-                                {[...Array(testimonial.rating)].map((_, i) => (
-                                    <FiStar key={i} className="text-yellow-400 fill-current" size={16} />
-                                ))}
+                {/* Why Choose Our Pricing */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                    viewport={{ once: true }}
+                    className="mt-16 text-center"
+                >
+                    <h3 className="text-2xl font-bold text-gray-900 mb-8">
+                        Why Our Pricing Works
+                    </h3>
+                    <div className="grid md:grid-cols-3 gap-8">
+                        <div className="flex flex-col items-center">
+                            <div className="bg-primary-100 rounded-full p-4 mb-4">
+                                <FiTrendingUp className="text-primary-600" size={24} />
                             </div>
-                            <blockquote className="text-gray-700 mb-4 italic">
-                                "{testimonial.content}"
-                            </blockquote>
-                            <div className="flex items-center">
-                                <img
-                                    src={testimonial.image}
-                                    alt={testimonial.name}
-                                    className="w-10 h-10 rounded-full mr-3 object-cover"
-                                />
-                                <div>
-                                    <div className="font-semibold text-gray-900">{testimonial.name}</div>
-                                    <div className="text-gray-600 text-sm">{testimonial.role}, {testimonial.company}</div>
-                                </div>
+                            <h4 className="font-semibold text-gray-900 mb-2">No Hidden Costs</h4>
+                            <p className="text-gray-600">What you see is what you pay. No surprise fees or hidden charges.</p>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <div className="bg-primary-100 rounded-full p-4 mb-4">
+                                <FiUsers className="text-primary-600" size={24} />
                             </div>
-                        </motion.div>
-                    ))}
-                </div>
+                            <h4 className="font-semibold text-gray-900 mb-2">Flexible Payment</h4>
+                            <p className="text-gray-600">50% upfront, 50% on completion. We work with your budget.</p>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <div className="bg-primary-100 rounded-full p-4 mb-4">
+                                <FiCheck className="text-primary-600" size={24} />
+                            </div>
+                            <h4 className="font-semibold text-gray-900 mb-2">100% Satisfaction</h4>
+                            <p className="text-gray-600">We guarantee your satisfaction or we'll make it right.</p>
+                        </div>
+                    </div>
+                </motion.div>
             </div>
         </section>
     );
 };
 
-export default TrustedClients;
+export default Pricing;

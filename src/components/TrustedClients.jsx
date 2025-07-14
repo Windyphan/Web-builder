@@ -1,106 +1,191 @@
 import { motion } from 'framer-motion';
-import { FiStar } from 'react-icons/fi';
+import { FiStar, FiExternalLink } from 'react-icons/fi';
 
 const TrustedClients = () => {
-    const testimonials = [
+    const trustedClient = {
+        company: 'CIWUW',
+        ceo: 'Grace',
+        ceoTitle: 'CEO & Founder',
+        logo: '/logos/CIWUW-lg.jpg', // Add CIWUW logo to public/logos/
+        testimonial: 'WebCraft Pro has been instrumental in our digital transformation. Their expertise in creating both our marketplace and tattoo booking platform has helped us establish a strong online presence. The quality of work and attention to detail is exceptional.',
+        rating: 5,
+        projects: [
+            {
+                name: 'CIWUW Marketplace',
+                description: 'Multi-vendor e-commerce platform',
+                url: 'https://github.com/Windyphan/CIWUW_market_web',
+                tech: ['React', 'Node.js', 'MongoDB', 'Stripe']
+            },
+            {
+                name: 'CIWUW Tattoo Platform',
+                description: 'Tattoo artist booking and portfolio system',
+                url: 'https://github.com/Windyphan/CIWUW_tatoo_web',
+                tech: ['React', 'Express', 'PostgreSQL', 'Calendar API']
+            },
+            {
+                name: 'Internal Email Platform',
+                description: 'Custom email management system',
+                url: 'https://github.com/Windyphan/internal-email-platform',
+                tech: ['Node.js', 'React', 'Email APIs', 'Authentication']
+            }
+        ],
+        partnership: 'Ongoing since 2024',
+        industry: 'E-commerce & Beauty Services'
+    };
+
+    const additionalTestimonials = [
         {
             name: 'Sarah Johnson',
-            role: 'CEO, TechStart Solutions',
-            content: 'WebCraft Pro delivered an exceptional website that exceeded our expectations. Their attention to detail and technical expertise is outstanding.',
+            role: 'Marketing Director',
+            company: 'TechStart Solutions',
+            content: 'Exceptional web development services. The team delivered exactly what we needed.',
             rating: 5,
             image: 'https://images.unsplash.com/photo-1494790108755-2616b612b06c?auto=format&fit=crop&w=400&q=80'
         },
         {
             name: 'Michael Chen',
-            role: 'Marketing Director, GrowthCorp',
-            content: 'The team created a beautiful, fast-loading website that has significantly improved our conversion rates. Highly recommended!',
+            role: 'Operations Manager',
+            company: 'GrowthCorp',
+            content: 'Professional, reliable, and incredibly skilled. Highly recommended for any web project.',
             rating: 5,
             image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80'
-        },
-        {
-            name: 'Emma Williams',
-            role: 'Founder, Creative Studio',
-            content: 'Professional, reliable, and incredibly skilled. They transformed our vision into a stunning digital reality.',
-            rating: 5,
-            image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80'
-        },
-        {
-            name: 'David Brown',
-            role: 'CTO, InnovateTech',
-            content: 'Excellent technical skills and communication. The project was delivered on time and within budget.',
-            rating: 5,
-            image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80'
-        },
-        {
-            name: 'Lisa Garcia',
-            role: 'Operations Manager, RetailPlus',
-            content: 'Our e-commerce platform has been a game-changer for our business. The user experience is fantastic.',
-            rating: 5,
-            image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80'
-        },
-        {
-            name: 'James Wilson',
-            role: 'Director, ConsultPro',
-            content: 'WebCraft Pro understood our needs perfectly and delivered a solution that drives real business results.',
-            rating: 5,
-            image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80'
         }
     ];
 
     return (
-        <section id="testimonials" className="section-padding bg-white">
+        <section id="trusted-clients" className="section-padding bg-white">
             <div className="container-max">
+                {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true }}
-                    className="text-center mb-12"
+                    className="text-center mb-16"
                 >
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                        What Our Clients Say
+                        Our Trusted Partners
                     </h2>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Don't just take our word for it - hear from our satisfied clients
+                        Building long-term partnerships with businesses who trust us with their digital success
                     </p>
                 </motion.div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {testimonials.map((testimonial, index) => (
+                {/* Featured Client - CIWUW */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                    viewport={{ once: true }}
+                    className="bg-gradient-to-br from-primary-50 to-white rounded-3xl p-8 md:p-12 mb-16 border border-primary-100"
+                >
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                        {/* Client Info */}
+                        <div>
+                            <div className="flex items-center mb-6">
+                                <div className="bg-white p-4 rounded-2xl shadow-sm mr-4">
+                                    <div className="text-2xl font-bold text-primary-600">CIWUW</div>
+                                </div>
+                                <div>
+                                    <div className="text-sm text-gray-600 uppercase tracking-wide">Featured Client</div>
+                                    <div className="font-semibold text-gray-900">{trustedClient.industry}</div>
+                                </div>
+                            </div>
+
+                            <blockquote className="text-lg text-gray-700 mb-6 italic">
+                                "{trustedClient.testimonial}"
+                            </blockquote>
+
+                            <div className="flex items-center mb-6">
+                                <img
+                                    src="https://images.unsplash.com/photo-1494790108755-2616b612b06c?auto=format&fit=crop&w=400&q=80"
+                                    alt={trustedClient.ceo}
+                                    className="w-12 h-12 rounded-full mr-4 object-cover"
+                                />
+                                <div>
+                                    <div className="font-semibold text-gray-900">{trustedClient.ceo}</div>
+                                    <div className="text-gray-600">{trustedClient.ceoTitle}, {trustedClient.company}</div>
+                                </div>
+                            </div>
+
+                            <div className="flex items-center mb-6">
+                                {[...Array(trustedClient.rating)].map((_, i) => (
+                                    <FiStar key={i} className="text-yellow-400 fill-current" size={20} />
+                                ))}
+                                <span className="ml-2 text-gray-600">Partnership: {trustedClient.partnership}</span>
+                            </div>
+                        </div>
+
+                        {/* Projects */}
+                        <div>
+                            <h3 className="text-xl font-bold text-gray-900 mb-6">Projects Delivered</h3>
+                            <div className="space-y-4">
+                                {trustedClient.projects.map((project, index) => (
+                                    <motion.div
+                                        key={index}
+                                        initial={{ opacity: 0, x: 20 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        transition={{ duration: 0.8, delay: index * 0.1 }}
+                                        viewport={{ once: true }}
+                                        className="bg-white rounded-xl p-6 shadow-sm border border-gray-100"
+                                    >
+                                        <div className="flex justify-between items-start mb-3">
+                                            <h4 className="font-semibold text-gray-900">{project.name}</h4>
+                                            <a
+                                                href={project.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-primary-600 hover:text-primary-700 transition-colors"
+                                            >
+                                                <FiExternalLink size={16} />
+                                            </a>
+                                        </div>
+                                        <p className="text-gray-600 mb-3">{project.description}</p>
+                                        <div className="flex flex-wrap gap-2">
+                                            {project.tech.map((tech, techIndex) => (
+                                                <span
+                                                    key={techIndex}
+                                                    className="bg-primary-100 text-primary-600 px-2 py-1 rounded text-xs font-medium"
+                                                >
+                                                    {tech}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+
+                {/* Additional Testimonials */}
+                <div className="grid md:grid-cols-2 gap-8">
+                    {additionalTestimonials.map((testimonial, index) => (
                         <motion.div
                             key={index}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className="bg-gray-50 p-6 rounded-xl hover:shadow-lg transition-shadow duration-300"
+                            className="bg-gray-50 rounded-xl p-6"
                         >
-                            {/* Rating */}
                             <div className="flex items-center mb-4">
                                 {[...Array(testimonial.rating)].map((_, i) => (
-                                    <FiStar key={i} className="text-yellow-400 fill-current" size={20} />
+                                    <FiStar key={i} className="text-yellow-400 fill-current" size={16} />
                                 ))}
                             </div>
-
-                            {/* Content */}
-                            <p className="text-gray-600 mb-6 italic">
+                            <blockquote className="text-gray-700 mb-4 italic">
                                 "{testimonial.content}"
-                            </p>
-
-                            {/* Author */}
+                            </blockquote>
                             <div className="flex items-center">
                                 <img
                                     src={testimonial.image}
                                     alt={testimonial.name}
-                                    className="w-12 h-12 rounded-full mr-4 object-cover"
+                                    className="w-10 h-10 rounded-full mr-3 object-cover"
                                 />
                                 <div>
-                                    <h4 className="font-semibold text-gray-900">
-                                        {testimonial.name}
-                                    </h4>
-                                    <p className="text-sm text-gray-500">
-                                        {testimonial.role}
-                                    </p>
+                                    <div className="font-semibold text-gray-900">{testimonial.name}</div>
+                                    <div className="text-gray-600 text-sm">{testimonial.role}, {testimonial.company}</div>
                                 </div>
                             </div>
                         </motion.div>
