@@ -39,22 +39,22 @@ const TrustedClients = () => {
     };
 
     const additionalTestimonials = [
-        {
-            name: 'Sarah Johnson',
-            role: 'Marketing Director',
-            company: 'TechStart Solutions',
-            content: 'Exceptional web development services. The team delivered exactly what we needed.',
-            rating: 5,
-            image: 'https://images.unsplash.com/photo-1494790108755-2616b612b06c?auto=format&fit=crop&w=400&q=80'
-        },
-        {
-            name: 'Michael Chen',
-            role: 'Operations Manager',
-            company: 'GrowthCorp',
-            content: 'Professional, reliable, and incredibly skilled. Highly recommended for any web project.',
-            rating: 5,
-            image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80'
-        }
+        // {
+        //     name: 'Sarah Johnson',
+        //     role: 'Marketing Director',
+        //     company: 'TechStart Solutions',
+        //     content: 'Exceptional web development services. The team delivered exactly what we needed.',
+        //     rating: 5,
+        //     image: 'https://images.unsplash.com/photo-1494790108755-2616b612b06c?auto=format&fit=crop&w=400&q=80'
+        // },
+        // {
+        //     name: 'Michael Chen',
+        //     role: 'Operations Manager',
+        //     company: 'GrowthCorp',
+        //     content: 'Professional, reliable, and incredibly skilled. Highly recommended for any web project.',
+        //     rating: 5,
+        //     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80'
+        // }
     ];
 
     return (
@@ -101,9 +101,11 @@ const TrustedClients = () => {
                                 <div className={`p-4 rounded-2xl shadow-sm mr-4 transition-colors duration-300 ${
                                     isDark ? 'bg-gray-600' : 'bg-white'
                                 }`}>
-                                    <div className={`text-2xl font-bold transition-colors duration-300 ${
-                                        isDark ? 'text-primary-400' : 'text-primary-600'
-                                    }`}>CIWUW</div>
+                                    <img
+                                        src={CIWUWLogo}
+                                        alt="CIWUW Logo"
+                                        className="w-12 h-12 object-contain"
+                                    />
                                 </div>
                                 <div>
                                     <div className={`text-sm uppercase tracking-wide transition-colors duration-300 ${
