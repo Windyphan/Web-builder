@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import Notification from '../components/Notification';
+import { useTheme } from '../contexts/ThemeContext';
 
 function ContactPage() {
     const [notification, setNotification] = useState({
@@ -10,6 +11,7 @@ function ContactPage() {
         type: '',
         message: ''
     });
+    const { isDark } = useTheme();
 
     const showNotification = (type, message) => {
         setNotification({ isVisible: true, type, message });
@@ -20,9 +22,13 @@ function ContactPage() {
     };
 
     return (
-        <div className="min-h-screen">
+        <div className={`min-h-screen transition-colors duration-300 ${
+            isDark ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-900'
+        }`}>
             <Header />
-            <Contact onNotification={showNotification} />
+            <div className="pt-20">
+                <Contact onNotification={showNotification} />
+            </div>
             <Footer />
 
             <Notification

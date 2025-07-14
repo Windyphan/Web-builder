@@ -1,12 +1,14 @@
 import { motion } from 'framer-motion';
 import { FiStar, FiExternalLink } from 'react-icons/fi';
 
+import CIWUWLogo from '../assets/logos/CIWUW-lg.jpg';
+
 const TrustedClients = () => {
     const trustedClient = {
         company: 'CIWUW',
         ceo: 'Grace',
         ceoTitle: 'CEO & Founder',
-        logo: '/logos/CIWUW-lg.jpg', // Add CIWUW logo to public/logos/
+        logo: CIWUWLogo,
         testimonial: 'WebCraft Pro has been instrumental in our digital transformation. Their expertise in creating both our marketplace and tattoo booking platform has helped us establish a strong online presence. The quality of work and attention to detail is exceptional.',
         rating: 5,
         projects: [

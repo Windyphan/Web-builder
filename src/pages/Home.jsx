@@ -5,6 +5,7 @@ import About from '../components/About';
 import Services from '../components/Services';
 import Footer from '../components/Footer';
 import Notification from '../components/Notification';
+import { useTheme } from '../contexts/ThemeContext';
 
 function Home() {
     const [notification, setNotification] = useState({
@@ -12,6 +13,7 @@ function Home() {
         type: '',
         message: ''
     });
+    const { isDark } = useTheme();
 
     const showNotification = (type, message) => {
         setNotification({ isVisible: true, type, message });
@@ -22,7 +24,9 @@ function Home() {
     };
 
     return (
-        <div className="min-h-screen">
+        <div className={`min-h-screen transition-colors duration-300 ${
+            isDark ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-900'
+        }`}>
             <Header />
             <Hero />
             <About />

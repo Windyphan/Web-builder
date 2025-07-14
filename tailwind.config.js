@@ -31,19 +31,24 @@ export default {
                     700: '#374151',
                     800: '#1f2937',
                     900: '#111827',
+                },
+                // Dark mode specific colors
+                dark: {
+                    50: '#18181b',
+                    100: '#27272a',
+                    200: '#3f3f46',
+                    300: '#52525b',
+                    400: '#71717a',
+                    500: '#a1a1aa',
+                    600: '#d4d4d8',
+                    700: '#e4e4e7',
+                    800: '#f4f4f5',
+                    900: '#fafafa',
                 }
             },
             fontFamily: {
                 'sans': ['Inter', 'system-ui', 'sans-serif'],
             },
-            backgroundColor: {
-                'light': '#ffffff',
-                'dark': '#111827',
-            },
-            textColor: {
-                'light': '#111827',
-                'dark': '#f9fafb',
-            }
         },
     },
     plugins: [],

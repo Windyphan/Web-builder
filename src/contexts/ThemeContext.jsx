@@ -11,34 +11,45 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState(() => {
+    const [isDark, setIsDark] = useState(() => {
         // Check localStorage first, then system preference
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
-            return savedTheme;
+            return savedTheme === 'dark';
         }
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        return window.matchMedia('(prefers-color-scheme: dark)').matches;
     });
 
     useEffect(() => {
-        // Apply theme to document
         const root = document.documentElement;
-        if (theme === 'dark') {
+        if (isDark) {
             root.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
         } else {
             root.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
         }
+    }, [isDark]);
 
-        // Save to localStorage
-        localStorage.setItem('theme', theme);
-    }, [theme]);
+    useEffect(() => {
+        // Listen for system theme changes
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleChange = (e) => {
+            if (!localStorage.getItem('theme')) {
+                setIsDark(e.matches);
+            }
+        };
+
+        mediaQuery.addEventListener('change', handleChange);
+        return () => mediaQuery.removeEventListener('change', handleChange);
+    }, []);
 
     const toggleTheme = () => {
-        setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+        setIsDark(prev => !prev);
     };
 
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <ThemeContext.Provider value={{ isDark, toggleTheme, theme: isDark ? 'dark' : 'light' }}>
             {children}
         </ThemeContext.Provider>
     );

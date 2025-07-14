@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import { FiArrowRight, FiPlay } from 'react-icons/fi';
-import { scrollToSection } from '../utils/scrollUtils';
+import { Link } from 'react-router-dom';
 import Lottie from 'lottie-react';
 import { useState, useEffect, useRef } from 'react';
+import { useTheme } from '../contexts/ThemeContext';
 
 // Import the optimized animation
 import heroAnimation from '../assets/Hero_section_animation.json';
@@ -11,21 +12,13 @@ const Hero = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [animationLoaded, setAnimationLoaded] = useState(false);
     const lottieRef = useRef(null);
+    const { isDark } = useTheme();
 
     useEffect(() => {
-        console.log('Hero Animation Data:', heroAnimation);
         setIsVisible(true);
     }, []);
 
-    const handleGetConsultation = () => {
-        scrollToSection('contact');
-    };
-
-    const handleViewWork = () => {
-        scrollToSection('portfolio');
-    };
-
-    // Enhanced animation data with higher opacity
+    // Enhanced animation data with theme-aware colors
     const enhancedAnimationData = {
         ...heroAnimation,
         layers: heroAnimation.layers?.map(layer => ({
@@ -37,41 +30,47 @@ const Hero = () => {
                     k: Array.isArray(layer.ks?.o?.k)
                         ? layer.ks.o.k.map(frame => ({
                             ...frame,
-                            s: frame.s ? frame.s.map(val => Math.min(val * 4, 100)) : [100]
+                            s: frame.s ? frame.s.map(val => Math.min(val * (isDark ? 3 : 4), 100)) : [100]
                         }))
-                        : Math.min((layer.ks?.o?.k || 15) * 6, 100)
+                        : Math.min((layer.ks?.o?.k || 15) * (isDark ? 4 : 6), 100)
                 }
-            }
+            },
+            shapes: layer.shapes?.map(shape => ({
+                ...shape,
+                ...(shape.ty === 'fl' && {
+                    c: {
+                        ...shape.c,
+                        k: isDark
+                            ? [0.6, 0.8, 1, 1] // Light blue for dark mode
+                            : shape.c?.k || [0.12, 0.15, 0.25, 1]
+                    }
+                })
+            })) || layer.shapes
         })) || []
-    };
-
-    const handleAnimationComplete = () => {
-        console.log('Animation completed');
-    };
-
-    const handleAnimationLoaded = () => {
-        console.log('Animation loaded successfully');
-        setAnimationLoaded(true);
-    };
-
-    const handleAnimationError = (error) => {
-        console.error('Animation error:', error);
     };
 
     return (
         <section
             id="home"
-            className="pt-16 bg-gradient-to-br from-primary-50 to-white relative overflow-hidden"
+            className={`pt-16 relative overflow-hidden transition-colors duration-300 ${
+                isDark
+                    ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900'
+                    : 'bg-gradient-to-br from-primary-50 to-white'
+            }`}
             style={{ minHeight: '100vh' }}
         >
-            {/* Animated Background Particles (CSS-based fallback) */}
+            {/* Animated Background Particles */}
             <div className="absolute inset-0 overflow-hidden z-0">
                 {/* CSS Animated Background */}
                 <div className="absolute inset-0">
                     {[...Array(6)].map((_, i) => (
                         <motion.div
                             key={i}
-                            className="absolute rounded-full bg-gradient-to-r from-primary-200/20 to-blue-300/20"
+                            className={`absolute rounded-full transition-colors duration-300 ${
+                                isDark
+                                    ? 'bg-gradient-to-r from-blue-500/10 to-purple-500/10'
+                                    : 'bg-gradient-to-r from-primary-200/20 to-blue-300/20'
+                            }`}
                             style={{
                                 width: `${100 + i * 50}px`,
                                 height: `${100 + i * 50}px`,
@@ -101,111 +100,79 @@ const Hero = () => {
                         animationData={enhancedAnimationData}
                         loop={true}
                         autoplay={true}
-                        onComplete={handleAnimationComplete}
-                        onDOMLoaded={handleAnimationLoaded}
-                        onLoadedImages={() => console.log('Images loaded')}
                         style={{
                             width: '100%',
                             height: '100%',
-                            opacity: animationLoaded ? 0.8 : 0,
-                            transition: 'opacity 1s ease-in-out',
-                            filter: 'brightness(1.2) contrast(1.1)',
-                        }}
-                        rendererSettings={{
-                            preserveAspectRatio: 'xMidYMid slice',
-                            clearCanvas: false,
-                            progressiveLoad: false,
-                            hideOnTransparent: false,
-                            className: 'lottie-animation'
+                            opacity: isDark ? 0.4 : 0.2,
+                            filter: isDark ? 'brightness(1.5) hue-rotate(180deg)' : 'none',
                         }}
                     />
                 </div>
-
-                {/* Subtle overlay for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-white/20 z-20" />
             </div>
 
-            {/* Content */}
-            <div className="section-padding relative z-30">
-                <div className="container-max">
-                    <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8 }}
-                        >
-                            <motion.h1
-                                className="text-4xl md:text-6xl font-bold text-gray-900 mb-6"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, delay: 0.2 }}
+            {/* Main Content */}
+            <div className="container mx-auto px-6 py-20 relative z-20">
+                <div className="max-w-4xl mx-auto text-center">
+                    <motion.h1
+                        className={`text-5xl md:text-7xl font-bold mb-6 transition-colors duration-300 ${
+                            isDark ? 'text-white' : 'text-gray-900'
+                        }`}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 0.8 }}
+                    >
+                        Build Your
+                        <span className="text-primary-600 dark:text-primary-400 block">
+                            Digital Future
+                        </span>
+                    </motion.h1>
+
+                    <motion.p
+                        className={`text-xl md:text-2xl mb-8 max-w-2xl mx-auto transition-colors duration-300 ${
+                            isDark ? 'text-gray-300' : 'text-gray-600'
+                        }`}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                    >
+                        We create stunning, responsive websites that drive results
+                        and elevate your brand in the digital landscape.
+                    </motion.p>
+
+                    <motion.div
+                        className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 0.8, delay: 0.4 }}
+                    >
+                        <Link to="/contact">
+                            <motion.button
+                                className="bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white px-8 py-4 rounded-full font-semibold flex items-center gap-2 transition-all duration-200 shadow-lg hover:shadow-xl"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
                             >
-                                Building Digital{' '}
-                                <motion.span
-                                    className="text-primary-600"
-                                    animate={{
-                                        textShadow: [
-                                            '0 0 0px rgba(59, 130, 246, 0)',
-                                            '0 0 10px rgba(59, 130, 246, 0.3)',
-                                            '0 0 0px rgba(59, 130, 246, 0)',
-                                        ]
-                                    }}
-                                    transition={{
-                                        duration: 3,
-                                        repeat: Infinity,
-                                        ease: "easeInOut"
-                                    }}
-                                >
-                                    Excellence
-                                </motion.span>
-                            </motion.h1>
-                            <motion.p
-                                className="text-xl text-gray-600 mb-8 leading-relaxed"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, delay: 0.4 }}
+                                Get Free Consultation
+                                <FiArrowRight />
+                            </motion.button>
+                        </Link>
+
+                        <Link to="/portfolio">
+                            <motion.button
+                                className={`border-2 px-8 py-4 rounded-full font-semibold flex items-center gap-2 transition-all duration-200 ${
+                                    isDark
+                                        ? 'border-gray-600 text-gray-300 hover:border-primary-400 hover:text-primary-400'
+                                        : 'border-gray-300 text-gray-700 hover:border-primary-600 hover:text-primary-600'
+                                }`}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
                             >
-                                We create stunning, high-performance websites and applications that drive results for your business. From concept to launch, we deliver professional web solutions that exceed expectations.
-                            </motion.p>
-                            <motion.div
-                                className="flex flex-col sm:flex-row gap-4"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, delay: 0.6 }}
-                            >
-                                <motion.button
-                                    onClick={handleGetConsultation}
-                                    className="btn-primary inline-flex items-center group"
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                >
-                                    Get Free Consultation
-                                    <FiArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                                </motion.button>
-                                <motion.button
-                                    onClick={handleViewWork}
-                                    className="btn-secondary inline-flex items-center group"
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                >
-                                    <FiPlay className="mr-2 group-hover:scale-110 transition-transform" />
-                                    View Our Work
-                                </motion.button>
-                            </motion.div>
-                        </motion.div>
-                        <div className="hidden lg:block"></div>
-                    </div>
+                                <FiPlay />
+                                View Our Work
+                            </motion.button>
+                        </Link>
+                    </motion.div>
                 </div>
             </div>
-
-            {/* Debug info */}
-            {process.env.NODE_ENV === 'development' && (
-                <div className="fixed bottom-4 right-4 bg-black/80 text-white p-2 rounded text-xs z-50">
-                    <div>Animation Loaded: {animationLoaded ? '✅' : '❌'}</div>
-                    <div>Layers: {heroAnimation?.layers?.length || 0}</div>
-                    <div>Duration: {heroAnimation?.op || 0} frames</div>
-                </div>
-            )}
         </section>
     );
 };
