@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FiLinkedin, FiGithub, FiMail, FiPhone } from 'react-icons/fi';
+import { FiMail, FiPhone, FiLinkedin, FiGithub } from 'react-icons/fi';
 
 const Team = () => {
     const teamMembers = [
@@ -17,7 +17,7 @@ const Team = () => {
     ];
 
     return (
-        <section id="team" className="section-padding bg-gray-50">
+        <section id="team" className="section-padding bg-gray-50 dark:bg-gray-800">
             <div className="container-max">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -26,10 +26,10 @@ const Team = () => {
                     viewport={{ once: true }}
                     className="text-center mb-12"
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                         Meet Our Team
                     </h2>
-                    <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                    <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
                         Passionate professionals dedicated to delivering exceptional web solutions
                     </p>
                 </motion.div>
@@ -42,7 +42,7 @@ const Team = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow duration-300"
+                            className="bg-white dark:bg-gray-700 rounded-xl shadow-lg dark:shadow-gray-900/20 p-6 text-center hover:shadow-xl dark:hover:shadow-gray-900/30 transition-shadow duration-300"
                         >
                             <div className="relative mb-6">
                                 <img
@@ -53,13 +53,13 @@ const Team = () => {
                                 <div className="absolute inset-0 bg-primary-600 rounded-full opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
                             </div>
 
-                            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
                                 {member.name}
                             </h3>
-                            <p className="text-primary-600 font-medium mb-3">
+                            <p className="text-primary-600 dark:text-primary-400 font-medium mb-3">
                                 {member.role}
                             </p>
-                            <p className="text-gray-600 mb-4">
+                            <p className="text-gray-600 dark:text-gray-300 mb-4">
                                 {member.bio}
                             </p>
 
@@ -68,20 +68,20 @@ const Team = () => {
                                 {member.skills.map((skill, skillIndex) => (
                                     <span
                                         key={skillIndex}
-                                        className="bg-primary-100 text-primary-600 px-3 py-1 rounded-full text-sm"
+                                        className="bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 px-3 py-1 rounded-full text-sm"
                                     >
-                    {skill}
-                  </span>
+                                        {skill}
+                                    </span>
                                 ))}
                             </div>
 
                             {/* Contact Information */}
                             <div className="space-y-2 mb-6">
-                                <div className="flex items-center justify-center text-gray-600">
+                                <div className="flex items-center justify-center text-gray-600 dark:text-gray-300">
                                     <FiMail size={16} className="mr-2" />
                                     <span className="text-sm">{member.email}</span>
                                 </div>
-                                <div className="flex items-center justify-center text-gray-600">
+                                <div className="flex items-center justify-center text-gray-600 dark:text-gray-300">
                                     <FiPhone size={16} className="mr-2" />
                                     <span className="text-sm">{member.phone}</span>
                                 </div>
@@ -91,21 +91,19 @@ const Team = () => {
                             <div className="flex justify-center space-x-4">
                                 <a
                                     href={member.linkedin}
-                                    className="text-gray-400 hover:text-primary-600 transition-colors duration-200"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                                 >
                                     <FiLinkedin size={20} />
                                 </a>
                                 <a
                                     href={member.github}
-                                    className="text-gray-400 hover:text-primary-600 transition-colors duration-200"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                                 >
                                     <FiGithub size={20} />
-                                </a>
-                                <a
-                                    href={`mailto:${member.email}`}
-                                    className="text-gray-400 hover:text-primary-600 transition-colors duration-200"
-                                >
-                                    <FiMail size={20} />
                                 </a>
                             </div>
                         </motion.div>

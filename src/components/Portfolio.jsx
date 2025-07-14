@@ -54,7 +54,7 @@ const Portfolio = () => {
     ];
 
     return (
-        <section id="portfolio" className="section-padding bg-white">
+        <section id="portfolio" className="section-padding bg-white dark:bg-gray-900">
             <div className="container-max">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -63,10 +63,10 @@ const Portfolio = () => {
                     viewport={{ once: true }}
                     className="text-center mb-12"
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                         Our Work
                     </h2>
-                    <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                    <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
                         Explore our portfolio of successful projects and see how we've helped businesses achieve their digital goals
                     </p>
                 </motion.div>
@@ -79,7 +79,7 @@ const Portfolio = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-gray-900/20 overflow-hidden hover:shadow-xl dark:hover:shadow-gray-900/30 transition-shadow duration-300"
                         >
                             <div className="relative overflow-hidden">
                                 <img
@@ -91,13 +91,13 @@ const Portfolio = () => {
                                     <div className="flex space-x-4">
                                         <a
                                             href={project.liveUrl}
-                                            className="bg-white text-gray-900 p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
+                                            className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
                                         >
                                             <FiExternalLink size={20} />
                                         </a>
                                         <a
                                             href={project.githubUrl}
-                                            className="bg-white text-gray-900 p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
+                                            className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
                                         >
                                             <FiGithub size={20} />
                                         </a>
@@ -105,20 +105,20 @@ const Portfolio = () => {
                                 </div>
                             </div>
                             <div className="p-6">
-                                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
                                     {project.title}
                                 </h3>
-                                <p className="text-gray-600 mb-4">
+                                <p className="text-gray-600 dark:text-gray-300 mb-4">
                                     {project.description}
                                 </p>
                                 <div className="flex flex-wrap gap-2">
                                     {project.technologies.map((tech, techIndex) => (
                                         <span
                                             key={techIndex}
-                                            className="bg-primary-100 text-primary-600 px-3 py-1 rounded-full text-sm"
+                                            className="bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 px-3 py-1 rounded-full text-sm"
                                         >
-                      {tech}
-                    </span>
+                                            {tech}
+                                        </span>
                                     ))}
                                 </div>
                             </div>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiCode, FiSmartphone, FiShoppingCart, FiTool, FiUsers, FiMessageCircle } from 'react-icons/fi';
+import { FiCode, FiSmartphone, FiGlobe, FiSettings, FiMessageCircle, FiShield } from 'react-icons/fi';
 import ServiceModal from './ServiceModal';
 
 const Services = () => {
@@ -10,26 +10,20 @@ const Services = () => {
     const services = [
         {
             icon: FiCode,
-            title: 'Custom Web Development',
-            description: 'Modern, responsive websites built with React, Vue, Angular, and Node.js. We create fast, scalable solutions tailored to your business needs.',
-            features: ['React & Vue.js', 'Node.js Backend', 'Database Integration', 'API Development']
+            title: 'Web Development',
+            description: 'Custom websites and web applications built with modern technologies like React, Vue.js, and Node.js.',
+            features: ['Responsive Design', 'SEO Optimized', 'Fast Loading', 'Cross-browser Compatible']
         },
         {
-            icon: FiShoppingCart,
+            icon: FiGlobe,
             title: 'E-commerce Solutions',
-            description: 'Complete online stores with secure payment processing, inventory management, and user-friendly shopping experiences.',
-            features: ['Shopify Development', 'WooCommerce', 'Custom E-commerce', 'Payment Integration']
+            description: 'Complete online stores with payment integration, inventory management, and admin dashboards.',
+            features: ['Payment Gateway', 'Inventory Management', 'Order Tracking', 'Admin Dashboard']
         },
         {
-            icon: FiUsers,
-            title: 'UI/UX Design',
-            description: 'User-centered design that converts visitors into customers. We create intuitive interfaces that users love.',
-            features: ['Figma Design', 'Adobe XD', 'Prototyping', 'User Research']
-        },
-        {
-            icon: FiTool,
+            icon: FiShield,
             title: 'Website Maintenance',
-            description: 'Keep your website secure, updated, and performing at its best with our comprehensive maintenance services.',
+            description: 'Ongoing support, security updates, performance optimization, and content management services.',
             features: ['Security Updates', 'Performance Optimization', 'Content Updates', 'Backup Solutions']
         },
         {
@@ -57,7 +51,7 @@ const Services = () => {
     };
 
     return (
-        <section id="services" className="section-padding bg-gray-50">
+        <section id="services" className="section-padding bg-gray-50 dark:bg-gray-800">
             <div className="container-max">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -66,10 +60,10 @@ const Services = () => {
                     viewport={{ once: true }}
                     className="text-center mb-12"
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                         Our Services
                     </h2>
-                    <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                    <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
                         We offer comprehensive web development services to help your business succeed online
                     </p>
                 </motion.div>
@@ -82,27 +76,27 @@ const Services = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer group"
+                            className="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-lg dark:shadow-gray-900/20 hover:shadow-xl dark:hover:shadow-gray-900/30 transition-shadow duration-300 cursor-pointer group"
                             onClick={() => handleServiceClick(service)}
                         >
-                            <div className="bg-primary-100 rounded-full p-3 w-fit mb-4 group-hover:bg-primary-200 transition-colors">
-                                <service.icon className="text-primary-600" size={24} />
+                            <div className="bg-primary-100 dark:bg-primary-900/30 rounded-full p-3 w-fit mb-4 group-hover:bg-primary-200 dark:group-hover:bg-primary-800/40 transition-colors">
+                                <service.icon className="text-primary-600 dark:text-primary-400" size={24} />
                             </div>
-                            <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors">
+                            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                                 {service.title}
                             </h3>
-                            <p className="text-gray-600 mb-4">
+                            <p className="text-gray-600 dark:text-gray-300 mb-4">
                                 {service.description}
                             </p>
                             <ul className="space-y-2 mb-4">
                                 {service.features.map((feature, featureIndex) => (
-                                    <li key={featureIndex} className="flex items-center text-sm text-gray-500">
-                                        <div className="w-2 h-2 bg-primary-600 rounded-full mr-2"></div>
+                                    <li key={featureIndex} className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                        <div className="w-2 h-2 bg-primary-600 dark:bg-primary-400 rounded-full mr-2"></div>
                                         {feature}
                                     </li>
                                 ))}
                             </ul>
-                            <button className="text-primary-600 font-medium hover:text-primary-700 transition-colors">
+                            <button className="text-primary-600 dark:text-primary-400 font-medium hover:text-primary-700 dark:hover:text-primary-300 transition-colors">
                                 Learn More →
                             </button>
                         </motion.div>

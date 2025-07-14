@@ -1,96 +1,90 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiCheck, FiArrowRight, FiClock, FiUsers, FiTrendingUp } from 'react-icons/fi';
+import { FiCheck, FiClock, FiArrowRight } from 'react-icons/fi';
 
 const Pricing = () => {
-    const [selectedPlan, setSelectedPlan] = useState('professional');
+    const [showNotification, setShowNotification] = useState(false);
 
     const plans = [
         {
             id: 'starter',
             name: 'Starter Package',
-            price: '£1,500',
+            price: '£899',
             duration: '2-3 weeks',
             description: 'Perfect for small businesses and personal websites',
-            features: [
-                'Up to 5 pages',
-                'Responsive design',
-                'Basic SEO optimization',
-                'Contact form integration',
-                'Mobile-friendly',
-                '3 months free support',
-                'Basic analytics setup'
-            ],
             popular: false,
+            features: [
+                'Responsive design (up to 5 pages)',
+                'Contact form integration',
+                'Basic SEO optimization',
+                'Social media integration',
+                'Mobile-friendly design',
+                'Free SSL certificate',
+                'Basic analytics setup',
+                '3 months free hosting'
+            ],
             buttonText: 'Get Started'
         },
         {
             id: 'professional',
             name: 'Professional Package',
-            price: '£3,500',
-            duration: '4-6 weeks',
-            description: 'Ideal for growing businesses with advanced features',
-            features: [
-                'Up to 15 pages',
-                'Custom design & branding',
-                'Advanced SEO optimization',
-                'CMS integration',
-                'E-commerce functionality (up to 50 products)',
-                'Payment gateway integration',
-                'Advanced analytics',
-                '6 months free support',
-                'Performance optimization',
-                'Security features'
-            ],
+            price: '£1,599',
+            duration: '3-4 weeks',
+            description: 'Ideal for growing businesses and e-commerce',
             popular: true,
+            features: [
+                'Responsive design (up to 10 pages)',
+                'E-commerce functionality (up to 50 products)',
+                'Advanced SEO optimization',
+                'Content management system',
+                'Payment gateway integration',
+                'Free SSL certificate',
+                'Google Analytics & Search Console',
+                '6 months free hosting',
+                'Social media integration',
+                'Newsletter signup form'
+            ],
             buttonText: 'Most Popular'
         },
         {
             id: 'enterprise',
             name: 'Enterprise Package',
-            price: '£7,500+',
-            duration: '8-12 weeks',
-            description: 'Comprehensive solutions for large businesses',
+            price: '£2,999',
+            duration: '4-6 weeks',
+            description: 'For large businesses with complex requirements',
+            popular: false,
             features: [
                 'Unlimited pages',
-                'Custom web application',
                 'Advanced e-commerce (unlimited products)',
-                'Multi-vendor marketplace',
-                'Custom integrations & APIs',
-                'Advanced user management',
-                'Real-time chat integration',
-                'Email marketing platform',
-                '12 months free support',
-                'Dedicated project manager',
-                'Training sessions included',
-                'Ongoing consultation'
+                'Custom functionality development',
+                'Multi-language support',
+                'Advanced SEO & performance optimization',
+                'Custom integrations (CRM, APIs)',
+                'Priority support',
+                '12 months free hosting',
+                'Advanced analytics dashboard',
+                'Training & documentation'
             ],
-            popular: false,
             buttonText: 'Contact Us'
         }
     ];
 
     const addOns = [
-        { name: 'Additional Page', price: '£150', description: 'Extra custom page design' },
-        { name: 'Blog Setup', price: '£300', description: 'Complete blog system with CMS' },
-        { name: 'Multi-language Support', price: '£500', description: 'Support for multiple languages' },
-        { name: 'Advanced Analytics', price: '£200', description: 'Detailed tracking and reporting' },
-        { name: 'Live Chat Integration', price: '£250', description: 'Real-time customer support' },
-        { name: 'Social Media Integration', price: '£180', description: 'Connect all social platforms' }
+        { name: 'Logo Design', price: '£199', description: 'Professional logo design with multiple concepts' },
+        { name: 'Content Creation', price: '£299', description: 'Professional copywriting for all pages' },
+        { name: 'Photography', price: '£399', description: 'Professional product or business photography' },
+        { name: 'Additional Pages', price: '£99', description: 'Per additional page beyond package limit' },
+        { name: 'Rush Delivery', price: '£499', description: 'Priority development for faster delivery' }
     ];
 
     const handleGetQuote = (planId) => {
-        // Scroll to contact section or open contact modal
-        const contactSection = document.getElementById('contact');
-        if (contactSection) {
-            contactSection.scrollIntoView({ behavior: 'smooth' });
-        }
+        setShowNotification(true);
+        setTimeout(() => setShowNotification(false), 3000);
     };
 
     return (
-        <section id="pricing" className="section-padding bg-gray-50">
+        <section id="pricing" className="section-padding bg-white dark:bg-gray-900">
             <div className="container-max">
-                {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -98,10 +92,10 @@ const Pricing = () => {
                     viewport={{ once: true }}
                     className="text-center mb-12"
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                         Transparent Pricing
                     </h2>
-                    <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                    <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
                         Choose the perfect package for your business needs. All prices include hosting setup and SSL certificate.
                     </p>
                 </motion.div>
@@ -115,7 +109,7 @@ const Pricing = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className={`relative bg-white rounded-2xl shadow-lg p-8 ${
+                            className={`relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/20 p-8 ${
                                 plan.popular ? 'ring-2 ring-primary-500 scale-105' : ''
                             }`}
                         >
@@ -128,17 +122,17 @@ const Pricing = () => {
                             )}
 
                             <div className="text-center mb-8">
-                                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                                     {plan.name}
                                 </h3>
-                                <div className="text-4xl font-bold text-primary-600 mb-2">
+                                <div className="text-4xl font-bold text-primary-600 dark:text-primary-400 mb-2">
                                     {plan.price}
                                 </div>
-                                <div className="flex items-center justify-center text-gray-500 mb-4">
+                                <div className="flex items-center justify-center text-gray-500 dark:text-gray-400 mb-4">
                                     <FiClock className="mr-2" size={16} />
                                     <span>{plan.duration}</span>
                                 </div>
-                                <p className="text-gray-600">
+                                <p className="text-gray-600 dark:text-gray-300">
                                     {plan.description}
                                 </p>
                             </div>
@@ -147,7 +141,7 @@ const Pricing = () => {
                                 {plan.features.map((feature, featureIndex) => (
                                     <li key={featureIndex} className="flex items-start">
                                         <FiCheck className="text-green-500 mr-3 mt-1 flex-shrink-0" size={16} />
-                                        <span className="text-gray-700">{feature}</span>
+                                        <span className="text-gray-700 dark:text-gray-300">{feature}</span>
                                     </li>
                                 ))}
                             </ul>
@@ -157,7 +151,7 @@ const Pricing = () => {
                                 className={`w-full py-3 px-6 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center ${
                                     plan.popular
                                         ? 'bg-primary-600 hover:bg-primary-700 text-white'
-                                        : 'bg-gray-100 hover:bg-gray-200 text-gray-900'
+                                        : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100'
                                 }`}
                             >
                                 {plan.buttonText}
@@ -173,59 +167,42 @@ const Pricing = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true }}
-                    className="bg-white rounded-2xl shadow-lg p-8"
+                    className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/20 p-8"
                 >
-                    <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-center">
                         Additional Services
                     </h3>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {addOns.map((addOn, index) => (
-                            <div key={index} className="border border-gray-200 rounded-lg p-4">
+                        {addOns.map((addon, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 10 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: index * 0.1 }}
+                                viewport={{ once: true }}
+                                className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-primary-300 dark:hover:border-primary-600 transition-colors"
+                            >
                                 <div className="flex justify-between items-start mb-2">
-                                    <h4 className="font-semibold text-gray-900">{addOn.name}</h4>
-                                    <span className="text-primary-600 font-bold">{addOn.price}</span>
+                                    <h4 className="font-semibold text-gray-900 dark:text-gray-100">{addon.name}</h4>
+                                    <span className="text-primary-600 dark:text-primary-400 font-bold">{addon.price}</span>
                                 </div>
-                                <p className="text-gray-600 text-sm">{addOn.description}</p>
-                            </div>
+                                <p className="text-gray-600 dark:text-gray-300 text-sm">{addon.description}</p>
+                            </motion.div>
                         ))}
                     </div>
                 </motion.div>
 
-                {/* Why Choose Our Pricing */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
-                    className="mt-16 text-center"
-                >
-                    <h3 className="text-2xl font-bold text-gray-900 mb-8">
-                        Why Our Pricing Works
-                    </h3>
-                    <div className="grid md:grid-cols-3 gap-8">
-                        <div className="flex flex-col items-center">
-                            <div className="bg-primary-100 rounded-full p-4 mb-4">
-                                <FiTrendingUp className="text-primary-600" size={24} />
-                            </div>
-                            <h4 className="font-semibold text-gray-900 mb-2">No Hidden Costs</h4>
-                            <p className="text-gray-600">What you see is what you pay. No surprise fees or hidden charges.</p>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <div className="bg-primary-100 rounded-full p-4 mb-4">
-                                <FiUsers className="text-primary-600" size={24} />
-                            </div>
-                            <h4 className="font-semibold text-gray-900 mb-2">Flexible Payment</h4>
-                            <p className="text-gray-600">50% upfront, 50% on completion. We work with your budget.</p>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <div className="bg-primary-100 rounded-full p-4 mb-4">
-                                <FiCheck className="text-primary-600" size={24} />
-                            </div>
-                            <h4 className="font-semibold text-gray-900 mb-2">100% Satisfaction</h4>
-                            <p className="text-gray-600">We guarantee your satisfaction or we'll make it right.</p>
-                        </div>
-                    </div>
-                </motion.div>
+                {/* Notification */}
+                {showNotification && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -50 }}
+                        className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50"
+                    >
+                        Quote request sent! We'll contact you soon.
+                    </motion.div>
+                )}
             </div>
         </section>
     );

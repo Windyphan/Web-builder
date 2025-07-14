@@ -42,15 +42,15 @@ const Modal = ({ isOpen, onClose, title, children, size = 'md' }) => {
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className={`bg-white rounded-xl shadow-xl ${getSizeClasses()} w-full max-h-[90vh] overflow-hidden`}
+                        className={`bg-white dark:bg-gray-800 rounded-xl shadow-xl ${getSizeClasses()} w-full max-h-[90vh] overflow-hidden`}
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Header */}
-                        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-                            <h2 className="text-2xl font-bold text-gray-900">{title}</h2>
+                        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+                            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{title}</h2>
                             <button
                                 onClick={onClose}
-                                className="text-gray-400 hover:text-gray-600 transition-colors"
+                                className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                             >
                                 <FiX size={24} />
                             </button>

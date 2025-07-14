@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
-import About from '../components/About';
 import Services from '../components/Services';
+import TrustedClients from '../components/TrustedClients';
 import Footer from '../components/Footer';
 import Notification from '../components/Notification';
 import { useTheme } from '../contexts/ThemeContext';
@@ -29,8 +29,8 @@ function Home() {
         }`}>
             <Header />
             <Hero />
-            <About />
             <Services />
+            <TrustedClients />
             <Footer />
 
             <Notification

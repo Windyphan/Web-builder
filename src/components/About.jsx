@@ -1,21 +1,20 @@
-import { motion } from 'framer-motion';
-import { FiUsers, FiAward, FiTrendingUp, FiClock } from 'react-icons/fi';
+import { useState, useRef, useEffect } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { FiAward, FiClock, FiUsers } from 'react-icons/fi';
 import Lottie from 'lottie-react';
-import { useState, useEffect, useRef } from 'react';
-
-// Import the optimized animation
-import aboutAnimation from '../assets/About_section_animation.json';
+import { useThemeAnimation } from '../hooks/useThemeAnimation';
 
 const About = () => {
     const [isInView, setIsInView] = useState(false);
     const [animationLoaded, setAnimationLoaded] = useState(false);
     const lottieRef = useRef(null);
+    const animationData = useThemeAnimation('about');
 
     const stats = [
-        { icon: FiUsers, value: '50+', label: 'Happy Clients' },
-        { icon: FiAward, value: '100+', label: 'Projects Completed' },
-        { icon: FiTrendingUp, value: '99%', label: 'Success Rate' },
-        { icon: FiClock, value: '5+', label: 'Years Experience' },
+        { value: '50+', label: 'Projects Completed' },
+        { value: '30+', label: 'Happy Clients' },
+        { value: '3+', label: 'Years Experience' },
+        { value: '99%', label: 'Client Satisfaction' }
     ];
 
     useEffect(() => {
@@ -31,7 +30,7 @@ const About = () => {
     }, [isInView, animationLoaded]);
 
     const lottieOptions = {
-        animationData: aboutAnimation,
+        animationData: animationData,
         loop: true,
         autoplay: true,
         rendererSettings: {
@@ -42,7 +41,7 @@ const About = () => {
     };
 
     return (
-        <section id="about" className="section-padding bg-white">
+        <section id="about" className="section-padding bg-white dark:bg-gray-900">
             <div className="container-max">
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
                     {/* Content (Left) */}
@@ -53,13 +52,13 @@ const About = () => {
                         viewport={{ once: true }}
                         onViewportEnter={() => setIsInView(true)}
                     >
-                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-6">
                             About WebCraft Pro
                         </h2>
-                        <p className="text-lg text-gray-600 mb-6">
+                        <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
                             We are a UK-based web development company specializing in creating exceptional digital experiences. Our mission is to help businesses thrive online through innovative web solutions that combine cutting-edge technology with outstanding design.
                         </p>
-                        <p className="text-lg text-gray-600 mb-8">
+                        <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
                             Founded by experienced developer Phong Minh Phan, we bring years of expertise in modern web technologies, ensuring your project is built with the latest industry standards and best practices.
                         </p>
 
@@ -79,14 +78,14 @@ const About = () => {
                                     viewport={{ once: true }}
                                 >
                                     <motion.div
-                                        className="bg-primary-100 rounded-full p-2 mr-4"
+                                        className="bg-primary-100 dark:bg-primary-900/30 rounded-full p-2 mr-4"
                                         whileHover={{ scale: 1.1 }}
                                     >
-                                        <item.icon className="text-primary-600" size={20} />
+                                        <item.icon className="text-primary-600 dark:text-primary-400" size={20} />
                                     </motion.div>
                                     <div>
-                                        <h4 className="font-semibold text-gray-900 mb-1">{item.title}</h4>
-                                        <p className="text-gray-600">{item.desc}</p>
+                                        <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-1">{item.title}</h4>
+                                        <p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
                                     </div>
                                 </motion.div>
                             ))}
@@ -102,81 +101,36 @@ const About = () => {
                         className="relative flex items-center justify-center min-h-[340px]"
                     >
                         {/* Optimized Lottie Background */}
-                        <div className="absolute inset-0 w-full h-full z-0 pointer-events-none overflow-hidden rounded-xl">
-                            {animationLoaded ? (
-                                <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ duration: 1 }}
-                                >
-                                    <Lottie
-                                        ref={lottieRef}
-                                        {...lottieOptions}
-                                        style={{
-                                            width: '100%',
-                                            height: '100%',
-                                            objectFit: 'cover',
-                                            opacity: 0.25,
-                                            willChange: 'auto',
-                                            transform: 'translateZ(0)',
-                                        }}
-                                    />
-                                </motion.div>
-                            ) : (
-                                <motion.div
-                                    className="w-full h-full bg-gradient-to-br from-primary-50 to-blue-50 rounded-xl"
-                                    animate={{
-                                        background: [
-                                            'linear-gradient(45deg, #EFF6FF, #DBEAFE)',
-                                            'linear-gradient(45deg, #DBEAFE, #BFDBFE)',
-                                            'linear-gradient(45deg, #EFF6FF, #DBEAFE)',
-                                        ]
-                                    }}
-                                    transition={{
-                                        duration: 3,
-                                        repeat: Infinity,
-                                        ease: "easeInOut"
-                                    }}
+                        <motion.div
+                            className="w-80 h-80 flex items-center justify-center"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 1, delay: 0.3 }}
+                            viewport={{ once: true }}
+                        >
+                            {animationLoaded && (
+                                <Lottie
+                                    lottieRef={lottieRef}
+                                    {...lottieOptions}
+                                    className="w-full h-full opacity-80 dark:opacity-60"
                                 />
                             )}
-                        </div>
+                        </motion.div>
 
-                        {/* Stats Grid */}
-                        <div className="grid grid-cols-2 gap-6 w-full relative z-10">
+                        {/* Stats positioned over animation */}
+                        <div className="absolute inset-0 grid grid-cols-2 gap-4 p-8">
                             {stats.map((stat, index) => (
                                 <motion.div
                                     key={index}
-                                    className="bg-white/95 p-6 rounded-xl text-center shadow-lg border border-gray-100 backdrop-blur-sm"
-                                    initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                                    transition={{
-                                        duration: 0.6,
-                                        delay: index * 0.15,
-                                        type: "spring",
-                                        stiffness: 100
-                                    }}
+                                    className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl p-4 text-center shadow-lg border border-white/20 dark:border-gray-700/50"
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.6, delay: index * 0.15 }}
                                     viewport={{ once: true }}
-                                    whileHover={{
-                                        scale: 1.05,
-                                        boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
-                                        y: -5
-                                    }}
+                                    whileHover={{ scale: 1.05 }}
                                 >
                                     <motion.div
-                                        initial={{ scale: 0, rotate: -180 }}
-                                        whileInView={{ scale: 1, rotate: 0 }}
-                                        transition={{
-                                            duration: 0.8,
-                                            delay: index * 0.15 + 0.3,
-                                            type: "spring",
-                                            stiffness: 200
-                                        }}
-                                        viewport={{ once: true }}
-                                    >
-                                        <stat.icon className="text-primary-600 mx-auto mb-4" size={32} />
-                                    </motion.div>
-                                    <motion.div
-                                        className="text-3xl font-bold text-gray-900 mb-2"
+                                        className="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-1"
                                         initial={{ opacity: 0, scale: 0.5 }}
                                         whileInView={{ opacity: 1, scale: 1 }}
                                         transition={{ duration: 0.5, delay: index * 0.15 + 0.5 }}
@@ -184,7 +138,7 @@ const About = () => {
                                     >
                                         {stat.value}
                                     </motion.div>
-                                    <div className="text-gray-600">{stat.label}</div>
+                                    <div className="text-gray-600 dark:text-gray-300">{stat.label}</div>
                                 </motion.div>
                             ))}
                         </div>
