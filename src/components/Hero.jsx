@@ -9,17 +9,12 @@ import heroAnimation from '../assets/Hero_section_animation.json';
 
 const Hero = () => {
     const [isVisible, setIsVisible] = useState(false);
-    const [shouldRender, setShouldRender] = useState(false);
-    const lottieRef = useRef();
+    const [animationLoaded, setAnimationLoaded] = useState(false);
+    const lottieRef = useRef(null);
 
     useEffect(() => {
-        // Delay animation start to prevent initial load freeze
-        const timer = setTimeout(() => {
-            setShouldRender(true);
-            setIsVisible(true);
-        }, 800);
-
-        return () => clearTimeout(timer);
+        console.log('Hero Animation Data:', heroAnimation);
+        setIsVisible(true);
     }, []);
 
     const handleGetConsultation = () => {
@@ -30,78 +25,110 @@ const Hero = () => {
         scrollToSection('portfolio');
     };
 
-    // Optimized Lottie options
-    const lottieOptions = {
-        animationData: heroAnimation,
-        loop: true,
-        autoplay: false, // We'll control this manually
-        rendererSettings: {
-            preserveAspectRatio: 'xMidYMid slice',
-            clearCanvas: true,
-            progressiveLoad: true,
-            hideOnTransparent: true,
-        }
+    // Enhanced animation data with higher opacity
+    const enhancedAnimationData = {
+        ...heroAnimation,
+        layers: heroAnimation.layers?.map(layer => ({
+            ...layer,
+            ks: {
+                ...layer.ks,
+                o: {
+                    ...layer.ks?.o,
+                    k: Array.isArray(layer.ks?.o?.k)
+                        ? layer.ks.o.k.map(frame => ({
+                            ...frame,
+                            s: frame.s ? frame.s.map(val => Math.min(val * 4, 100)) : [100]
+                        }))
+                        : Math.min((layer.ks?.o?.k || 15) * 6, 100)
+                }
+            }
+        })) || []
     };
 
-    // Start animation when component is visible
-    useEffect(() => {
-        if (isVisible && lottieRef.current) {
-            setTimeout(() => {
-                lottieRef.current.play();
-            }, 200);
-        }
-    }, [isVisible]);
+    const handleAnimationComplete = () => {
+        console.log('Animation completed');
+    };
+
+    const handleAnimationLoaded = () => {
+        console.log('Animation loaded successfully');
+        setAnimationLoaded(true);
+    };
+
+    const handleAnimationError = (error) => {
+        console.error('Animation error:', error);
+    };
 
     return (
         <section
             id="home"
             className="pt-16 bg-gradient-to-br from-primary-50 to-white relative overflow-hidden"
-            style={{ minHeight: '600px' }}
+            style={{ minHeight: '100vh' }}
         >
-            {/* Optimized Lottie Animation Background */}
-            <div
-                className="absolute top-0 bottom-0 right-0 w-full lg:w-1/2 h-full pointer-events-none z-0"
-                aria-hidden="true"
-                style={{ minHeight: '600px' }}
-            >
-                {shouldRender && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: isVisible ? 1 : 0 }}
-                        transition={{ duration: 1 }}
-                        className="w-full h-full"
-                    >
-                        <Lottie
-                            ref={lottieRef}
-                            {...lottieOptions}
+            {/* Animated Background Particles (CSS-based fallback) */}
+            <div className="absolute inset-0 overflow-hidden z-0">
+                {/* CSS Animated Background */}
+                <div className="absolute inset-0">
+                    {[...Array(6)].map((_, i) => (
+                        <motion.div
+                            key={i}
+                            className="absolute rounded-full bg-gradient-to-r from-primary-200/20 to-blue-300/20"
                             style={{
-                                width: '100%',
-                                height: '100%',
-                                position: 'absolute',
-                                right: 0,
-                                top: 0,
-                                objectFit: 'cover',
-                                opacity: 0.3,
-                                // Performance optimizations
-                                willChange: 'auto',
-                                transform: 'translateZ(0)',
+                                width: `${100 + i * 50}px`,
+                                height: `${100 + i * 50}px`,
+                                left: `${10 + i * 15}%`,
+                                top: `${10 + i * 10}%`,
+                            }}
+                            animate={{
+                                x: [0, 30, 0],
+                                y: [0, -20, 0],
+                                rotate: [0, 180, 360],
+                                scale: [1, 1.1, 1],
+                            }}
+                            transition={{
+                                duration: 8 + i * 2,
+                                repeat: Infinity,
+                                ease: "easeInOut",
+                                delay: i * 0.5,
                             }}
                         />
-                    </motion.div>
-                )}
+                    ))}
+                </div>
 
-                {/* Fallback gradient while loading */}
-                {!shouldRender && (
-                    <div className="w-full h-full bg-gradient-to-br from-primary-100 to-blue-100 opacity-20" />
-                )}
+                {/* Lottie Animation Overlay */}
+                <div className="absolute inset-0 z-10">
+                    <Lottie
+                        lottieRef={lottieRef}
+                        animationData={enhancedAnimationData}
+                        loop={true}
+                        autoplay={true}
+                        onComplete={handleAnimationComplete}
+                        onDOMLoaded={handleAnimationLoaded}
+                        onLoadedImages={() => console.log('Images loaded')}
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            opacity: animationLoaded ? 0.8 : 0,
+                            transition: 'opacity 1s ease-in-out',
+                            filter: 'brightness(1.2) contrast(1.1)',
+                        }}
+                        rendererSettings={{
+                            preserveAspectRatio: 'xMidYMid slice',
+                            clearCanvas: false,
+                            progressiveLoad: false,
+                            hideOnTransparent: false,
+                            className: 'lottie-animation'
+                        }}
+                    />
+                </div>
 
-                <div className="hidden lg:block absolute inset-0 bg-white/5" />
+                {/* Subtle overlay for text readability */}
+                <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-white/20 z-20" />
             </div>
 
             {/* Content */}
-            <div className="section-padding relative z-10">
+            <div className="section-padding relative z-30">
                 <div className="container-max">
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                    <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -170,6 +197,15 @@ const Hero = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Debug info */}
+            {process.env.NODE_ENV === 'development' && (
+                <div className="fixed bottom-4 right-4 bg-black/80 text-white p-2 rounded text-xs z-50">
+                    <div>Animation Loaded: {animationLoaded ? '✅' : '❌'}</div>
+                    <div>Layers: {heroAnimation?.layers?.length || 0}</div>
+                    <div>Duration: {heroAnimation?.op || 0} frames</div>
+                </div>
+            )}
         </section>
     );
 };

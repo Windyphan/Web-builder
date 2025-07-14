@@ -9,7 +9,7 @@ import aboutAnimation from '../assets/About_section_animation.json';
 const About = () => {
     const [isInView, setIsInView] = useState(false);
     const [animationLoaded, setAnimationLoaded] = useState(false);
-    const lottieRef = useRef();
+    const lottieRef = useRef(null);
 
     const stats = [
         { icon: FiUsers, value: '50+', label: 'Happy Clients' },
@@ -22,7 +22,7 @@ const About = () => {
         if (isInView && !animationLoaded) {
             const timer = setTimeout(() => {
                 setAnimationLoaded(true);
-                if (lottieRef.current) {
+                if (lottieRef.current && typeof lottieRef.current.play === 'function') {
                     lottieRef.current.play();
                 }
             }, 500);
