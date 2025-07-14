@@ -33,7 +33,7 @@ const About = () => {
     const lottieOptions = {
         animationData: aboutAnimation,
         loop: true,
-        autoplay: false,
+        autoplay: true,
         rendererSettings: {
             preserveAspectRatio: 'xMidYMid slice',
             clearCanvas: true,
