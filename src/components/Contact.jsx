@@ -141,158 +141,158 @@ const Contact = ({ onNotification }) => {
                         </div>
                     </motion.div>
 
-                    {/* Contact Form */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8 }}
-                        viewport={{ once: true }}
-                        className="bg-white p-8 rounded-xl shadow-lg"
-                    >
-                        <h3 className="text-2xl font-semibold text-gray-900 mb-6">
-                            Send Us a Message
-                        </h3>
+                    {/*/!* Contact Form *!/*/}
+                    {/*<motion.div*/}
+                    {/*    initial={{ opacity: 0, x: 20 }}*/}
+                    {/*    whileInView={{ opacity: 1, x: 0 }}*/}
+                    {/*    transition={{ duration: 0.8 }}*/}
+                    {/*    viewport={{ once: true }}*/}
+                    {/*    className="bg-white p-8 rounded-xl shadow-lg"*/}
+                    {/*>*/}
+                    {/*    <h3 className="text-2xl font-semibold text-gray-900 mb-6">*/}
+                    {/*        Send Us a Message*/}
+                    {/*    </h3>*/}
 
-                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                            <div className="grid md:grid-cols-2 gap-6">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        First Name *
-                                    </label>
-                                    <input
-                                        type="text"
-                                        {...register('firstName', { required: 'First name is required' })}
-                                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
-                                            errors.firstName ? 'border-red-300' : 'border-gray-300'
-                                        }`}
-                                        placeholder="John"
-                                        disabled={isSubmitting}
-                                    />
-                                    {errors.firstName && (
-                                        <p className="mt-1 text-sm text-red-600">{errors.firstName.message}</p>
-                                    )}
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Last Name *
-                                    </label>
-                                    <input
-                                        type="text"
-                                        {...register('lastName', { required: 'Last name is required' })}
-                                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
-                                            errors.lastName ? 'border-red-300' : 'border-gray-300'
-                                        }`}
-                                        placeholder="Doe"
-                                        disabled={isSubmitting}
-                                    />
-                                    {errors.lastName && (
-                                        <p className="mt-1 text-sm text-red-600">{errors.lastName.message}</p>
-                                    )}
-                                </div>
-                            </div>
+                    {/*    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">*/}
+                    {/*        <div className="grid md:grid-cols-2 gap-6">*/}
+                    {/*            <div>*/}
+                    {/*                <label className="block text-sm font-medium text-gray-700 mb-2">*/}
+                    {/*                    First Name **/}
+                    {/*                </label>*/}
+                    {/*                <input*/}
+                    {/*                    type="text"*/}
+                    {/*                    {...register('firstName', { required: 'First name is required' })}*/}
+                    {/*                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${*/}
+                    {/*                        errors.firstName ? 'border-red-300' : 'border-gray-300'*/}
+                    {/*                    }`}*/}
+                    {/*                    placeholder="John"*/}
+                    {/*                    disabled={isSubmitting}*/}
+                    {/*                />*/}
+                    {/*                {errors.firstName && (*/}
+                    {/*                    <p className="mt-1 text-sm text-red-600">{errors.firstName.message}</p>*/}
+                    {/*                )}*/}
+                    {/*            </div>*/}
+                    {/*            <div>*/}
+                    {/*                <label className="block text-sm font-medium text-gray-700 mb-2">*/}
+                    {/*                    Last Name **/}
+                    {/*                </label>*/}
+                    {/*                <input*/}
+                    {/*                    type="text"*/}
+                    {/*                    {...register('lastName', { required: 'Last name is required' })}*/}
+                    {/*                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${*/}
+                    {/*                        errors.lastName ? 'border-red-300' : 'border-gray-300'*/}
+                    {/*                    }`}*/}
+                    {/*                    placeholder="Doe"*/}
+                    {/*                    disabled={isSubmitting}*/}
+                    {/*                />*/}
+                    {/*                {errors.lastName && (*/}
+                    {/*                    <p className="mt-1 text-sm text-red-600">{errors.lastName.message}</p>*/}
+                    {/*                )}*/}
+                    {/*            </div>*/}
+                    {/*        </div>*/}
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Email *
-                                </label>
-                                <input
-                                    type="email"
-                                    {...register('email', {
-                                        required: 'Email is required',
-                                        pattern: {
-                                            value: /^\S+@\S+$/i,
-                                            message: 'Invalid email address'
-                                        }
-                                    })}
-                                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
-                                        errors.email ? 'border-red-300' : 'border-gray-300'
-                                    }`}
-                                    placeholder="john@example.com"
-                                    disabled={isSubmitting}
-                                />
-                                {errors.email && (
-                                    <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-                                )}
-                            </div>
+                    {/*        <div>*/}
+                    {/*            <label className="block text-sm font-medium text-gray-700 mb-2">*/}
+                    {/*                Email **/}
+                    {/*            </label>*/}
+                    {/*            <input*/}
+                    {/*                type="email"*/}
+                    {/*                {...register('email', {*/}
+                    {/*                    required: 'Email is required',*/}
+                    {/*                    pattern: {*/}
+                    {/*                        value: /^\S+@\S+$/i,*/}
+                    {/*                        message: 'Invalid email address'*/}
+                    {/*                    }*/}
+                    {/*                })}*/}
+                    {/*                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${*/}
+                    {/*                    errors.email ? 'border-red-300' : 'border-gray-300'*/}
+                    {/*                }`}*/}
+                    {/*                placeholder="john@example.com"*/}
+                    {/*                disabled={isSubmitting}*/}
+                    {/*            />*/}
+                    {/*            {errors.email && (*/}
+                    {/*                <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>*/}
+                    {/*            )}*/}
+                    {/*        </div>*/}
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Project Type *
-                                </label>
-                                <select
-                                    {...register('projectType', { required: 'Please select a project type' })}
-                                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
-                                        errors.projectType ? 'border-red-300' : 'border-gray-300'
-                                    }`}
-                                    disabled={isSubmitting}
-                                >
-                                    <option value="">Select a service</option>
-                                    <option value="web-development">Web Development</option>
-                                    <option value="ecommerce">E-commerce</option>
-                                    <option value="mobile-app">Mobile App</option>
-                                    <option value="ui-ux">UI/UX Design</option>
-                                    <option value="maintenance">Website Maintenance</option>
-                                    <option value="consultation">Consultation</option>
-                                </select>
-                                {errors.projectType && (
-                                    <p className="mt-1 text-sm text-red-600">{errors.projectType.message}</p>
-                                )}
-                            </div>
+                    {/*        <div>*/}
+                    {/*            <label className="block text-sm font-medium text-gray-700 mb-2">*/}
+                    {/*                Project Type **/}
+                    {/*            </label>*/}
+                    {/*            <select*/}
+                    {/*                {...register('projectType', { required: 'Please select a project type' })}*/}
+                    {/*                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${*/}
+                    {/*                    errors.projectType ? 'border-red-300' : 'border-gray-300'*/}
+                    {/*                }`}*/}
+                    {/*                disabled={isSubmitting}*/}
+                    {/*            >*/}
+                    {/*                <option value="">Select a service</option>*/}
+                    {/*                <option value="web-development">Web Development</option>*/}
+                    {/*                <option value="ecommerce">E-commerce</option>*/}
+                    {/*                <option value="mobile-app">Mobile App</option>*/}
+                    {/*                <option value="ui-ux">UI/UX Design</option>*/}
+                    {/*                <option value="maintenance">Website Maintenance</option>*/}
+                    {/*                <option value="consultation">Consultation</option>*/}
+                    {/*            </select>*/}
+                    {/*            {errors.projectType && (*/}
+                    {/*                <p className="mt-1 text-sm text-red-600">{errors.projectType.message}</p>*/}
+                    {/*            )}*/}
+                    {/*        </div>*/}
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Budget Range
-                                </label>
-                                <select
-                                    {...register('budget')}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                                    disabled={isSubmitting}
-                                >
-                                    <option value="">Select budget range</option>
-                                    <option value="under-2k">Under £2,000</option>
-                                    <option value="2k-5k">£2,000 - £5,000</option>
-                                    <option value="5k-10k">£5,000 - £10,000</option>
-                                    <option value="10k-20k">£10,000 - £20,000</option>
-                                    <option value="over-20k">Over £20,000</option>
-                                </select>
-                            </div>
+                    {/*        <div>*/}
+                    {/*            <label className="block text-sm font-medium text-gray-700 mb-2">*/}
+                    {/*                Budget Range*/}
+                    {/*            </label>*/}
+                    {/*            <select*/}
+                    {/*                {...register('budget')}*/}
+                    {/*                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"*/}
+                    {/*                disabled={isSubmitting}*/}
+                    {/*            >*/}
+                    {/*                <option value="">Select budget range</option>*/}
+                    {/*                <option value="under-2k">Under £2,000</option>*/}
+                    {/*                <option value="2k-5k">£2,000 - £5,000</option>*/}
+                    {/*                <option value="5k-10k">£5,000 - £10,000</option>*/}
+                    {/*                <option value="10k-20k">£10,000 - £20,000</option>*/}
+                    {/*                <option value="over-20k">Over £20,000</option>*/}
+                    {/*            </select>*/}
+                    {/*        </div>*/}
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Message *
-                                </label>
-                                <textarea
-                                    {...register('message', { required: 'Message is required' })}
-                                    rows="4"
-                                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
-                                        errors.message ? 'border-red-300' : 'border-gray-300'
-                                    }`}
-                                    placeholder="Tell us about your project..."
-                                    disabled={isSubmitting}
-                                ></textarea>
-                                {errors.message && (
-                                    <p className="mt-1 text-sm text-red-600">{errors.message.message}</p>
-                                )}
-                            </div>
+                    {/*        <div>*/}
+                    {/*            <label className="block text-sm font-medium text-gray-700 mb-2">*/}
+                    {/*                Message **/}
+                    {/*            </label>*/}
+                    {/*            <textarea*/}
+                    {/*                {...register('message', { required: 'Message is required' })}*/}
+                    {/*                rows="4"*/}
+                    {/*                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${*/}
+                    {/*                    errors.message ? 'border-red-300' : 'border-gray-300'*/}
+                    {/*                }`}*/}
+                    {/*                placeholder="Tell us about your project..."*/}
+                    {/*                disabled={isSubmitting}*/}
+                    {/*            ></textarea>*/}
+                    {/*            {errors.message && (*/}
+                    {/*                <p className="mt-1 text-sm text-red-600">{errors.message.message}</p>*/}
+                    {/*            )}*/}
+                    {/*        </div>*/}
 
-                            <button
-                                type="submit"
-                                disabled={isSubmitting}
-                                className={`w-full btn-primary inline-flex items-center justify-center ${
-                                    isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
-                                }`}
-                            >
-                                {isSubmitting ? (
-                                    <>
-                                        <FiLoader className="mr-2 animate-spin" />
-                                        Sending Message...
-                                    </>
-                                ) : (
-                                    'Send Message'
-                                )}
-                            </button>
-                        </form>
-                    </motion.div>
+                    {/*        <button*/}
+                    {/*            type="submit"*/}
+                    {/*            disabled={isSubmitting}*/}
+                    {/*            className={`w-full btn-primary inline-flex items-center justify-center ${*/}
+                    {/*                isSubmitting ? 'opacity-70 cursor-not-allowed' : ''*/}
+                    {/*            }`}*/}
+                    {/*        >*/}
+                    {/*            {isSubmitting ? (*/}
+                    {/*                <>*/}
+                    {/*                    <FiLoader className="mr-2 animate-spin" />*/}
+                    {/*                    Sending Message...*/}
+                    {/*                </>*/}
+                    {/*            ) : (*/}
+                    {/*                'Send Message'*/}
+                    {/*            )}*/}
+                    {/*        </button>*/}
+                    {/*    </form>*/}
+                    {/*</motion.div>*/}
                 </div>
             </div>
         </section>

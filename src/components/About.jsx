@@ -64,31 +64,38 @@ const About = () => {
                         </div>
                     </motion.div>
 
-                    {/* Animation + Stats (Right) */}
+                    {/* Stats with Animation Background (Right) */}
                     <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8 }}
                         viewport={{ once: true }}
-                        className="flex flex-col items-center"
+                        className="relative flex items-center justify-center min-h-[340px]"
                     >
-                        <div className="w-72 h-72 mb-8">
+                        {/* Lottie Animation as background */}
+                        <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
                             <Lottie
                                 animationData={aboutAnimation}
                                 loop
                                 autoplay
-                                style={{ width: '100%', height: '100%' }}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover',
+                                    opacity: 0.16, // subtle, but visible
+                                }}
                             />
                         </div>
-                        <div className="grid grid-cols-2 gap-6 w-full">
-                            {stats.map((stat, index) => (
-                                <div key={index} className="bg-gray-50 p-6 rounded-xl text-center w-full">
-                                    <stat.icon className="text-primary-600 mx-auto mb-4" size={32} />
-                                    <div className="text-3xl font-bold text-gray-900 mb-2">{stat.value}</div>
-                                    <div className="text-gray-600">{stat.label}</div>
-                                </div>
-                            ))}
-                        </div>
+                        {/* Stats on top */}
+                        {/*<div className="grid grid-cols-2 gap-6 w-full relative z-10">*/}
+                        {/*    {stats.map((stat, index) => (*/}
+                        {/*        <div key={index} className="bg-gray-50/90 p-6 rounded-xl text-center shadow-md">*/}
+                        {/*            <stat.icon className="text-primary-600 mx-auto mb-4" size={32} />*/}
+                        {/*            <div className="text-3xl font-bold text-gray-900 mb-2">{stat.value}</div>*/}
+                        {/*            <div className="text-gray-600">{stat.label}</div>*/}
+                        {/*        </div>*/}
+                        {/*    ))}*/}
+                        {/*</div>*/}
                     </motion.div>
                 </div>
             </div>

@@ -74,7 +74,7 @@ npm run build
 - Skills and expertise
 - Contact information
 
-### 6. **Testimonials**
+### 6. **TrustedClients**
 - Client reviews and feedback
 - Success stories
 - Professional testimonial cards

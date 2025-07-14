@@ -1,28 +1,28 @@
 import { useState } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
 import Services from './components/Services';
+import Pricing from './components/Pricing'; // New import
 import Portfolio from './components/Portfolio';
 import Team from './components/Team';
-import Testimonials from './components/Testimonials';
+import TrustedClients from './components/TrustedClients'; // Updated import
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Notification from './components/Notification';
 
 function App() {
     const [notification, setNotification] = useState({
+        isVisible: false,
         type: '',
-        message: '',
-        isVisible: false
+        message: ''
     });
 
     const showNotification = (type, message) => {
         setNotification({
+            isVisible: true,
             type,
-            message,
-            isVisible: true
+            message
         });
     };
 
@@ -34,27 +34,25 @@ function App() {
     };
 
     return (
-        <Router>
-            <div className="App">
-                <Header />
-                <Hero />
-                <About />
-                <Services />
-                <Portfolio />
-                <Team />
-                <Testimonials />
-                <Contact onNotification={showNotification} />
-                <Footer />
+        <div className="min-h-screen">
+            <Header />
+            <Hero />
+            <About />
+            <Services />
+            <Pricing /> {/* New section */}
+            <Portfolio />
+            <Team />
+            <TrustedClients /> {/* Updated component */}
+            <Contact onNotification={showNotification} />
+            <Footer />
 
-                {/* Notification Component */}
-                <Notification
-                    type={notification.type}
-                    message={notification.message}
-                    isVisible={notification.isVisible}
-                    onClose={hideNotification}
-                />
-            </div>
-        </Router>
+            <Notification
+                type={notification.type}
+                message={notification.message}
+                isVisible={notification.isVisible}
+                onClose={hideNotification}
+            />
+        </div>
     );
 }
 

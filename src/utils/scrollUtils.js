@@ -12,9 +12,9 @@ export const scrollToSection = (elementId) => {
     }
 };
 
-// Get current active section
+// Get current active section - Updated with new sections
 export const getCurrentSection = () => {
-    const sections = ['home', 'about', 'services', 'portfolio', 'team', 'testimonials', 'contact'];
+    const sections = ['home', 'about', 'services', 'pricing', 'portfolio', 'team', 'trusted-clients', 'contact'];
     const scrollPosition = window.scrollY + 100;
 
     for (let i = sections.length - 1; i >= 0; i--) {

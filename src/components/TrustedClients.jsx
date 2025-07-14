@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { FiStar } from 'react-icons/fi';
 
-const Testimonials = () => {
+const TrustedClients = () => {
     const testimonials = [
         {
             name: 'Sarah Johnson',
@@ -111,4 +111,4 @@ const Testimonials = () => {
     );
 };
 
-export default Testimonials;
+export default TrustedClients;

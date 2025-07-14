@@ -11,8 +11,10 @@ const Header = ({ onGetQuoteClick }) => {
         { name: 'Home', href: 'home' },
         { name: 'About', href: 'about' },
         { name: 'Services', href: 'services' },
+        { name: 'Pricing', href: 'pricing' }, // Added Pricing
         { name: 'Portfolio', href: 'portfolio' },
         { name: 'Team', href: 'team' },
+        { name: 'Clients', href: 'trusted-clients' }, // Updated from testimonials
         { name: 'Contact', href: 'contact' },
     ];
 
@@ -97,21 +99,19 @@ const Header = ({ onGetQuoteClick }) => {
                             <button
                                 key={item.name}
                                 onClick={() => handleNavClick(item.href)}
-                                className={`block w-full text-left px-4 py-2 text-gray-600 hover:text-primary-600 hover:bg-gray-50 transition-colors duration-200 ${
-                                    activeSection === item.href ? 'text-primary-600 font-medium bg-primary-50' : ''
+                                className={`block w-full text-left px-4 py-2 text-gray-600 hover:text-primary-600 hover:bg-gray-50 transition-colors ${
+                                    activeSection === item.href ? 'text-primary-600 font-medium' : ''
                                 }`}
                             >
                                 {item.name}
                             </button>
                         ))}
-                        <div className="px-4 py-2">
-                            <button
-                                onClick={handleGetQuoteClick}
-                                className="btn-primary w-full"
-                            >
-                                Get Quote
-                            </button>
-                        </div>
+                        <button
+                            onClick={handleGetQuoteClick}
+                            className="block w-full text-left px-4 py-2 mt-2 btn-primary"
+                        >
+                            Get Quote
+                        </button>
                     </motion.div>
                 )}
             </div>
