@@ -12,6 +12,9 @@ export const useTheme = () => {
 
 export const ThemeProvider = ({ children }) => {
     const [isDark, setIsDark] = useState(() => {
+        // Check if we're in the browser first
+        if (typeof window === 'undefined') return false;
+
         // Check localStorage first, then system preference
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
@@ -21,6 +24,9 @@ export const ThemeProvider = ({ children }) => {
     });
 
     useEffect(() => {
+        // Ensure we're in the browser
+        if (typeof window === 'undefined') return;
+
         const root = document.documentElement;
         if (isDark) {
             root.classList.add('dark');
@@ -33,6 +39,8 @@ export const ThemeProvider = ({ children }) => {
 
     useEffect(() => {
         // Listen for system theme changes
+        if (typeof window === 'undefined') return;
+
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         const handleChange = (e) => {
             if (!localStorage.getItem('theme')) {
