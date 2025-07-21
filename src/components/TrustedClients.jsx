@@ -12,7 +12,7 @@ const TrustedClients = () => {
         ceo: 'Grace',
         ceoTitle: 'CEO & Founder',
         logo: CIWUWLogo,
-        testimonial: 'WebCraft Pro has been instrumental in our digital transformation. Their expertise in creating both our marketplace and tattoo booking platform has helped us establish a strong online presence. The quality of work and attention to detail is exceptional.',
+        testimonial: 'The Innovation Curve has been instrumental in our digital transformation. Their expertise in creating both our marketplace and tattoo booking platform has helped us establish a strong online presence. The quality of work and attention to detail is exceptional.',
         rating: 5,
         projects: [
             {

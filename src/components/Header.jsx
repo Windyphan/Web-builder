@@ -50,7 +50,7 @@ const Header = () => {
                             className="text-2xl font-bold text-primary-600 dark:text-primary-400"
                             whileHover={{ scale: 1.05 }}
                         >
-                            WebCraft Pro
+                            The Innovation Curve
                         </motion.div>
                     </Link>
 

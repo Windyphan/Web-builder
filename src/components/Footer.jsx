@@ -34,7 +34,7 @@ const Footer = () => {
                         viewport={{ once: true }}
                     >
                         <h3 className="text-2xl font-bold text-white mb-4">
-                            WebCraft Pro
+                            The Innovation Curve
                         </h3>
                         <p className="text-gray-300 dark:text-gray-400 mb-6">
                             Building digital excellence through innovative web solutions. We help businesses thrive online with cutting-edge technology and outstanding design.
@@ -154,7 +154,7 @@ const Footer = () => {
                     className="border-t border-gray-800 dark:border-gray-700 mt-12 pt-8 text-center"
                 >
                     <p className="text-gray-400 dark:text-gray-500">
-                        © {currentYear} WebCraft Pro. All rights reserved. Built with passion by Phong Minh Phan.
+                        © {currentYear} The Innovation Curve. All rights reserved. Built with passion by Phong Minh Phan.
                     </p>
                 </motion.div>
             </div>

@@ -1,4 +1,4 @@
-# WebCraft Pro - Professional Web Development Company
+# The Innovation Curve - Professional Web Development Company
 
 A modern, responsive website built with React + Vite showcasing professional web development services.
 
@@ -139,7 +139,7 @@ npm run build
 
 ## 📧 Contact Information
 
-**WebCraft Pro**
+**The Innovation Curve**
 - **Email**: pmphong1999@gmail.com
 - **Phone**: 07340764930
 - **Location**: United Kingdom
@@ -165,7 +165,7 @@ This website is designed to:
 
 ## 📄 License
 
-This project is created for WebCraft Pro. All rights reserved.
+This project is created for The Innovation Curve. All rights reserved.
 
 ## 🤝 Support
 
@@ -176,4 +176,4 @@ For support or questions about this project:
 
 ---
 
-**Built with ❤️ by WebCraft Pro**
+**Built with ❤️ by The Innovation Curve**

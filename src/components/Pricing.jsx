@@ -9,7 +9,7 @@ const Pricing = () => {
         {
             id: 'starter',
             name: 'Starter Package',
-            price: '£899',
+            price: '£199',
             duration: '2-3 weeks',
             description: 'Perfect for small businesses and personal websites',
             popular: false,
@@ -28,7 +28,7 @@ const Pricing = () => {
         {
             id: 'professional',
             name: 'Professional Package',
-            price: '£1,599',
+            price: '£699',
             duration: '3-4 weeks',
             description: 'Ideal for growing businesses and e-commerce',
             popular: true,

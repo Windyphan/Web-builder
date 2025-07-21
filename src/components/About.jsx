@@ -53,7 +53,7 @@ const About = () => {
                         onViewportEnter={() => setIsInView(true)}
                     >
                         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-                            About WebCraft Pro
+                            About The Innovation Curve
                         </h2>
                         <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
                             We are a UK-based web development company specializing in creating exceptional digital experiences. Our mission is to help businesses thrive online through innovative web solutions that combine cutting-edge technology with outstanding design.
