@@ -4,7 +4,7 @@ A modern, responsive website built with React + Vite showcasing professional web
 
 ## 🚀 Features
 
-- **Modern Design**: Clean, professional layout with smooth animations
+- **Modern Design**: Clean, professional layout with smooth animation
 - **Responsive**: Fully responsive design that works on all devices
 - **Performance**: Built with Vite for fast development and optimized builds
 - **Interactive**: Smooth scrolling, hover effects, and micro-interactions
