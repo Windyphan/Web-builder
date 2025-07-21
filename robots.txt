@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://theinnovationcurve.com/sitemap.xml
+
+# Contact Information
+# Contact: info@theinnovation.com
