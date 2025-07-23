@@ -1,12 +1,13 @@
 import { motion } from 'framer-motion';
 import { FiMail, FiPhone, FiLinkedin, FiGithub } from 'react-icons/fi';
+import CEO_pic from '../assets/CEO_pic_Phong.jpg';
 
 const Team = () => {
     const teamMembers = [
         {
             name: 'Phong Minh Phan',
             role: 'Founder & Lead Developer',
-            image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80',
+            image: CEO_pic,
             bio: 'Full-stack developer with 5+ years of experience in modern web technologies. Passionate about creating innovative digital solutions.',
             skills: ['React', 'Node.js', 'TypeScript', 'AWS', 'MongoDB', 'UI/UX Design'],
             email: 'pmphong1999@gmail.com',
