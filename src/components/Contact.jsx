@@ -6,8 +6,8 @@ const Contact = () => {
         {
             icon: FiMail,
             title: 'Email',
-            content: 'pmphong1999@gmail.com',
-            link: 'mailto:pmphong1999@gmail.com'
+            content: 'info@theinnovationcurve.com',
+            link: 'mailto:info@theinnovationcurve.com'
         },
         {
             icon: FiPhone,
@@ -236,10 +236,10 @@ const Contact = () => {
                             <p className="text-sm text-gray-500 dark:text-gray-400">
                                 Or contact us directly at{' '}
                                 <a
-                                    href="mailto:pmphong1999@gmail.com"
+                                    href="mailto:info@theinnovationcurve.com"
                                     className="text-primary-600 dark:text-primary-400 hover:underline"
                                 >
-                                    pmphong1999@gmail.com
+                                    info@theinnovationcurve.com
                                 </a>
                                 {' '}or{' '}
                                 <a

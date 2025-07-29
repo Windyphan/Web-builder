@@ -53,7 +53,7 @@ const Footer = () => {
                                 <FiGithub size={24} />
                             </a>
                             <a
-                                href="mailto:pmphong1999@gmail.com"
+                                href="mailto:info@theinnovationcurve.com"
                                 className="text-gray-400 dark:text-gray-500 hover:text-white dark:hover:text-gray-300 transition-colors duration-200"
                             >
                                 <FiMail size={24} />
@@ -120,10 +120,10 @@ const Footer = () => {
                             <div className="flex items-center">
                                 <FiMail className="text-gray-400 dark:text-gray-500 mr-3" size={18} />
                                 <a
-                                    href="mailto:pmphong1999@gmail.com"
+                                    href="mailto:info@theinnovationcurve.com"
                                     className="text-gray-300 dark:text-gray-400 hover:text-white dark:hover:text-gray-300 transition-colors duration-200"
                                 >
-                                    pmphong1999@gmail.com
+                                    info@theinnovationcurve.com
                                 </a>
                             </div>
                             <div className="flex items-center">

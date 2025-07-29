@@ -5,4 +5,4 @@ Allow: /
 Sitemap: https://www.theinnovationcurve.com/sitemap.xml
 
 # Contact Information
-# Contact: pmphong1999@gmail.com
+# Contact: info@theinnovationcurve.com

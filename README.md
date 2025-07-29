@@ -140,7 +140,7 @@ npm run build
 ## 📧 Contact Information
 
 **The Innovation Curve**
-- **Email**: pmphong1999@gmail.com
+- **Email**: info@theinnovationcurve.com
 - **Phone**: 07340764930
 - **Location**: United Kingdom
 - **LinkedIn**: [linkedin.com/in/phong-phan](https://linkedin.com/in/phong-phan)
