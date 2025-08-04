@@ -28,5 +28,5 @@
 /about/team          /index.html           200
 /contact/success     /index.html           200
 
-# Fallback for any other routes (this replaces /* but is more specific)
-/404                 /index.html           200
+# Catch-all rule for SPA routing - serves index.html for any route not matched above
+/*                   /index.html           200
