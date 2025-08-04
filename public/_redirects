@@ -1,1 +1,5 @@
-/!(*.html)    /index.html   200
+# Handle direct access to index.html
+/index.html    /index.html   200
+
+# Handle all other routes by serving index.html (for SPA routing)
+/*    /index.html   200
