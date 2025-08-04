@@ -1,1 +1,6 @@
-/*    /index.html   200
+# Remove .html extension (with loop prevention)
+/*/index.html  /:splat/  301!
+/*.html        /:splat   301!
+
+# Handle SPA routing
+/*             /index.html  200
