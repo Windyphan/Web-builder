@@ -143,7 +143,7 @@ npm run build
 - **Email**: info@theinnovationcurve.com
 - **Phone**: 07340764930
 - **Location**: United Kingdom
-- **LinkedIn**: [linkedin.com/in/phong-phan](https://linkedin.com/in/phong-phan)
+- **LinkedIn**: [linkedin.com/in/phong-phan-30814616b/](https://www.linkedin.com/in/phong-phan-30814616b/)
 - **GitHub**: [github.com/Windyphan](https://github.com/Windyphan)
 
 ## 🚀 Performance Optimizations

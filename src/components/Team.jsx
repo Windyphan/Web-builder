@@ -12,7 +12,7 @@ const Team = () => {
             skills: ['React', 'Node.js', 'TypeScript', 'AWS', 'MongoDB', 'UI/UX Design'],
             email: 'pmphong1999@gmail.com',
             phone: '07340764930',
-            linkedin: 'https://linkedin.com/in/phong-phan',
+            linkedin: 'https://linkedin.com/in/phong-phan-30814616b/',
             github: 'https://github.com/Windyphan'
         }
     ];

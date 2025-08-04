@@ -41,7 +41,7 @@ const Footer = () => {
                         </p>
                         <div className="flex space-x-4">
                             <a
-                                href="https://linkedin.com/in/phong-phan"
+                                href="https://www.linkedin.com/company/the-innovation-curve/"
                                 className="text-gray-400 dark:text-gray-500 hover:text-white dark:hover:text-gray-300 transition-colors duration-200"
                             >
                                 <FiLinkedin size={24} />
