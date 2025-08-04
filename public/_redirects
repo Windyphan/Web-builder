@@ -4,8 +4,9 @@
 /favicon.ico           /favicon.ico          200
 /vite.svg             /vite.svg             200
 
+/index.html          /index.html           200
+
 # Main application routes - serve index.html for SPA routing
-/                     /index.html           200
 /portfolio           /index.html           200
 /pricing             /index.html           200
 /about               /index.html           200
