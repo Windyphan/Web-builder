@@ -27,6 +27,3 @@
 /portfolio/project   /index.html           200
 /about/team          /index.html           200
 /contact/success     /index.html           200
-
-# Fallback for any other routes (this replaces /* but is more specific)
-/404                 /index.html           200
