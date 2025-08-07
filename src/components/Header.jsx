@@ -4,6 +4,7 @@ import { FiMenu, FiX } from 'react-icons/fi';
 import { Link, useLocation } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 import { useTheme } from '../contexts/ThemeContext';
+import companyLogo from '../assets/logos/Company_logo.png';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -47,10 +48,17 @@ const Header = () => {
                     {/* Logo */}
                     <Link to="/">
                         <motion.div
-                            className="text-2xl font-bold text-primary-600 dark:text-primary-400"
+                            className="flex items-center"
                             whileHover={{ scale: 1.05 }}
                         >
-                            The Innovation Curve
+                            <img 
+                                src={companyLogo} 
+                                alt="The Innovation Curve" 
+                                className="h-10 w-10 transition-all duration-300 dark:filter dark:invert dark:brightness-0 dark:contrast-100"
+                            />
+                            <span className="ml-3 text-xl font-bold text-primary-600 dark:text-primary-400 hidden sm:inline">
+                                The Innovation Curve
+                            </span>
                         </motion.div>
                     </Link>
 
