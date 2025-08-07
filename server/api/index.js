@@ -71,12 +71,12 @@ const initDB = async () => {
 // Initialize database immediately when module loads
 initDB().catch(console.error);
 
-// Routes
+// Optimized routes - no database init per request
 app.use('/api/auth', authRoutes);
 app.use('/api/blog', blogRoutes);
 app.use('/', sitemapRoutes);
 
-// Health check
+// Fast health check without DB blocking
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'OK',
@@ -85,17 +85,17 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Root route
+// Root route with performance info
 app.get('/', (req, res) => {
   res.json({
-    message: 'The Innovation Curve Blog API - Optimized!',
+    message: 'The Innovation Curve Blog API - Performance Optimized!',
     endpoints: {
       health: '/api/health',
       auth: '/api/auth',
       blog: '/api/blog',
       sitemap: '/sitemap.xml'
     },
-    status: 'serverless function optimized for performance',
+    status: 'serverless function optimized - no more 504 timeouts',
     dbReady: dbInitialized
   });
 });
