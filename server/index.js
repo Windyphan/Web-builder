@@ -21,7 +21,7 @@ const limiter = rateLimit({
 app.use(helmet());
 app.use(cors({
   origin: process.env.NODE_ENV === 'production'
-    ? ['https://www.theinnovationcurve.com', 'https://theinnovationcurve.com']
+    ? ['https://www.theinnovationcurve.com', 'https://theinnovationcurve.com', 'https://web-builder-five-rust.vercel.app']
     : ['http://localhost:5173', 'http://localhost:3000'],
   credentials: true
 }));
