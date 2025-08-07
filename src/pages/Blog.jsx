@@ -90,12 +90,13 @@ const BlogPage = () => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const [postsData, tagsData] = await Promise.all([
+                const [postsResponse, tagsData] = await Promise.all([
                     blogAPI.getPosts(),
                     blogAPI.getTags()
                 ]);
-                setPosts(postsData);
-                setTags(tagsData);
+                // Extract posts array from the response object
+                setPosts(postsResponse.posts || []);
+                setTags(tagsData || []);
             } catch (err) {
                 console.error('Error fetching blog data:', err);
                 setError('Failed to load blog posts. Please try again later.');
