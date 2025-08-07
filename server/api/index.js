@@ -49,6 +49,12 @@ app.options('*', (req, res) => {
 });
 
 app.use(limiter);
+
+// Add a root route to confirm the API is running
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'API is running. Frontend is served separately.' });
+});
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
@@ -82,21 +88,6 @@ app.get('/api/health', (req, res) => {
     status: 'OK',
     timestamp: new Date().toISOString(),
     dbInitialized: dbInitialized
-  });
-});
-
-// Root route with performance info
-app.get('/', (req, res) => {
-  res.json({
-    message: 'The Innovation Curve Blog API - Performance Optimized!',
-    endpoints: {
-      health: '/api/health',
-      auth: '/api/auth',
-      blog: '/api/blog',
-      sitemap: '/sitemap.xml'
-    },
-    status: 'serverless function optimized - no more 504 timeouts',
-    dbReady: dbInitialized
   });
 });
 
