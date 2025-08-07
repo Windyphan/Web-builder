@@ -3,8 +3,7 @@
   "name": "web-builder-backend",
   "functions": {
     "api/index.js": {
-      "runtime": "@vercel/node",
-      "maxDuration": 30
+      "runtime": "nodejs18.x"
     }
   },
   "routes": [
