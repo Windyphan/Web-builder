@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { FiMail, FiPhone, FiMapPin, FiClock } from 'react-icons/fi';
+import emailjs from '@emailjs/browser';
+import {useState} from "react";
 
 const Contact = () => {
     const contactInfo = [
@@ -29,12 +31,60 @@ const Contact = () => {
         }
     ];
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Handle form submission here
-        console.log('Form submitted');
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        projectType: '',
+        budget: '',
+        message: '',
+    });
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState(null);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setSubmitStatus(null);
+
+        try {
+            // Replace these with your actual EmailJS service, template and user IDs
+            await emailjs.send(
+                'service_4lbrwu9',
+                'template_sotia64',
+                {
+                    from_name: formData.name,
+                    reply_to: formData.email,
+                    phone: formData.phone,
+                    project_type: formData.projectType,
+                    budget: formData.budget,
+                    message: formData.message,
+                },
+                '_KGvnP1t8dVz7HVoB'
+            );
+
+            setSubmitStatus('success');
+            setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                projectType: '',
+                budget: '',
+                message: '',
+            });
+        } catch (error) {
+            console.error('Error sending email:', error);
+            setSubmitStatus('error');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
     return (
         <section id="contact" className="section-padding bg-gray-50 dark:bg-gray-800">
             <div className="container-max">
@@ -152,6 +202,9 @@ const Contact = () => {
                                     </label>
                                     <input
                                         type="text"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleChange}
                                         required
                                         className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-200"
                                         placeholder="Your Name"
@@ -163,6 +216,9 @@ const Contact = () => {
                                     </label>
                                     <input
                                         type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
                                         required
                                         className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-200"
                                         placeholder="your@email.com"
@@ -176,6 +232,9 @@ const Contact = () => {
                                 </label>
                                 <input
                                     type="tel"
+                                    name="phone"
+                                    value={formData.phone}
+                                    onChange={handleChange}
                                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-200"
                                     placeholder="Your phone number"
                                 />
@@ -185,7 +244,12 @@ const Contact = () => {
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Project Type
                                 </label>
-                                <select className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+                                <select
+                                    name="projectType"
+                                    value={formData.projectType}
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-200"
+                                >
                                     <option value="">Select a service</option>
                                     <option value="web-development">Web Development</option>
                                     <option value="ecommerce">E-commerce Solution</option>
@@ -200,7 +264,12 @@ const Contact = () => {
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Budget Range
                                 </label>
-                                <select className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+                                <select
+                                    name="budget"
+                                    value={formData.budget}
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-200"
+                                >
                                     <option value="">Select budget range</option>
                                     <option value="under-1000">Under £1,000</option>
                                     <option value="1000-3000">£1,000 - £3,000</option>
@@ -216,19 +285,35 @@ const Contact = () => {
                                 </label>
                                 <textarea
                                     rows="6"
+                                    name="message"
+                                    value={formData.message}
+                                    onChange={handleChange}
                                     required
                                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-200"
                                     placeholder="Tell us about your project, goals, timeline, and any specific requirements..."
                                 ></textarea>
                             </div>
 
+                            {submitStatus === 'success' && (
+                                <div className="p-4 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-lg">
+                                    Thank you! Your message has been sent successfully.
+                                </div>
+                            )}
+
+                            {submitStatus === 'error' && (
+                                <div className="p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-lg">
+                                    There was an error sending your message. Please try again or contact us directly.
+                                </div>
+                            )}
+
                             <motion.button
                                 type="submit"
-                                className="w-full bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center"
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
+                                disabled={isSubmitting}
+                                className={`w-full ${isSubmitting ? 'bg-gray-400' : 'bg-primary-600 hover:bg-primary-700'} text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center`}
+                                whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                                whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                             >
-                                Send Message
+                                {isSubmitting ? 'Sending...' : 'Send Message'}
                             </motion.button>
                         </form>
 
