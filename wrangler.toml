@@ -1,18 +1,19 @@
-# Cloudflare Workers deployment configuration
+# Cloudflare Pages deployment configuration for frontend only
 name = "the-innovation-curve"
-main = "server/api/index.js"
 compatibility_date = "2025-08-07"
-compatibility_flags = ["nodejs_compat"]
+
+# Remove the main entry point since we're deploying the frontend
+# main = "server/api/index.js"  # Commented out
+
+# Frontend build configuration
+[build]
+command = "npm run build"
+publish = "dist"
 
 [vars]
-NODE_ENV = "production"
-JWT_SECRET = "c270cc4a3a6a39ad40f60242a60e9e26a07e730bc15e56f4d81f4a2f9f7d930ffd1087f2edfb493a1acdae57888dad4f9900028ead9a528c269385964a78c197"
-ADMIN_EMAIL = "info@theinnovativcurve.com"
-ADMIN_PASSWORD = "TIC2025!@BlogAdmin#SecurePass789$"
+# Only frontend environment variables
+VITE_API_URL = "https://web-builder-five-rust.vercel.app/api"
 
 [env.development]
 [env.development.vars]
-NODE_ENV = "development"
-
-[build]
-command = "cd server && npm install"
+VITE_API_URL = "http://localhost:3000/api"
