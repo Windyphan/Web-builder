@@ -1,7 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { getQuery } from '../config/database.js';
+import { sql } from '@vercel/postgres';
 
 const router = express.Router();
 
@@ -15,11 +15,13 @@ router.post('/login', async (req, res) => {
     }
 
     // Get user from database
-    const user = await getQuery('SELECT * FROM users WHERE email = ?', [email]);
+    const result = await sql`SELECT * FROM users WHERE email = ${email}`;
 
-    if (!user) {
+    if (result.rows.length === 0) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
+
+    const user = result.rows[0];
 
     // Check password
     const validPassword = await bcrypt.compare(password, user.password);
@@ -59,11 +61,13 @@ router.get('/verify', async (req, res) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await getQuery('SELECT id, email, role FROM users WHERE id = ?', [decoded.userId]);
+    const result = await sql`SELECT id, email, role FROM users WHERE id = ${decoded.userId}`;
 
-    if (!user) {
+    if (result.rows.length === 0) {
       return res.status(403).json({ error: 'Invalid token' });
     }
+
+    const user = result.rows[0];
 
     res.json({ user });
   } catch (error) {
