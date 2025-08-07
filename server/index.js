@@ -46,6 +46,10 @@ app.options('*', (req, res) => {
   res.sendStatus(200);
 });
 
+app.use(limiter);
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
 // Initialize database (only once)
 let dbInitialized = false;
 const initDB = async () => {
@@ -85,7 +89,7 @@ app.get('/', (req, res) => {
       health: '/api/health',
       auth: '/api/auth',
       blog: '/api/blog',
-      sitemap: '/api/sitemap'
+      sitemap: '/sitemap.xml'
     }
   });
 });
@@ -105,4 +109,5 @@ app.use((err, req, res, next) => {
   });
 });
 
+// Export as serverless function for Vercel
 export default app;
