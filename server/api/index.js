@@ -4,8 +4,8 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 
-// Import your existing routes and database (now with relative paths from server/api/)
-import { initDatabase } from '../config/database.js';
+// Import your existing routes and database (now with persistent PostgreSQL)
+import { initDatabase } from '../config/postgres.js';
 import blogRoutes from '../routes/blogRoutes.js';
 import authRoutes from '../routes/authRoutes.js';
 import sitemapRoutes from '../routes/sitemapRoutes.js';
