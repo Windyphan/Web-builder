@@ -7,5 +7,10 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets'
   },
-  base: '/' // Important for Cloudflare Pages
+  base: '/', // Important for Cloudflare Pages
+  server: {
+    port: 5173,
+    host: true,
+    open: true
+  }
 })

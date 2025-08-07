@@ -11,19 +11,6 @@
 /pricing             /index.html           200
 /about               /index.html           200
 /contact             /index.html           200
-
-# Handle any CSS, JS, and image files
-/*.css               /:splat.css           200
-/*.js                /:splat.js            200
-/*.png               /:splat.png           200
-/*.jpg               /:splat.jpg           200
-/*.jpeg              /:splat.jpeg          200
-/*.gif               /:splat.gif           200
-/*.svg               /:splat.svg           200
-/*.webp              /:splat.webp          200
-/*.ico               /:splat.ico           200
-
-# Handle potential nested routes or future routes
-/portfolio/project   /index.html           200
-/about/team          /index.html           200
-/contact/success     /index.html           200
+/blog                /index.html           200
+/blog/*              /index.html           200
+/admin/*             /index.html           200
