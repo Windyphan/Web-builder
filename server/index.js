@@ -19,16 +19,32 @@ const limiter = rateLimit({
 });
 
 // Middleware
-app.use(helmet());
-app.use(cors({
-  origin: process.env.NODE_ENV === 'production'
-    ? ['https://www.theinnovationcurve.com', 'https://theinnovationcurve.com', 'https://web-builder-five-rust.vercel.app']
-    : ['http://localhost:5173', 'http://localhost:3000'],
-  credentials: true
+app.use(helmet({
+  crossOriginResourcePolicy: false // Allow cross-origin requests
 }));
-app.use(limiter);
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+app.use(cors({
+  origin: [
+    'https://www.theinnovationcurve.com',
+    'https://theinnovationcurve.com',
+    'https://web-builder-five-rust.vercel.app',
+    'http://localhost:5173',
+    'http://localhost:3000'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  optionsSuccessStatus: 200 // For legacy browser support
+}));
+
+// Add explicit preflight handling for problematic routes
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(200);
+});
 
 // Initialize database (only once)
 let dbInitialized = false;
