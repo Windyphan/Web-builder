@@ -112,5 +112,5 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Export for Vercel serverless
+// Export for Vercel serverless - THIS IS CRITICAL
 export default app;
