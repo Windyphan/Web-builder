@@ -99,6 +99,23 @@ class BlogAPI {
       method: 'DELETE',
     });
   }
+
+  // Sitemap submission endpoints
+  async submitSitemap() {
+    return this.request('/sitemap/submit', {
+      method: 'POST',
+    });
+  }
+
+  async submitSitemapWithRetry() {
+    return this.request('/sitemap/submit-with-retry', {
+      method: 'POST',
+    });
+  }
+
+  async getSitemapHealth() {
+    return this.request('/sitemap/health');
+  }
 }
 
 export default new BlogAPI();

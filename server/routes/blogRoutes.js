@@ -2,6 +2,7 @@ import express from 'express';
 import slugify from 'slugify';
 import { runQuery, getQuery, allQuery } from '../config/database.js';
 import { authenticateToken, requireAdmin } from '../middleware/auth.js';
+import { autoSubmitSitemap } from './sitemapRoutes.js';
 
 const router = express.Router();
 
@@ -185,6 +186,24 @@ router.post('/admin/posts', authenticateToken, requireAdmin, async (req, res) =>
     }
 
     res.status(201).json({ id: postId, slug, message: 'Post created successfully' });
+
+    // Auto-submit sitemap to search engines when publishing
+    if (published) {
+      // Run sitemap submission in background (don't block response)
+      setImmediate(async () => {
+        try {
+          console.log(`🔄 Auto-submitting sitemap for new post: ${title}`);
+          const success = await autoSubmitSitemap(2);
+          if (success) {
+            console.log(`✅ Sitemap successfully submitted for post: ${slug}`);
+          } else {
+            console.log(`⚠️ Sitemap submission failed for post: ${slug}`);
+          }
+        } catch (error) {
+          console.error('Background sitemap submission error:', error);
+        }
+      });
+    }
   } catch (error) {
     console.error('Error creating post:', error);
     res.status(500).json({ error: 'Failed to create post' });
@@ -258,6 +277,18 @@ router.put('/admin/posts/:id', authenticateToken, requireAdmin, async (req, res)
     }
 
     res.json({ message: 'Post updated successfully', slug });
+
+    // Auto-submit sitemap when publishing or updating published posts
+    if (published) {
+      setImmediate(async () => {
+        try {
+          console.log(`🔄 Auto-submitting sitemap for updated post: ${title}`);
+          await autoSubmitSitemap(2);
+        } catch (error) {
+          console.error('Background sitemap submission error:', error);
+        }
+      });
+    }
   } catch (error) {
     console.error('Error updating post:', error);
     res.status(500).json({ error: 'Failed to update post' });
@@ -276,6 +307,16 @@ router.delete('/admin/posts/:id', authenticateToken, requireAdmin, async (req, r
     }
 
     res.json({ message: 'Post deleted successfully' });
+
+    // Auto-submit sitemap after deleting posts
+    setImmediate(async () => {
+      try {
+        console.log(`🔄 Auto-submitting sitemap after post deletion`);
+        await autoSubmitSitemap(2);
+      } catch (error) {
+        console.error('Background sitemap submission error:', error);
+      }
+    });
   } catch (error) {
     console.error('Error deleting post:', error);
     res.status(500).json({ error: 'Failed to delete post' });

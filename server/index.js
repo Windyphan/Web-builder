@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import { initDatabase } from './config/database.js';
 import blogRoutes from './routes/blogRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import sitemapRoutes from './routes/sitemapRoutes.js';
 
 dotenv.config();
 
@@ -49,6 +50,12 @@ app.use('/api/blog', async (req, res, next) => {
   next();
 }, blogRoutes);
 
+// Sitemap routes - serve dynamic sitemap
+app.use('/', async (req, res, next) => {
+  await initDB();
+  next();
+}, sitemapRoutes);
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
@@ -61,7 +68,8 @@ app.get('/', (req, res) => {
     endpoints: {
       health: '/api/health',
       auth: '/api/auth',
-      blog: '/api/blog'
+      blog: '/api/blog',
+      sitemap: '/api/sitemap'
     }
   });
 });

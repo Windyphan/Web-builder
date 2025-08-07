@@ -15,6 +15,8 @@ const BlogAdmin = () => {
     const [showLoginModal, setShowLoginModal] = useState(true);
     const [showPostModal, setShowPostModal] = useState(false);
     const [editingPost, setEditingPost] = useState(null);
+    const [sitemapStatus, setSitemapStatus] = useState(null);
+    const [submittingSitemap, setSubmittingSitemap] = useState(false);
     const [loginForm, setLoginForm] = useState({ email: '', password: '' });
     const [postForm, setPostForm] = useState({
         title: '',
@@ -129,6 +131,19 @@ const BlogAdmin = () => {
             } catch (error) {
                 setError('Failed to delete post');
             }
+        }
+    };
+
+    const handleSubmitSitemap = async () => {
+        setSubmittingSitemap(true);
+        setSitemapStatus(null);
+        try {
+            await blogAPI.submitSitemap();
+            setSitemapStatus('Sitemap submitted successfully!');
+        } catch (error) {
+            setSitemapStatus('Failed to submit sitemap.');
+        } finally {
+            setSubmittingSitemap(false);
         }
     };
 
@@ -300,6 +315,42 @@ const BlogAdmin = () => {
                             </table>
                         </div>
                     )}
+
+                    {/* Sitemap Submission */}
+                    <div className="mt-8 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-md">
+                        <h2 className="text-xl font-bold mb-4">Sitemap Submission</h2>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                            Submit your sitemap to help search engines index your blog posts.
+                        </p>
+                        <div className="flex items-center gap-4">
+                            <button
+                                onClick={handleSubmitSitemap}
+                                className="flex-1 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 flex items-center justify-center gap-2"
+                                disabled={submittingSitemap}
+                            >
+                                {submittingSitemap ? (
+                                    <>
+                                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                                        Submitting...
+                                    </>
+                                ) : (
+                                    <>
+                                        <FiSave />
+                                        Submit Sitemap
+                                    </>
+                                )}
+                            </button>
+                        </div>
+                        {sitemapStatus && (
+                            <div className={`mt-4 p-3 rounded-lg text-sm ${
+                                sitemapStatus.includes('success') 
+                                    ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400' 
+                                    : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400'
+                            }`}>
+                                {sitemapStatus}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </main>
 
