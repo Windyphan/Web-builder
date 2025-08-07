@@ -1,121 +1,223 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 class BlogAPI {
-  constructor() {
-    this.baseURL = API_BASE_URL;
-  }
-
-  async request(endpoint, options = {}) {
-    const url = `${this.baseURL}${endpoint}`;
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-      ...options,
-    };
-
-    // Add auth token if available
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-
+  async getPosts(params = {}) {
     try {
-      const response = await fetch(url, config);
+      const queryParams = new URLSearchParams();
+
+      if (params.search) queryParams.append('search', params.search);
+      if (params.tag) queryParams.append('tag', params.tag);
+      if (params.featured) queryParams.append('featured', params.featured);
+      if (params.limit) queryParams.append('limit', params.limit);
+      if (params.offset) queryParams.append('offset', params.offset);
+
+      const response = await fetch(`${API_BASE_URL}/blog/posts?${queryParams}`);
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`Failed to fetch posts: ${response.status}`);
       }
 
       return await response.json();
     } catch (error) {
-      console.error('API request failed:', error);
+      console.error('Error fetching posts:', error);
       throw error;
     }
   }
 
-  // Public blog endpoints
-  async getPosts(params = {}) {
-    const queryString = new URLSearchParams(params).toString();
-    const endpoint = queryString ? `/blog/posts?${queryString}` : '/blog/posts';
-    return this.request(endpoint);
-  }
+  async getPostBySlug(slug) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/blog/posts/${slug}`);
 
-  async getPost(slug) {
-    return this.request(`/blog/posts/${slug}`);
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error('Post not found');
+        }
+        throw new Error(`Failed to fetch post: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching post:', error);
+      throw error;
+    }
   }
 
   async getTags() {
-    return this.request('/blog/tags');
-  }
+    try {
+      const response = await fetch(`${API_BASE_URL}/blog/tags`);
 
-  // Admin endpoints
-  async login(email, password) {
-    const response = await this.request('/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
-    });
+      if (!response.ok) {
+        throw new Error(`Failed to fetch tags: ${response.status}`);
+      }
 
-    if (response.token) {
-      localStorage.setItem('authToken', response.token);
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching tags:', error);
+      throw error;
     }
-
-    return response;
   }
 
-  async logout() {
-    localStorage.removeItem('authToken');
+  // Admin functions (require authentication)
+  async getAdminPosts(token, params = {}) {
+    try {
+      const queryParams = new URLSearchParams();
+
+      if (params.limit) queryParams.append('limit', params.limit);
+      if (params.offset) queryParams.append('offset', params.offset);
+
+      const response = await fetch(`${API_BASE_URL}/blog/admin/posts?${queryParams}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch admin posts: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching admin posts:', error);
+      throw error;
+    }
+  }
+
+  async createPost(token, postData) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/blog/admin/posts`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to create post: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error creating post:', error);
+      throw error;
+    }
+  }
+
+  async updatePost(token, postId, postData) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/blog/admin/posts/${postId}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to update post: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error updating post:', error);
+      throw error;
+    }
+  }
+
+  async deletePost(token, postId) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/blog/admin/posts/${postId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete post: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      throw error;
+    }
+  }
+
+  // Authentication functions
+  async login(credentials) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Login failed: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error logging in:', error);
+      throw error;
+    }
   }
 
   async verifyToken() {
-    return this.request('/auth/verify');
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        throw new Error('No token found');
+      }
+
+      const response = await fetch(`${API_BASE_URL}/auth/verify`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Token verification failed: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error verifying token:', error);
+      localStorage.removeItem('authToken'); // Remove invalid token
+      throw error;
+    }
   }
 
-  async getAdminPosts() {
-    return this.request('/blog/admin/posts');
-  }
+  async register(userData) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      });
 
-  async getAdminPost(id) {
-    return this.request(`/blog/admin/posts/${id}`);
-  }
+      if (!response.ok) {
+        throw new Error(`Registration failed: ${response.status}`);
+      }
 
-  async createPost(postData) {
-    return this.request('/blog/admin/posts', {
-      method: 'POST',
-      body: JSON.stringify(postData),
-    });
-  }
-
-  async updatePost(id, postData) {
-    return this.request(`/blog/admin/posts/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify(postData),
-    });
-  }
-
-  async deletePost(id) {
-    return this.request(`/blog/admin/posts/${id}`, {
-      method: 'DELETE',
-    });
-  }
-
-  // Sitemap submission endpoints
-  async submitSitemap() {
-    return this.request('/sitemap/submit', {
-      method: 'POST',
-    });
-  }
-
-  async submitSitemapWithRetry() {
-    return this.request('/sitemap/submit-with-retry', {
-      method: 'POST',
-    });
-  }
-
-  async getSitemapHealth() {
-    return this.request('/sitemap/health');
+      return await response.json();
+    } catch (error) {
+      console.error('Error registering:', error);
+      throw error;
+    }
   }
 }
 
-export default new BlogAPI();
+const blogAPI = new BlogAPI();
+export default blogAPI;
