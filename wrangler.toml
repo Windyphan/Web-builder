@@ -2,6 +2,7 @@
 name = "the-innovation-curve"
 main = "server/api/index.js"
 compatibility_date = "2025-08-07"
+compatibility_flags = ["nodejs_compat"]
 
 [vars]
 NODE_ENV = "production"
