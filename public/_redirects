@@ -3,9 +3,6 @@
 /favicon.ico         /favicon.ico          200
 /vite.svg           /vite.svg             200
 
-# Dynamic sitemap from API
-/sitemap.xml        https://web-builder-five-rust.vercel.app/sitemap.xml    200
-
 # Main application routes - serve index.html for SPA routing
 /about              /index.html           200
 /portfolio          /index.html           200

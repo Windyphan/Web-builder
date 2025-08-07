@@ -8,6 +8,7 @@ import Contact from './pages/Contact';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import BlogAdmin from './pages/BlogAdmin';
+import Sitemap from './pages/Sitemap';
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                         <Route path="/blog" element={<Blog />} />
                         <Route path="/blog/:slug" element={<BlogPost />} />
                         <Route path="/admin/blog" element={<BlogAdmin />} />
+                        <Route path="/sitemap.xml" element={<Sitemap />} />
                     </Routes>
                 </div>
             </Router>
