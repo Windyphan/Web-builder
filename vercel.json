@@ -14,8 +14,6 @@
     }
   ],
   "env": {
-    "NODE_ENV": "production"
-  },
-  "regions": ["lhr1"]
+    "VITE_API_URL": "https://web-builder-five-rust.vercel.app/api"
+  }
 }
-
