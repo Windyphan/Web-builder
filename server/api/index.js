@@ -52,48 +52,51 @@ app.use(limiter);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Initialize database (only once)
+// Initialize database at module level (outside request handling)
 let dbInitialized = false;
+let dbInitPromise = null;
+
 const initDB = async () => {
-  if (!dbInitialized) {
-    await initDatabase();
-    dbInitialized = true;
+  if (!dbInitialized && !dbInitPromise) {
+    dbInitPromise = initDatabase().then(() => {
+      dbInitialized = true;
+      dbInitPromise = null;
+    });
+  }
+  if (dbInitPromise) {
+    await dbInitPromise;
   }
 };
 
+// Initialize database immediately when module loads
+initDB().catch(console.error);
+
 // Routes
-app.use('/api/auth', async (req, res, next) => {
-  await initDB();
-  next();
-}, authRoutes);
-
-app.use('/api/blog', async (req, res, next) => {
-  await initDB();
-  next();
-}, blogRoutes);
-
-// Sitemap routes
-app.use('/', async (req, res, next) => {
-  await initDB();
-  next();
-}, sitemapRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/blog', blogRoutes);
+app.use('/', sitemapRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+  res.json({
+    status: 'OK',
+    timestamp: new Date().toISOString(),
+    dbInitialized: dbInitialized
+  });
 });
 
 // Root route
 app.get('/', (req, res) => {
   res.json({
-    message: 'The Innovation Curve Blog API - Working from Server Directory!',
+    message: 'The Innovation Curve Blog API - Optimized!',
     endpoints: {
       health: '/api/health',
       auth: '/api/auth',
       blog: '/api/blog',
       sitemap: '/sitemap.xml'
     },
-    status: 'serverless function is working correctly'
+    status: 'serverless function optimized for performance',
+    dbReady: dbInitialized
   });
 });
 
