@@ -19,7 +19,7 @@ const BlogPost = () => {
         const fetchPost = async () => {
             try {
                 setLoading(true);
-                const postData = await blogAPI.getPost(slug);
+                const postData = await blogAPI.getPostBySlug(slug);
                 setPost(postData);
             } catch (err) {
                 console.error('Error fetching post:', err);
