@@ -9,12 +9,6 @@ JWT_SECRET = "c270cc4a3a6a39ad40f60242a60e9e26a07e730bc15e56f4d81f4a2f9f7d930ffd
 ADMIN_EMAIL = "info@theinnovativcurve.com"
 ADMIN_PASSWORD = "TIC2025!@BlogAdmin#SecurePass789$"
 
-# D1 Database configuration (for future use if you want to migrate from SQLite)
-[[d1_databases]]
-binding = "DB"
-database_name = "blog-database"
-# database_id will be generated when you create the D1 database
-
 [env.development]
 [env.development.vars]
 NODE_ENV = "development"
