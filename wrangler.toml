@@ -20,11 +20,6 @@ run_worker_first = [
 command = "npm run build"
 publish = "dist"
 
-# Cloudflare KV binding for user sessions (OAuth functionality)
-[[kv_namespaces]]
-binding = "SESSIONS_KV"
-id = "your-kv-namespace-id"  # Replace with actual KV namespace ID when setting up OAuth
-
 [vars]
 # Frontend environment variables
 VITE_API_URL = "https://web-builder-five-rust.vercel.app/api"
