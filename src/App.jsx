@@ -16,9 +16,18 @@ const RouteDebugger = () => {
     const location = useLocation();
 
     useEffect(() => {
+        console.log('=== ROUTE DEBUG ===');
         console.log('Current route:', location.pathname);
         console.log('Search params:', location.search);
         console.log('Hash:', location.hash);
+        console.log('Full URL:', window.location.href);
+        console.log('API URL:', import.meta.env.VITE_API_URL);
+        console.log('===================');
+
+        // Log when route changes
+        return () => {
+            console.log('Route changing from:', location.pathname);
+        };
     }, [location]);
 
     return null;

@@ -85,6 +85,18 @@ const BlogPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // Debug logging for Blog component
+    useEffect(() => {
+        console.log('=== BLOG COMPONENT DEBUG ===');
+        console.log('Blog component mounted');
+        console.log('API URL:', import.meta.env.VITE_API_URL);
+        console.log('==============================');
+
+        return () => {
+            console.log('Blog component unmounting');
+        };
+    }, []);
+
     // Fetch posts and tags on component mount
     useEffect(() => {
         const fetchData = async () => {
