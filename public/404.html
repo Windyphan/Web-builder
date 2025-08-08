@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <style>
+        body { margin: 0; padding: 0; background: #f9fafb; }
+        .loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="loader">Loading...</div>
+    <script>
+        // Simple client-side routing fallback
+        const currentPath = window.location.pathname;
+
+        // If we're not on the home page and this isn't a file request
+        if (currentPath !== '/' && !currentPath.includes('.')) {
+            // Redirect to home page with the path as a hash
+            window.location.replace('/#' + currentPath);
+        }
+    </script>
+</body>
+</html>
+
