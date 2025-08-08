@@ -1,9 +1,0 @@
-# Simple configuration for hash routing
-# Just serve static files normally, everything else gets index.html
-/assets/* /assets/:splat 200
-/favicon.ico /favicon.ico 200
-/vite.svg /vite.svg 200
-/robots.txt /robots.txt 200
-/sitemap.xml /sitemap.xml 200
-/googlec04985f57c64ab4e.html /googlec04985f57c64ab4e.html 200
-
