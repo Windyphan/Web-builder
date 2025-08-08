@@ -80,10 +80,10 @@ ${allUrls.map(url => `    <url>
 
     // Set appropriate headers for XML sitemap
     res.set({
-      'Content-Type': 'application/xml',
-      'Cache-Control': 'no-cache, no-store, must-revalidate',
-      'Pragma': 'no-cache',
-      'Expires': '0'
+      'Content-Type': 'application/xml; charset=utf-8',
+      'X-Content-Type-Options': 'nosniff',
+      'Cache-Control': 'public, max-age=3600', // Cache for 1 hour
+      'Pragma': 'public'
     });
 
     res.send(sitemap);
