@@ -2,7 +2,6 @@
 name = "the-innovation-curve"
 main = "worker-backend.js"
 compatibility_date = "2025-08-08"
-compatibility_flags = ["assets_navigation_prefers_asset_serving"]
 
 # SPA Assets configuration
 [assets]
