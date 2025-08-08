@@ -1,9 +1,18 @@
-# Cloudflare Pages deployment configuration for frontend only
+# Cloudflare Workers deployment configuration for SPA
 name = "the-innovation-curve"
-compatibility_date = "2025-08-07"
+main = "worker-backend.js"
+compatibility_date = "2025-08-08"
 
-# Remove the main entry point since we're deploying the frontend
-# main = "server/api/index.js"  # Commented out
+# SPA Assets configuration with advanced routing control
+[assets]
+directory = "./dist/"
+not_found_handling = "single-page-application"
+binding = "ASSETS"
+run_worker_first = [
+  "/api/*",           # All API routes go to Worker first
+  "/auth/callback",   # Authentication callback goes to Worker
+  "!/api/docs/*"      # Exclude API docs (if you add them later)
+]
 
 # Frontend build configuration
 [build]
@@ -11,7 +20,7 @@ command = "npm run build"
 publish = "dist"
 
 [vars]
-# Only frontend environment variables
+# Frontend environment variables
 VITE_API_URL = "https://web-builder-five-rust.vercel.app/api"
 
 [env.development]
