@@ -345,6 +345,10 @@ router.delete('/admin/posts/:id', authenticateToken, requireAdmin, async (req, r
   try {
     const { id } = req.params;
 
+    // First delete tag associations to avoid foreign key constraint errors
+    await sql`DELETE FROM blog_post_tags WHERE post_id = ${id}`;
+
+    // Then delete the blog post
     const result = await sql`DELETE FROM blog_posts WHERE id = ${id}`;
 
     if (result.rowCount === 0) {

@@ -106,28 +106,13 @@ ${allUrls.map(url => `    <url>
 router.post('/submit', async (req, res) => {
   try {
     const sitemapUrl = 'https://www.theinnovationcurve.com/sitemap.xml';
-    const results = { google: false, bing: false, errors: [] };
+    const results = { bing: false, errors: [] };
 
-    // Submit to Google Search Console
-    try {
-      const googlePingUrl = `https://www.google.com/ping?sitemap=${encodeURIComponent(sitemapUrl)}`;
-      const googleResponse = await fetch(googlePingUrl, {
-        method: 'GET',
-        headers: {
-          'User-Agent': 'The Innovation Curve Blog Bot 1.0'
-        },
-        timeout: 10000
-      });
+    // Note: Google discontinued their ping service.
+    // Modern approach: Ensure sitemap is listed in robots.txt and let Google discover it naturally
+    // Or use Google Search Console API with proper authentication
 
-      results.google = googleResponse.ok;
-      if (!googleResponse.ok) {
-        results.errors.push(`Google submission failed: ${googleResponse.status} ${googleResponse.statusText}`);
-      }
-    } catch (googleError) {
-      results.errors.push(`Google submission error: ${googleError.message}`);
-    }
-
-    // Submit to Bing Webmaster Tools
+    // Submit to Bing Webmaster Tools (still works)
     try {
       const bingPingUrl = `https://www.bing.com/ping?sitemap=${encodeURIComponent(sitemapUrl)}`;
       const bingResponse = await fetch(bingPingUrl, {
@@ -147,14 +132,14 @@ router.post('/submit', async (req, res) => {
     }
 
     // Log submission attempt
-    console.log(`Sitemap submission attempt - Google: ${results.google ? 'SUCCESS' : 'FAILED'}, Bing: ${results.bing ? 'SUCCESS' : 'FAILED'}`);
+    console.log(`Sitemap submission attempt - Bing: ${results.bing ? 'SUCCESS' : 'FAILED'}`);
 
     res.json({
-      success: results.google || results.bing,
-      message: 'Sitemap submission completed',
+      success: results.bing,
+      message: 'Sitemap submission completed (Google ping service deprecated, using natural discovery)',
       details: {
         sitemap: sitemapUrl,
-        google: results.google,
+        google: 'disabled (ping service deprecated)',
         bing: results.bing,
         timestamp: new Date().toISOString(),
         errors: results.errors
@@ -177,24 +162,17 @@ async function autoSubmitSitemap(maxRetries = 3) {
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      console.log(`Automatic sitemap submission attempt ${attempt}/${maxRetries}`);
+      console.log(`Automatic sitemap submission attempt ${attempt}/${maxRetries} (Bing only - Google ping deprecated)`);
 
-      // Submit to Google
-      const googleResponse = await fetch(`https://www.google.com/ping?sitemap=${encodeURIComponent(sitemapUrl)}`, {
-        method: 'GET',
-        headers: { 'User-Agent': 'The Innovation Curve Blog Bot 1.0' },
-        timeout: 10000
-      });
-
-      // Submit to Bing
+      // Submit to Bing (Google ping service is deprecated)
       const bingResponse = await fetch(`https://www.bing.com/ping?sitemap=${encodeURIComponent(sitemapUrl)}`, {
         method: 'GET',
         headers: { 'User-Agent': 'The Innovation Curve Blog Bot 1.0' },
         timeout: 10000
       });
 
-      if (googleResponse.ok || bingResponse.ok) {
-        console.log(`✅ Sitemap submitted successfully on attempt ${attempt}`);
+      if (bingResponse.ok) {
+        console.log(`✅ Sitemap submitted to Bing successfully on attempt ${attempt}`);
         return true;
       }
 
