@@ -110,6 +110,11 @@ const BlogPage = () => {
 
     // Filter posts based on search and tag
     const filteredPosts = useMemo(() => {
+        // Ensure posts is always an array before filtering
+        if (!Array.isArray(posts)) {
+            return [];
+        }
+
         return posts.filter(post => {
             const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                                 post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
