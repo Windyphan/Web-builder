@@ -57,113 +57,29 @@ class BlogAPI {
     }
   }
 
-  // Admin functions (require authentication)
-  async getAdminPosts(token, params = {}) {
-    try {
-      const queryParams = new URLSearchParams();
-
-      if (params.limit) queryParams.append('limit', params.limit);
-      if (params.offset) queryParams.append('offset', params.offset);
-
-      const response = await fetch(`${API_BASE_URL}/blog/admin/posts?${queryParams}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch admin posts: ${response.status}`);
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching admin posts:', error);
-      throw error;
-    }
-  }
-
-  async createPost(token, postData) {
-    try {
-      const response = await fetch(`${API_BASE_URL}/blog/admin/posts`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(postData)
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to create post: ${response.status}`);
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error('Error creating post:', error);
-      throw error;
-    }
-  }
-
-  async updatePost(token, postId, postData) {
-    try {
-      const response = await fetch(`${API_BASE_URL}/blog/admin/posts/${postId}`, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(postData)
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to update post: ${response.status}`);
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error('Error updating post:', error);
-      throw error;
-    }
-  }
-
-  async deletePost(token, postId) {
-    try {
-      const response = await fetch(`${API_BASE_URL}/blog/admin/posts/${postId}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to delete post: ${response.status}`);
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error('Error deleting post:', error);
-      throw error;
-    }
-  }
-
   // Authentication functions
-  async login(credentials) {
+  async login(email, password) {
     try {
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(credentials)
+        body: JSON.stringify({ email, password })
       });
 
       if (!response.ok) {
         throw new Error(`Login failed: ${response.status}`);
       }
 
-      return await response.json();
+      const data = await response.json();
+
+      // Store the token in localStorage
+      if (data.token) {
+        localStorage.setItem('authToken', data.token);
+      }
+
+      return data;
     } catch (error) {
       console.error('Error logging in:', error);
       throw error;
@@ -197,23 +113,142 @@ class BlogAPI {
     }
   }
 
-  async register(userData) {
+  logout() {
+    localStorage.removeItem('authToken');
+  }
+
+  // Admin functions (automatically use stored token)
+  async getAdminPosts(params = {}) {
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/register`, {
-        method: 'POST',
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+
+      const queryParams = new URLSearchParams();
+      if (params.limit) queryParams.append('limit', params.limit);
+      if (params.offset) queryParams.append('offset', params.offset);
+
+      const response = await fetch(`${API_BASE_URL}/blog/admin/posts?${queryParams}`, {
         headers: {
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
+        }
       });
 
       if (!response.ok) {
-        throw new Error(`Registration failed: ${response.status}`);
+        throw new Error(`Failed to fetch admin posts: ${response.status}`);
       }
 
       return await response.json();
     } catch (error) {
-      console.error('Error registering:', error);
+      console.error('Error fetching admin posts:', error);
+      throw error;
+    }
+  }
+
+  async createPost(postData) {
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+
+      const response = await fetch(`${API_BASE_URL}/blog/admin/posts`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to create post: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error creating post:', error);
+      throw error;
+    }
+  }
+
+  async updatePost(postId, postData) {
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+
+      const response = await fetch(`${API_BASE_URL}/blog/admin/posts/${postId}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to update post: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error updating post:', error);
+      throw error;
+    }
+  }
+
+  async deletePost(postId) {
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+
+      const response = await fetch(`${API_BASE_URL}/blog/admin/posts/${postId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete post: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      throw error;
+    }
+  }
+
+  async submitSitemap() {
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+
+      const response = await fetch(`${API_BASE_URL}/sitemap/submit`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to submit sitemap: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error submitting sitemap:', error);
       throw error;
     }
   }
