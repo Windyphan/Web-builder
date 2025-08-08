@@ -42,6 +42,118 @@ app.get('/api/blog', async (c) => {
   }
 })
 
+// Sitemap route - serve XML sitemap
+app.get('/sitemap.xml', async (c) => {
+  try {
+    const currentDate = new Date().toISOString().split('T')[0];
+
+    // Fetch blog posts for dynamic sitemap
+    let blogPosts = [];
+    try {
+      const response = await fetch(`${c.env.VITE_API_URL || 'https://web-builder-five-rust.vercel.app/api'}/blog/posts`, {
+        headers: { 'User-Agent': 'Cloudflare Worker Sitemap Generator' }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        blogPosts = data.posts || [];
+      }
+    } catch (blogError) {
+      console.error('Error fetching blog posts for sitemap:', blogError);
+    }
+
+    // Static pages
+    const staticUrls = [
+      {
+        loc: 'https://www.theinnovationcurve.com/',
+        lastmod: currentDate,
+        changefreq: 'weekly',
+        priority: '1.0'
+      },
+      {
+        loc: 'https://www.theinnovationcurve.com/about',
+        lastmod: currentDate,
+        changefreq: 'monthly',
+        priority: '0.8'
+      },
+      {
+        loc: 'https://www.theinnovationcurve.com/blog',
+        lastmod: currentDate,
+        changefreq: 'weekly',
+        priority: '0.9'
+      },
+      {
+        loc: 'https://www.theinnovationcurve.com/pricing',
+        lastmod: currentDate,
+        changefreq: 'monthly',
+        priority: '0.8'
+      },
+      {
+        loc: 'https://www.theinnovationcurve.com/portfolio',
+        lastmod: currentDate,
+        changefreq: 'monthly',
+        priority: '0.7'
+      },
+      {
+        loc: 'https://www.theinnovationcurve.com/contact',
+        lastmod: currentDate,
+        changefreq: 'monthly',
+        priority: '0.6'
+      }
+    ];
+
+    // Dynamic blog post URLs
+    const blogUrls = blogPosts.map(post => ({
+      loc: `https://www.theinnovationcurve.com/blog/${post.slug}`,
+      lastmod: new Date(post.updated_at || post.created_at).toISOString().split('T')[0],
+      changefreq: 'monthly',
+      priority: '0.7'
+    }));
+
+    // Combine all URLs
+    const allUrls = [...staticUrls, ...blogUrls];
+
+    // Generate XML sitemap
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${allUrls.map(url => `    <url>
+        <loc>${url.loc}</loc>
+        <lastmod>${url.lastmod}</lastmod>
+        <changefreq>${url.changefreq}</changefreq>
+        <priority>${url.priority}</priority>
+    </url>`).join('\n')}
+</urlset>`;
+
+    return new Response(sitemap, {
+      headers: {
+        'Content-Type': 'application/xml; charset=utf-8',
+        'Cache-Control': 'public, max-age=3600',
+        'X-Content-Type-Options': 'nosniff'
+      }
+    });
+
+  } catch (error) {
+    console.error('Error generating sitemap:', error);
+
+    // Fallback sitemap with just the homepage
+    const fallbackSitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://www.theinnovationcurve.com/</loc>
+        <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+</urlset>`;
+
+    return new Response(fallbackSitemap, {
+      headers: {
+        'Content-Type': 'application/xml; charset=utf-8',
+        'Cache-Control': 'public, max-age=3600'
+      }
+    });
+  }
+})
+
 // Auth routes placeholder
 app.post('/api/auth/login', async (c) => {
   // Implement authentication with Cloudflare Workers
@@ -248,120 +360,6 @@ app.get('/auth/callback', async (c) => {
     `, 500);
   }
 })
-
-// Sitemap endpoint - serves dynamic XML sitemap
-app.get('/sitemap.xml', async (c) => {
-  try {
-    const currentDate = new Date().toISOString().split('T')[0];
-
-    // Static pages for your site
-    const staticUrls = [
-      {
-        loc: 'https://www.theinnovationcurve.com/',
-        lastmod: currentDate,
-        changefreq: 'weekly',
-        priority: '1.0'
-      },
-      {
-        loc: 'https://www.theinnovationcurve.com/about',
-        lastmod: currentDate,
-        changefreq: 'monthly',
-        priority: '0.8'
-      },
-      {
-        loc: 'https://www.theinnovationcurve.com/blog',
-        lastmod: currentDate,
-        changefreq: 'weekly',
-        priority: '0.9'
-      },
-      {
-        loc: 'https://www.theinnovationcurve.com/pricing',
-        lastmod: currentDate,
-        changefreq: 'monthly',
-        priority: '0.8'
-      },
-      {
-        loc: 'https://www.theinnovationcurve.com/portfolio',
-        lastmod: currentDate,
-        changefreq: 'monthly',
-        priority: '0.7'
-      },
-      {
-        loc: 'https://www.theinnovationcurve.com/contact',
-        lastmod: currentDate,
-        changefreq: 'monthly',
-        priority: '0.6'
-      }
-    ];
-
-    // Fetch blog posts from Neon DB via Vercel backend API
-    let blogUrls = [];
-    try {
-      const response = await fetch(`https://web-builder-five-rust.vercel.app/api/blog/posts`, {
-        headers: {
-          'User-Agent': 'Cloudflare Worker Sitemap Generator'
-        }
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const posts = data.posts || [];
-
-        blogUrls = posts.map(post => ({
-          loc: `https://www.theinnovationcurve.com/blog/${post.slug}`,
-          lastmod: new Date(post.updated_at || post.created_at).toISOString().split('T')[0],
-          changefreq: 'monthly',
-          priority: '0.7'
-        }));
-      }
-    } catch (dbError) {
-      console.warn('Failed to fetch blog posts from Neon DB via API:', dbError);
-      // Continue with empty blog URLs array if API fails
-    }
-
-    // Combine all URLs
-    const allUrls = [...staticUrls, ...blogUrls];
-
-    // Generate proper XML sitemap
-    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${allUrls.map(url => `    <url>
-        <loc>${url.loc}</loc>
-        <lastmod>${url.lastmod}</lastmod>
-        <changefreq>${url.changefreq}</changefreq>
-        <priority>${url.priority}</priority>
-    </url>`).join('\n')}
-</urlset>`;
-
-    // Set proper XML headers
-    return new Response(sitemap, {
-      headers: {
-        'Content-Type': 'application/xml; charset=utf-8',
-        'Cache-Control': 'public, max-age=3600', // Cache for 1 hour
-      }
-    });
-
-  } catch (error) {
-    console.error('Error generating sitemap:', error);
-
-    // Return minimal sitemap on error
-    const fallbackSitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <url>
-        <loc>https://www.theinnovationcurve.com/</loc>
-        <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-</urlset>`;
-
-    return new Response(fallbackSitemap, {
-      headers: {
-        'Content-Type': 'application/xml; charset=utf-8',
-      }
-    });
-  }
-});
 
 // Helper function: Exchange OAuth code for tokens
 async function exchangeCodeForTokens(code, state, env) {
