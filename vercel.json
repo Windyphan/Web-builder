@@ -5,15 +5,11 @@
   "installCommand": "npm install",
   "rewrites": [
     {
-      "source": "/sitemap.xml",
-      "destination": "https://web-builder-five-rust.vercel.app/sitemap.xml"
-    },
-    {
       "source": "/api/(.*)",
       "destination": "https://web-builder-five-rust.vercel.app/api/$1"
     },
     {
-      "source": "/((?!api|sitemap.xml).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ],
