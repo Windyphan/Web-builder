@@ -21,6 +21,9 @@ const RouteDebugger = () => {
         console.log('Search params:', location.search);
         console.log('Hash:', location.hash);
         console.log('Full URL:', window.location.href);
+        console.log('Document URL:', document.URL);
+        console.log('Location href:', location.href);
+        console.log('History length:', window.history.length);
         console.log('API URL:', import.meta.env.VITE_API_URL);
         console.log('===================');
 
@@ -29,6 +32,12 @@ const RouteDebugger = () => {
             console.log('Route changing from:', location.pathname);
         };
     }, [location]);
+
+    // Also log immediately when component mounts
+    useEffect(() => {
+        console.log('⚠️ RouteDebugger mounted with initial URL:', window.location.href);
+        console.log('⚠️ Initial pathname:', window.location.pathname);
+    }, []);
 
     return null;
 };
