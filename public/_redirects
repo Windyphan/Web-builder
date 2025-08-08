@@ -1,7 +1,4 @@
-# Proxy API calls to backend
-/api/* https://web-builder-five-rust.vercel.app/api/:splat 200
-
-# Exact route matches for SPA pages
+# SPA routes - serve index.html for client-side routing
 /about /index.html 200
 /portfolio /index.html 200
 /pricing /index.html 200
@@ -10,6 +7,4 @@
 /admin/blog /index.html 200
 
 # Blog post routes with specific pattern
-/blog/welcome-to-the-innovation-curve-blog /index.html 200
-/blog/how-to-build-modern-websites /index.html 200
-/blog/web-development-trends-2024 /index.html 200
+/blog/* /index.html 200
