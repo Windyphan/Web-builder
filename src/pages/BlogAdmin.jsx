@@ -23,7 +23,7 @@ const BlogAdmin = () => {
         title: '',
         excerpt: '',
         content: '',
-        author: 'The Innovation Curve Team',
+        author: 'Phong Minh Phan',
         featured: false,
         published: true,
         tags: []
@@ -153,7 +153,7 @@ const BlogAdmin = () => {
             title: '',
             excerpt: '',
             content: '',
-            author: 'The Innovation Curve Team',
+            author: 'Phong Minh Phan',
             featured: false,
             published: true,
             tags: []
@@ -493,6 +493,18 @@ const BlogAdmin = () => {
                                     value={postForm.excerpt}
                                     onChange={(e) => setPostForm({...postForm, excerpt: e.target.value})}
                                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg focus:ring-2 focus:ring-primary-500 h-20"
+                                    required
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium mb-2">Author</label>
+                                <input
+                                    type="text"
+                                    value={postForm.author}
+                                    onChange={(e) => setPostForm({...postForm, author: e.target.value})}
+                                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg focus:ring-2 focus:ring-primary-500"
+                                    placeholder="Who wrote this post?"
                                     required
                                 />
                             </div>
