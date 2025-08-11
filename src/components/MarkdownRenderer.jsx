@@ -38,6 +38,30 @@ const MarkdownRenderer = ({ content, className = "" }) => {
                     );
                 }
 
+                // Handle images as standalone elements
+                if (paragraph.match(/^!\[.*\]\(.*\)$/)) {
+                    const match = paragraph.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+                    if (match) {
+                        const [, alt, src] = match;
+                        return (
+                            <div key={index} className="my-6">
+                                <img
+                                    src={src}
+                                    alt={alt}
+                                    className="max-w-full h-auto rounded-lg shadow-lg mx-auto"
+                                    onError={(e) => {
+                                        e.target.style.display = 'none';
+                                        const errorDiv = document.createElement('div');
+                                        errorDiv.className = 'text-red-500 text-sm italic text-center p-4 bg-red-50 dark:bg-red-900/20 rounded-lg';
+                                        errorDiv.textContent = `Failed to load image: ${alt || 'Image'}`;
+                                        e.target.parentNode.appendChild(errorDiv);
+                                    }}
+                                />
+                            </div>
+                        );
+                    }
+                }
+
                 // Handle blockquotes
                 if (paragraph.startsWith('> ')) {
                     const quote = paragraph.replace(/^> /gm, '');
