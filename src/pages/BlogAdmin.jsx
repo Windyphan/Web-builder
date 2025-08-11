@@ -584,8 +584,8 @@ const BlogAdmin = () => {
                                         </div>
                                     )}
 
-                                    <div className={`${showPreview ? 'grid grid-cols-2 gap-4' : 'flex'} ${isFullscreen ? 'flex-1 min-h-0' : ''}`}>
-                                        <div className="flex flex-col">
+                                    <div className={`${showPreview ? 'grid grid-cols-2 gap-4' : 'flex flex-col'} ${isFullscreen ? 'flex-1 min-h-0' : ''}`}>
+                                        <div className={`flex flex-col ${!showPreview ? 'w-full' : ''}`}>
                                             {showPreview && (
                                                 <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 flex-shrink-0">
                                                     Editor
