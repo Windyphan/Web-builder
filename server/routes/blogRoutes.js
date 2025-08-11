@@ -11,7 +11,12 @@ router.get('/posts', async (req, res) => {
   try {
     const { search, tag, featured, limit = 20, offset = 0 } = req.query;
 
-    let baseQuery = `
+    // SECURITY FIX: Input validation and sanitization
+    const validatedLimit = Math.min(Math.max(parseInt(limit) || 20, 1), 100); // Max 100 posts
+    const validatedOffset = Math.max(parseInt(offset) || 0, 0);
+
+    // Base query using parameterized queries
+    let query = `
       SELECT DISTINCT 
         p.id, p.title, p.slug, p.excerpt, p.author, p.featured, 
         p.created_at, p.updated_at, p.image_url,
@@ -22,37 +27,35 @@ router.get('/posts', async (req, res) => {
       WHERE p.published = true
     `;
 
-    const conditions = [];
-    const params = [];
+    const queryParams = [];
     let paramIndex = 1;
 
-    if (search) {
-      conditions.push(`(p.title ILIKE $${paramIndex} OR p.excerpt ILIKE $${paramIndex + 1} OR p.content ILIKE $${paramIndex + 2})`);
-      params.push(`%${search}%`, `%${search}%`, `%${search}%`);
+    // SECURITY FIX: Use parameterized queries to prevent SQL injection
+    if (search && typeof search === 'string' && search.trim()) {
+      const searchTerm = `%${search.trim()}%`;
+      query += ` AND (p.title ILIKE $${paramIndex} OR p.excerpt ILIKE $${paramIndex + 1} OR p.content ILIKE $${paramIndex + 2})`;
+      queryParams.push(searchTerm, searchTerm, searchTerm);
       paramIndex += 3;
     }
 
-    if (tag) {
-      conditions.push(`t.name = $${paramIndex}`);
-      params.push(tag);
+    if (tag && typeof tag === 'string' && tag.trim()) {
+      query += ` AND t.name = $${paramIndex}`;
+      queryParams.push(tag.trim());
       paramIndex++;
     }
 
     if (featured === 'true') {
-      conditions.push('p.featured = true');
+      query += ` AND p.featured = true`;
     }
 
-    if (conditions.length > 0) {
-      baseQuery += ' AND ' + conditions.join(' AND ');
-    }
+    query += ` GROUP BY p.id, p.title, p.slug, p.excerpt, p.author, p.featured, p.created_at, p.updated_at, p.image_url 
+               ORDER BY p.created_at DESC 
+               LIMIT $${paramIndex} OFFSET $${paramIndex + 1}`;
 
-    baseQuery += ` GROUP BY p.id, p.title, p.slug, p.excerpt, p.author, p.featured, p.created_at, p.updated_at, p.image_url 
-                   ORDER BY p.created_at DESC 
-                   LIMIT $${paramIndex} OFFSET $${paramIndex + 1}`;
+    queryParams.push(validatedLimit, validatedOffset);
 
-    params.push(parseInt(limit), parseInt(offset));
-
-    const result = await sql.query(baseQuery, params);
+    // Execute the secure parameterized query
+    const result = await sql.query(query, queryParams);
     const posts = result.rows;
 
     // Calculate read time for each post
@@ -67,9 +70,9 @@ router.get('/posts', async (req, res) => {
     res.json({
       posts: postsWithReadTime,
       pagination: {
-        limit: parseInt(limit),
-        offset: parseInt(offset),
-        hasMore: posts.length === parseInt(limit)
+        limit: validatedLimit,
+        offset: validatedOffset,
+        hasMore: posts.length === validatedLimit
       }
     });
   } catch (error) {
