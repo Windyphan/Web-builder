@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FiPlus, FiEdit2, FiTrash2, FiEye, FiLogOut, FiSave, FiX } from 'react-icons/fi';
+import { FiPlus, FiEdit2, FiTrash2, FiEye, FiLogOut, FiSave, FiX, FiEyeOff, FiMaximize2, FiMinimize2, FiBold, FiItalic, FiCode, FiList, FiLink, FiImage } from 'react-icons/fi';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import MarkdownRenderer from '../components/MarkdownRenderer';
 import { useTheme } from '../contexts/ThemeContext';
 import blogAPI from '../utils/blogAPI';
 
@@ -27,6 +28,9 @@ const BlogAdmin = () => {
         published: true,
         tags: []
     });
+    const [showPreview, setShowPreview] = useState(false);
+    const [previewMode, setPreviewMode] = useState('split'); // 'split', 'preview-only', 'edit-only'
+    const [isFullscreen, setIsFullscreen] = useState(false);
 
     useEffect(() => {
         checkAuth();
@@ -145,6 +149,40 @@ const BlogAdmin = () => {
         } finally {
             setSubmittingSitemap(false);
         }
+    };
+
+    const insertMarkdown = (before, after = '', placeholder = 'text') => {
+        const textarea = document.querySelector('textarea[name="content"]');
+        if (!textarea) return;
+
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const selectedText = postForm.content.substring(start, end);
+        const replacement = before + (selectedText || placeholder) + after;
+
+        const newContent = postForm.content.substring(0, start) + replacement + postForm.content.substring(end);
+        setPostForm({...postForm, content: newContent});
+
+        // Set cursor position
+        setTimeout(() => {
+            textarea.focus();
+            const newPosition = start + before.length + (selectedText || placeholder).length;
+            textarea.setSelectionRange(newPosition, newPosition);
+        }, 0);
+    };
+
+    const markdownButtons = [
+        { icon: FiBold, action: () => insertMarkdown('**', '**', 'bold text'), title: 'Bold' },
+        { icon: FiItalic, action: () => insertMarkdown('*', '*', 'italic text'), title: 'Italic' },
+        { icon: FiCode, action: () => insertMarkdown('`', '`', 'code'), title: 'Inline Code' },
+        { icon: FiList, action: () => insertMarkdown('- ', '', 'list item'), title: 'List' },
+        { icon: FiLink, action: () => insertMarkdown('[', '](url)', 'link text'), title: 'Link' },
+        { icon: FiImage, action: () => insertMarkdown('![', '](image-url)', 'alt text'), title: 'Image' },
+    ];
+
+    const insertHeading = (level) => {
+        const prefix = '#'.repeat(level) + ' ';
+        insertMarkdown(prefix, '', `Heading ${level}`);
     };
 
     if (showLoginModal) {
@@ -396,14 +434,122 @@ const BlogAdmin = () => {
                                 />
                             </div>
 
+                            {/* Enhanced Content Section with Preview */}
                             <div>
-                                <label className="block text-sm font-medium mb-2">Content (Markdown supported)</label>
-                                <textarea
-                                    value={postForm.content}
-                                    onChange={(e) => setPostForm({...postForm, content: e.target.value})}
-                                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg focus:ring-2 focus:ring-primary-500 h-64"
-                                    required
-                                />
+                                <div className="flex items-center justify-between mb-2">
+                                    <label className="block text-sm font-medium">Content (Markdown supported)</label>
+                                    <div className="flex items-center gap-2">
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPreview(!showPreview)}
+                                            className="flex items-center gap-1 px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                                        >
+                                            {showPreview ? <FiEyeOff size={14} /> : <FiEye size={14} />}
+                                            {showPreview ? 'Hide Preview' : 'Show Preview'}
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsFullscreen(!isFullscreen)}
+                                            className="flex items-center gap-1 px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                                        >
+                                            {isFullscreen ? <FiMinimize2 size={14} /> : <FiMaximize2 size={14} />}
+                                            {isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Markdown Toolbar */}
+                                <div className="flex flex-wrap gap-2 p-2 border border-gray-300 dark:border-gray-700 rounded-t-lg bg-gray-50 dark:bg-gray-800">
+                                    <div className="flex gap-1">
+                                        {[1, 2, 3].map(level => (
+                                            <button
+                                                key={level}
+                                                type="button"
+                                                onClick={() => insertHeading(level)}
+                                                className="px-2 py-1 text-xs bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+                                                title={`Heading ${level}`}
+                                            >
+                                                H{level}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <div className="w-px h-6 bg-gray-300 dark:bg-gray-600"></div>
+                                    <div className="flex gap-1">
+                                        {markdownButtons.map(({ icon: Icon, action, title }, index) => (
+                                            <button
+                                                key={index}
+                                                type="button"
+                                                onClick={action}
+                                                className="p-1.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+                                                title={title}
+                                            >
+                                                <Icon size={14} />
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <div className="w-px h-6 bg-gray-300 dark:bg-gray-600"></div>
+                                    <button
+                                        type="button"
+                                        onClick={() => insertMarkdown('```\n', '\n```', 'code block')}
+                                        className="px-2 py-1 text-xs bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+                                        title="Code Block"
+                                    >
+                                        Code Block
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => insertMarkdown('> ', '', 'quote')}
+                                        className="px-2 py-1 text-xs bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+                                        title="Quote"
+                                    >
+                                        Quote
+                                    </button>
+                                </div>
+
+                                {/* Content Editor with Preview */}
+                                <div className={`${isFullscreen ? 'fixed inset-0 z-50 bg-white dark:bg-gray-900 p-6' : ''}`}>
+                                    {isFullscreen && (
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-lg font-semibold">Content Editor</h3>
+                                            <button
+                                                type="button"
+                                                onClick={() => setIsFullscreen(false)}
+                                                className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg"
+                                            >
+                                                <FiX size={20} />
+                                            </button>
+                                        </div>
+                                    )}
+
+                                    <div className={`${showPreview ? 'grid grid-cols-2 gap-4' : ''} ${isFullscreen ? 'h-full' : ''}`}>
+                                        <div className="flex flex-col">
+                                            {showPreview && (
+                                                <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                                    Editor
+                                                </div>
+                                            )}
+                                            <textarea
+                                                name="content"
+                                                value={postForm.content}
+                                                onChange={(e) => setPostForm({...postForm, content: e.target.value})}
+                                                className={`w-full px-3 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 ${showPreview ? 'rounded-lg' : 'rounded-b-lg'} focus:ring-2 focus:ring-primary-500 font-mono text-sm ${isFullscreen ? 'h-full resize-none' : 'h-64'}`}
+                                                placeholder="Write your content in Markdown format..."
+                                                required
+                                            />
+                                        </div>
+
+                                        {showPreview && (
+                                            <div className="flex flex-col">
+                                                <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                                    Preview
+                                                </div>
+                                                <div className={`border border-gray-300 dark:border-gray-700 rounded-lg p-4 bg-white dark:bg-gray-800 overflow-y-auto ${isFullscreen ? 'h-full' : 'h-64'}`}>
+                                                    <MarkdownRenderer content={postForm.content} />
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
                             </div>
 
                             <div>

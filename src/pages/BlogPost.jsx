@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { FiArrowLeft, FiCalendar, FiClock, FiTag, FiShare2 } from 'react-icons/fi';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import MarkdownRenderer from '../components/MarkdownRenderer';
 import { useTheme } from '../contexts/ThemeContext';
 import blogAPI from '../utils/blogAPI';
 
@@ -52,81 +53,6 @@ const BlogPost = () => {
             navigator.clipboard.writeText(window.location.href);
             // You could show a notification here
         }
-    };
-
-    // Simple markdown-like rendering (you might want to use a proper markdown parser)
-    const renderContent = (content) => {
-        return content
-            .split('\n\n')
-            .map((paragraph, index) => {
-                // Handle headers
-                if (paragraph.startsWith('# ')) {
-                    return (
-                        <h1 key={index} className="text-3xl font-bold mt-8 mb-4 text-gray-900 dark:text-gray-100">
-                            {paragraph.replace('# ', '')}
-                        </h1>
-                    );
-                }
-                if (paragraph.startsWith('## ')) {
-                    return (
-                        <h2 key={index} className="text-2xl font-semibold mt-6 mb-3 text-gray-900 dark:text-gray-100">
-                            {paragraph.replace('## ', '')}
-                        </h2>
-                    );
-                }
-                if (paragraph.startsWith('### ')) {
-                    return (
-                        <h3 key={index} className="text-xl font-semibold mt-4 mb-2 text-gray-900 dark:text-gray-100">
-                            {paragraph.replace('### ', '')}
-                        </h3>
-                    );
-                }
-
-                // Handle code blocks
-                if (paragraph.startsWith('```')) {
-                    const lines = paragraph.split('\n');
-                    const language = lines[0].replace('```', '');
-                    const code = lines.slice(1, -1).join('\n');
-                    return (
-                        <div key={index} className="my-4">
-                            <pre className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 overflow-x-auto">
-                                <code className="text-sm text-gray-800 dark:text-gray-200">
-                                    {code}
-                                </code>
-                            </pre>
-                        </div>
-                    );
-                }
-
-                // Handle lists
-                if (paragraph.includes('- ') || paragraph.includes('1. ')) {
-                    const items = paragraph.split('\n').filter(line => line.trim());
-                    const isOrdered = items[0].match(/^\d+\./);
-                    const ListTag = isOrdered ? 'ol' : 'ul';
-
-                    return (
-                        <ListTag key={index} className={`my-4 space-y-2 ${isOrdered ? 'list-decimal' : 'list-disc'} list-inside text-gray-700 dark:text-gray-300`}>
-                            {items.map((item, i) => (
-                                <li key={i} className="leading-relaxed">
-                                    {item.replace(/^[-\d+\.]\s/, '')}
-                                </li>
-                            ))}
-                        </ListTag>
-                    );
-                }
-
-                // Handle inline code
-                let processedParagraph = paragraph.replace(/`([^`]+)`/g, '<code class="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm">$1</code>');
-
-                // Regular paragraphs
-                return (
-                    <p
-                        key={index}
-                        className="mb-4 leading-relaxed text-gray-700 dark:text-gray-300"
-                        dangerouslySetInnerHTML={{ __html: processedParagraph }}
-                    />
-                );
-            });
     };
 
     if (loading) {
@@ -252,7 +178,7 @@ const BlogPost = () => {
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.8, delay: 0.3 }}
                     >
-                        {renderContent(post.content)}
+                        <MarkdownRenderer content={post.content} />
                     </motion.div>
 
                     {/* Article Footer */}
