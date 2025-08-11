@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FiPlus, FiEdit2, FiTrash2, FiEye, FiLogOut, FiSave, FiX, FiEyeOff, FiMaximize2, FiMinimize2, FiBold, FiItalic, FiCode, FiList, FiLink, FiImage } from 'react-icons/fi';
+import { FiPlus, FiEdit2, FiTrash2, FiEye, FiLogOut, FiSave, FiX, FiEyeOff, FiMaximize2, FiMinimize2, FiBold, FiItalic, FiCode, FiList, FiLink, FiImage, FiCalendar, FiTag } from 'react-icons/fi';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MarkdownRenderer from '../components/MarkdownRenderer';
@@ -29,7 +29,6 @@ const BlogAdmin = () => {
         tags: []
     });
     const [showPreview, setShowPreview] = useState(false);
-    const [previewMode, setPreviewMode] = useState('split'); // 'split', 'preview-only', 'edit-only'
     const [isFullscreen, setIsFullscreen] = useState(false);
 
     useEffect(() => {
@@ -41,6 +40,70 @@ const BlogAdmin = () => {
             fetchPosts();
         }
     }, [isAuthenticated]);
+
+    // Add keyboard shortcut handler
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            // Only handle shortcuts when the content textarea is focused
+            const textarea = document.querySelector('textarea[name="content"]');
+            if (document.activeElement !== textarea) return;
+
+            // Handle keyboard shortcuts
+            if (e.ctrlKey || e.metaKey) {
+                switch (e.key.toLowerCase()) {
+                    case 'b':
+                        e.preventDefault();
+                        insertMarkdown('**', '**', 'bold text');
+                        break;
+                    case 'i':
+                        e.preventDefault();
+                        insertMarkdown('*', '*', 'italic text');
+                        break;
+                    case 'k':
+                        e.preventDefault();
+                        insertMarkdown('[', '](url)', 'link text');
+                        break;
+                    case 'e':
+                        e.preventDefault();
+                        insertMarkdown('`', '`', 'code');
+                        break;
+                    case '1':
+                        e.preventDefault();
+                        insertMarkdown('# ', '', 'Heading 1');
+                        break;
+                    case '2':
+                        e.preventDefault();
+                        insertMarkdown('## ', '', 'Heading 2');
+                        break;
+                    case '3':
+                        e.preventDefault();
+                        insertMarkdown('### ', '', 'Heading 3');
+                        break;
+                    case 'enter':
+                        if (e.shiftKey) {
+                            e.preventDefault();
+                            insertMarkdown('```\n', '\n```', 'code block');
+                        }
+                        break;
+                    // Note: Ctrl+Z (undo) is handled natively by the browser for textareas
+                    // Note: Ctrl+Y (redo) is handled natively by the browser for textareas
+                    default:
+                        // Let other shortcuts (like Ctrl+Z, Ctrl+Y, Ctrl+A, etc.) work natively
+                        break;
+                }
+            }
+        };
+
+        // Add event listener when modal is open
+        if (showPostModal) {
+            document.addEventListener('keydown', handleKeyDown);
+        }
+
+        // Cleanup
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [showPostModal, postForm.content]);
 
     const checkAuth = async () => {
         try {
@@ -507,9 +570,9 @@ const BlogAdmin = () => {
                                 </div>
 
                                 {/* Content Editor with Preview */}
-                                <div className={`${isFullscreen ? 'fixed inset-0 z-50 bg-white dark:bg-gray-900 p-6' : ''}`}>
+                                <div className={`${isFullscreen ? 'fixed inset-0 z-50 bg-white dark:bg-gray-900 p-6 flex flex-col' : ''}`}>
                                     {isFullscreen && (
-                                        <div className="flex justify-between items-center mb-4">
+                                        <div className="flex justify-between items-center mb-4 flex-shrink-0">
                                             <h3 className="text-lg font-semibold">Content Editor</h3>
                                             <button
                                                 type="button"
@@ -521,10 +584,10 @@ const BlogAdmin = () => {
                                         </div>
                                     )}
 
-                                    <div className={`${showPreview ? 'grid grid-cols-2 gap-4' : ''} ${isFullscreen ? 'h-full' : ''}`}>
+                                    <div className={`${showPreview ? 'grid grid-cols-2 gap-4' : ''} ${isFullscreen ? 'flex-1 min-h-0' : ''}`}>
                                         <div className="flex flex-col">
                                             {showPreview && (
-                                                <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                                <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 flex-shrink-0">
                                                     Editor
                                                 </div>
                                             )}
@@ -532,7 +595,7 @@ const BlogAdmin = () => {
                                                 name="content"
                                                 value={postForm.content}
                                                 onChange={(e) => setPostForm({...postForm, content: e.target.value})}
-                                                className={`w-full px-3 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 ${showPreview ? 'rounded-lg' : 'rounded-b-lg'} focus:ring-2 focus:ring-primary-500 font-mono text-sm ${isFullscreen ? 'h-full resize-none' : 'h-64'}`}
+                                                className={`w-full px-3 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 ${showPreview ? 'rounded-lg' : 'rounded-b-lg'} focus:ring-2 focus:ring-primary-500 font-mono text-sm ${isFullscreen ? 'flex-1 min-h-0' : 'h-64'}`}
                                                 placeholder="Write your content in Markdown format..."
                                                 required
                                             />
@@ -540,11 +603,84 @@ const BlogAdmin = () => {
 
                                         {showPreview && (
                                             <div className="flex flex-col">
-                                                <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                                    Preview
+                                                <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 flex-shrink-0">
+                                                    Full Post Preview
                                                 </div>
-                                                <div className={`border border-gray-300 dark:border-gray-700 rounded-lg p-4 bg-white dark:bg-gray-800 overflow-y-auto ${isFullscreen ? 'h-full' : 'h-64'}`}>
-                                                    <MarkdownRenderer content={postForm.content} />
+                                                <div className={`border border-gray-300 dark:border-gray-700 rounded-lg p-6 bg-white dark:bg-gray-800 overflow-y-auto ${isFullscreen ? 'flex-1 min-h-0' : 'h-64'}`}>
+                                                    {/* Article Header */}
+                                                    <header className="mb-6">
+                                                        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight">
+                                                            {postForm.title || 'Your Post Title'}
+                                                        </h1>
+
+                                                        <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
+                                                            <div className="flex items-center gap-1">
+                                                                <FiCalendar size={14} />
+                                                                <span>{new Date().toLocaleDateString('en-US', {
+                                                                    year: 'numeric',
+                                                                    month: 'long',
+                                                                    day: 'numeric'
+                                                                })}</span>
+                                                            </div>
+                                                            <div className="flex items-center gap-1">
+                                                                <FiEye size={14} />
+                                                                <span>{Math.ceil(postForm.content.split(' ').length / 200)} min read</span>
+                                                            </div>
+                                                        </div>
+
+                                                        {postForm.tags.length > 0 && (
+                                                            <div className="flex flex-wrap gap-2 mb-4">
+                                                                {postForm.tags.map((tag, index) => (
+                                                                    <span
+                                                                        key={index}
+                                                                        className="inline-flex items-center gap-1 px-2 py-1 text-xs bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full"
+                                                                    >
+                                                                        <FiTag size={10} />
+                                                                        {tag}
+                                                                    </span>
+                                                                ))}
+                                                            </div>
+                                                        )}
+
+                                                        {postForm.excerpt && (
+                                                            <div className="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg mb-4 border-l-4 border-primary-500">
+                                                                <p className="text-gray-700 dark:text-gray-300 italic">
+                                                                    {postForm.excerpt}
+                                                                </p>
+                                                            </div>
+                                                        )}
+
+                                                        {postForm.featured && (
+                                                            <div className="mb-4">
+                                                                <span className="inline-flex items-center px-3 py-1 text-sm bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 rounded-full">
+                                                                    ⭐ Featured Post
+                                                                </span>
+                                                            </div>
+                                                        )}
+                                                    </header>
+
+                                                    {/* Article Content */}
+                                                    <div className="prose prose-sm max-w-none">
+                                                        {postForm.content ? (
+                                                            <MarkdownRenderer content={postForm.content} />
+                                                        ) : (
+                                                            <p className="text-gray-500 dark:text-gray-400 italic">
+                                                                Start writing your content to see the preview...
+                                                            </p>
+                                                        )}
+                                                    </div>
+
+                                                    {/* Article Footer */}
+                                                    <footer className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                                                        <div className="flex items-center justify-between">
+                                                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                                                                Written by <span className="font-medium text-gray-900 dark:text-gray-100">{postForm.author}</span>
+                                                            </p>
+                                                            <div className="text-xs text-gray-500 dark:text-gray-400">
+                                                                Status: {postForm.published ? 'Published' : 'Draft'}
+                                                            </div>
+                                                        </div>
+                                                    </footer>
                                                 </div>
                                             </div>
                                         )}
