@@ -18,6 +18,17 @@ const BlogCard = ({ post, index }) => {
             transition={{ duration: 0.5, delay: index * 0.1 }}
             whileHover={{ y: -5 }}
         >
+            {/* Image Section */}
+            {post.image_url && (
+                <div className={`${post.featured ? 'h-64' : 'h-48'} overflow-hidden`}>
+                    <img
+                        src={post.image_url}
+                        alt={post.title}
+                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                    />
+                </div>
+            )}
+
             <div className="p-6">
                 {post.featured && (
                     <span className="inline-block px-3 py-1 text-xs font-semibold text-primary-600 dark:text-primary-400 bg-primary-100 dark:bg-primary-900/30 rounded-full mb-4">

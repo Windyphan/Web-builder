@@ -26,7 +26,8 @@ const BlogAdmin = () => {
         author: 'Phong Minh Phan',
         featured: false,
         published: true,
-        tags: []
+        tags: [],
+        image_url: ''
     });
     const [showPreview, setShowPreview] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
@@ -156,7 +157,8 @@ const BlogAdmin = () => {
             author: 'Phong Minh Phan',
             featured: false,
             published: true,
-            tags: []
+            tags: [],
+            image_url: ''
         });
         setShowPostModal(true);
     };
@@ -170,7 +172,8 @@ const BlogAdmin = () => {
             author: post.author,
             featured: post.featured === 1,
             published: post.published === 1,
-            tags: post.tags || []
+            tags: post.tags || [],
+            image_url: post.image_url || ''
         });
         setShowPostModal(true);
     };
@@ -365,7 +368,7 @@ const BlogAdmin = () => {
                                                 <div>
                                                     <div className="text-sm font-medium text-gray-900 dark:text-gray-100">
                                                         {post.title}
-                                                        {post.featured && (
+                                                        {(post.featured === 1 || post.featured === true) && (
                                                             <span className="ml-2 px-2 py-1 text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 rounded-full">
                                                                 Featured
                                                             </span>
@@ -378,11 +381,11 @@ const BlogAdmin = () => {
                                             </td>
                                             <td className="px-6 py-4">
                                                 <span className={`px-2 py-1 text-xs rounded-full ${
-                                                    post.published 
+                                                    (post.published === 1 || post.published === true)
                                                         ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400' 
                                                         : 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-400'
                                                 }`}>
-                                                    {post.published ? 'Published' : 'Draft'}
+                                                    {(post.published === 1 || post.published === true) ? 'Published' : 'Draft'}
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
@@ -506,6 +509,17 @@ const BlogAdmin = () => {
                                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg focus:ring-2 focus:ring-primary-500"
                                     placeholder="Who wrote this post?"
                                     required
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium mb-2">Featured Image URL (optional)</label>
+                                <input
+                                    type="url"
+                                    value={postForm.image_url || ''}
+                                    onChange={(e) => setPostForm({...postForm, image_url: e.target.value})}
+                                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg focus:ring-2 focus:ring-primary-500"
+                                    placeholder="https://example.com/image.jpg"
                                 />
                             </div>
 
