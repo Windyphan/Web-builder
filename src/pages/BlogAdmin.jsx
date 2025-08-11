@@ -164,14 +164,20 @@ const BlogAdmin = () => {
     };
 
     const handleEditPost = (post) => {
+        console.log('=== DEBUG: Post data when editing ===');
+        console.log('post.featured:', post.featured, 'typeof:', typeof post.featured);
+        console.log('post.published:', post.published, 'typeof:', typeof post.published);
+        console.log('=======================================');
+
         setEditingPost(post);
         setPostForm({
             title: post.title,
             excerpt: post.excerpt,
             content: post.content,
             author: post.author,
-            featured: post.featured === 1,
-            published: post.published === 1,
+            // Fix: Handle various data types for featured/published
+            featured: post.featured === 1 || post.featured === true || post.featured === 'true' || post.featured === 't',
+            published: post.published === 1 || post.published === true || post.published === 'true' || post.published === 't',
             tags: post.tags || [],
             image_url: post.image_url || ''
         });
