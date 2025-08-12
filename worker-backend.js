@@ -370,10 +370,11 @@ app.post('/api/chat', async (c) => {
       return c.json({ error: 'Message is required' }, 400)
     }
 
-    // Call your custom model API on Vercel (from server directory deployment)
-    const vercelApiUrl = c.env.VERCEL_CHATBOT_API_URL || 'https://your-server-project.vercel.app'
+    // Call your server directory deployment on Vercel
+    // Using the same base URL but pointing to your server directory deployment
+    const serverApiUrl = c.env.SERVER_API_URL || 'https://web-builder-five-rust.vercel.app'
 
-    const response = await fetch(`${vercelApiUrl}/api/chat`, {
+    const response = await fetch(`${serverApiUrl}/api/chatbot`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -383,7 +384,7 @@ app.post('/api/chat', async (c) => {
     })
 
     if (!response.ok) {
-      throw new Error(`API call failed with status: ${response.status}`)
+      throw new Error(`Python AI API call failed with status: ${response.status}`)
     }
 
     const chatResponse = await response.json()
@@ -393,12 +394,13 @@ app.post('/api/chat', async (c) => {
   } catch (error) {
     console.error('Chat error:', error)
 
-    // Fallback response if your custom API is unavailable
+    // Enhanced fallback response with more helpful information
     return c.json({
-      response: "I'm experiencing technical difficulties. Please try again later or contact us directly for assistance with your web development needs.",
+      response: "I'm experiencing technical difficulties connecting to my AI brain. This usually means my Python server is starting up or temporarily unavailable. Please try again in a moment, or contact us directly for immediate assistance with your web development needs.",
       intent: 'error',
       confidence: 0.0,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      error_details: error.message
     }, 500)
   }
 })

@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import SimpleBrowserAI from '../utils/browserAI';
 
 const AIChatbot = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -8,7 +7,7 @@ const AIChatbot = () => {
         {
             id: 1,
             type: 'bot',
-            content: "Hello! I'm your AI assistant. How can I help you with web development today?",
+            content: "Hello! I'm your AI assistant powered by machine learning. How can I help you with web development today?",
             timestamp: new Date().toISOString(),
             intent: 'greeting',
             confidence: 1.0
@@ -16,7 +15,6 @@ const AIChatbot = () => {
     ]);
     const [inputMessage, setInputMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [aiInstance] = useState(() => new SimpleBrowserAI());
     const messagesEndRef = useRef(null);
     const inputRef = useRef(null);
 
@@ -46,24 +44,39 @@ const AIChatbot = () => {
         setIsLoading(true);
 
         try {
-            // Use the browser-based AI instead of API call
-            const aiResponse = aiInstance.chat(currentInput);
+            // Use your Cloudflare Worker endpoint which connects to your server directory Python AI
+            const workerUrl = 'https://www.theinnovationcurve.com'; // Your main domain with Cloudflare Worker
+            const response = await fetch(`${workerUrl}/api/chat`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: currentInput
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
 
             const botMessage = {
                 id: Date.now() + 1,
                 type: 'bot',
-                content: aiResponse.response,
-                timestamp: aiResponse.timestamp,
-                intent: aiResponse.intent,
-                confidence: aiResponse.confidence
+                content: data.response || data.message || "I received your message but couldn't generate a proper response.",
+                timestamp: data.timestamp || new Date().toISOString(),
+                intent: data.intent || 'unknown',
+                confidence: data.confidence || 0.0
             };
             setMessages(prev => [...prev, botMessage]);
         } catch (error) {
-            console.error('Error with AI:', error);
+            console.error('Error with Python AI API:', error);
             const errorMessage = {
                 id: Date.now() + 1,
                 type: 'bot',
-                content: "I'm sorry, I'm experiencing technical difficulties. Please try again later.",
+                content: "I'm sorry, I'm experiencing technical difficulties with my AI brain. This usually means my Python server is starting up or temporarily unavailable. Please try again in a moment!",
                 timestamp: new Date().toISOString(),
                 intent: 'error',
                 confidence: 0.0
@@ -75,12 +88,12 @@ const AIChatbot = () => {
     };
 
     const clearChat = () => {
-        aiInstance.resetConversation();
+        // Reset to initial state - no need to reset AI instance since we're using API
         setMessages([
             {
                 id: 1,
                 type: 'bot',
-                content: "Hello! I'm your AI assistant. How can I help you with web development today?",
+                content: "Hello! I'm your AI assistant powered by machine learning. How can I help you with web development today?",
                 timestamp: new Date().toISOString(),
                 intent: 'greeting',
                 confidence: 1.0
