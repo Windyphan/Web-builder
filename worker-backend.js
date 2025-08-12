@@ -361,6 +361,48 @@ app.get('/auth/callback', async (c) => {
   }
 })
 
+// AI Chatbot route using your custom model on Vercel
+app.post('/api/chat', async (c) => {
+  try {
+    const { message } = await c.request.json()
+
+    if (!message) {
+      return c.json({ error: 'Message is required' }, 400)
+    }
+
+    // Call your custom model API on Vercel (from server directory deployment)
+    const vercelApiUrl = c.env.VERCEL_CHATBOT_API_URL || 'https://your-server-project.vercel.app'
+
+    const response = await fetch(`${vercelApiUrl}/api/chat`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': 'Cloudflare Worker Chatbot Client'
+      },
+      body: JSON.stringify({ message })
+    })
+
+    if (!response.ok) {
+      throw new Error(`API call failed with status: ${response.status}`)
+    }
+
+    const chatResponse = await response.json()
+
+    return c.json(chatResponse)
+
+  } catch (error) {
+    console.error('Chat error:', error)
+
+    // Fallback response if your custom API is unavailable
+    return c.json({
+      response: "I'm experiencing technical difficulties. Please try again later or contact us directly for assistance with your web development needs.",
+      intent: 'error',
+      confidence: 0.0,
+      timestamp: new Date().toISOString()
+    }, 500)
+  }
+})
+
 // Helper function: Exchange OAuth code for tokens
 async function exchangeCodeForTokens(code, state, env) {
   try {
