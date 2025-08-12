@@ -1,9 +1,6 @@
 {
   "version": 2,
   "functions": {
-    "api/*.js": {
-      "runtime": "nodejs18.x"
-    },
     "chatbot_api.py": {
       "runtime": "python3.9"
     }
@@ -12,10 +9,6 @@
     {
       "src": "/api/chat",
       "dest": "/chatbot_api.py"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
     }
   ]
 }
