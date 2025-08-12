@@ -2,10 +2,10 @@
   "version": 2,
   "functions": {
     "api/chat.py": {
-      "runtime": "@vercel/python@3.9"
+      "runtime": "python3.9"
     },
     "api/index.js": {
-      "runtime": "@vercel/node@18.x"
+      "runtime": "nodejs18.x"
     }
   },
   "routes": [
