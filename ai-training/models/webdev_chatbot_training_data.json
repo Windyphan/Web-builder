@@ -1,0 +1,304 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi",
+        "Hello",
+        "Good morning",
+        "Good afternoon",
+        "Good evening",
+        "Hey there",
+        "Greetings",
+        "What's up",
+        "How are you",
+        "Hi there",
+        "Hey",
+        "Howdy",
+        "Good day",
+        "Salutations",
+        "Yo",
+        "What's good",
+        "How's it going",
+        "Nice to meet you",
+        "Pleasure to meet you",
+        "Hello there",
+        "Good to see you",
+        "Hiya",
+        "Sup",
+        "How do you do"
+      ],
+      "responses": [
+        "Hello! I'm here to help you with web development questions.",
+        "Hi there! How can I assist you with your web development needs today?",
+        "Greetings! I'm your web development AI assistant. What can I help you with?",
+        "Welcome! I'm excited to help you with your web development project.",
+        "Hey! Ready to build something amazing together?"
+      ]
+    },
+    {
+      "tag": "web_development",
+      "patterns": [
+        "What is web development",
+        "Tell me about web development",
+        "How to build a website",
+        "Website development process",
+        "Frontend vs backend",
+        "Full stack development",
+        "What is frontend",
+        "What is backend",
+        "How websites work",
+        "Web development basics",
+        "Learn web development",
+        "Getting started with web dev",
+        "Modern web development",
+        "Web development technologies",
+        "Responsive web design",
+        "Mobile-first development",
+        "Progressive web apps",
+        "Single page applications",
+        "Web application development",
+        "API development",
+        "Database integration",
+        "Cloud deployment"
+      ],
+      "responses": [
+        "Web development involves creating websites and web applications using technologies like HTML, CSS, JavaScript, React, Node.js, and databases.",
+        "Web development includes frontend (user interface) and backend (server-side) development. We specialize in modern frameworks like React, Vue, and Node.js.",
+        "Building a website involves planning, design, development, testing, and deployment. Our team can help you through each step.",
+        "Modern web development focuses on creating fast, responsive, and user-friendly applications using cutting-edge technologies.",
+        "We build everything from simple landing pages to complex enterprise applications with modern frameworks and best practices."
+      ]
+    },
+    {
+      "tag": "services",
+      "patterns": [
+        "What services do you offer",
+        "Your services",
+        "What can you build",
+        "Website types",
+        "E-commerce development",
+        "Custom web applications",
+        "Web design services",
+        "Mobile app development",
+        "UI UX design",
+        "Logo design",
+        "Branding services",
+        "SEO optimization",
+        "Website maintenance",
+        "Technical support",
+        "Consulting services",
+        "Digital marketing",
+        "Content management systems",
+        "CMS development",
+        "WordPress development",
+        "Shopify development",
+        "Custom solutions",
+        "Enterprise solutions",
+        "Startup packages",
+        "Small business websites"
+      ],
+      "responses": [
+        "We offer custom website development, e-commerce solutions, web applications, mobile-responsive design, and ongoing maintenance.",
+        "Our services include React/Vue.js frontend development, Node.js/Python backend development, database design, and cloud deployment.",
+        "We build everything from simple business websites to complex web applications, e-commerce stores, and progressive web apps.",
+        "Our comprehensive services cover the entire digital journey: design, development, deployment, and ongoing support.",
+        "From startups to enterprises, we provide tailored web solutions that grow with your business needs."
+      ]
+    },
+    {
+      "tag": "pricing",
+      "patterns": [
+        "How much does it cost",
+        "Pricing",
+        "Website cost",
+        "Development cost",
+        "Budget",
+        "Quote",
+        "Estimate",
+        "Price range",
+        "Cost breakdown",
+        "Affordable websites",
+        "Cheap web development",
+        "Premium pricing",
+        "Enterprise pricing",
+        "Startup pricing",
+        "Monthly payments",
+        "Payment plans",
+        "Free consultation",
+        "Cost calculator",
+        "Investment in website",
+        "ROI of website",
+        "Value pricing"
+      ],
+      "responses": [
+        "Our pricing varies based on project complexity. Basic websites start at $2,000, while complex web applications can range from $10,000+.",
+        "We offer competitive pricing with transparent quotes. Contact us for a detailed estimate based on your specific requirements.",
+        "Pricing depends on features, complexity, and timeline. We provide free consultations to discuss your budget and requirements.",
+        "We believe in transparent pricing with no hidden costs. Every project gets a detailed quote with clear deliverables.",
+        "Investment in a quality website pays for itself through increased business growth and customer engagement."
+      ]
+    },
+    {
+      "tag": "technologies",
+      "patterns": [
+        "What technologies do you use",
+        "Tech stack",
+        "Programming languages",
+        "React development",
+        "Node.js",
+        "Database technologies",
+        "Vue.js",
+        "Angular",
+        "Python",
+        "JavaScript",
+        "TypeScript",
+        "HTML CSS",
+        "MongoDB",
+        "PostgreSQL",
+        "MySQL",
+        "AWS",
+        "Vercel",
+        "Netlify",
+        "Docker",
+        "Git",
+        "API development",
+        "GraphQL",
+        "REST API",
+        "Microservices",
+        "Serverless",
+        "JAMstack",
+        "Headless CMS"
+      ],
+      "responses": [
+        "We use modern technologies including React, Vue.js, Node.js, Python, PostgreSQL, MongoDB, AWS, and Docker.",
+        "Our tech stack includes frontend frameworks like React/Vue, backend technologies like Node.js/Python, and cloud platforms like AWS/Vercel.",
+        "We stay current with the latest web technologies to ensure your project is built with industry best practices.",
+        "Our technology choices are driven by performance, scalability, and maintainability to ensure long-term success.",
+        "We specialize in the JavaScript ecosystem but are flexible to use the best tools for each specific project."
+      ]
+    },
+    {
+      "tag": "timeline",
+      "patterns": [
+        "How long does it take",
+        "Project timeline",
+        "Development time",
+        "When will it be ready",
+        "Rush projects",
+        "Quick turnaround",
+        "Project duration",
+        "Delivery time",
+        "Milestones",
+        "Project phases",
+        "Fast development",
+        "Urgent website",
+        "Launch date",
+        "Go live"
+      ],
+      "responses": [
+        "Project timelines vary based on complexity. Simple websites take 2-4 weeks, while complex applications can take 2-6 months.",
+        "We provide detailed project timelines with clear milestones to keep you informed throughout the development process.",
+        "Rush projects are possible with additional resources. We'll work with you to meet your launch deadlines.",
+        "Quality takes time, but we're efficient. We balance speed with thorough testing and quality assurance."
+      ]
+    },
+    {
+      "tag": "support",
+      "patterns": [
+        "Technical support",
+        "Website maintenance",
+        "Bug fixes",
+        "Updates",
+        "Ongoing support",
+        "Help after launch",
+        "Website issues",
+        "Troubleshooting",
+        "Emergency support",
+        "24/7 support",
+        "Support packages",
+        "Maintenance plans"
+      ],
+      "responses": [
+        "We provide comprehensive post-launch support including bug fixes, updates, and ongoing maintenance.",
+        "Our support packages ensure your website stays secure, updated, and performing optimally.",
+        "We're here for you after launch with technical support and guidance as your business grows.",
+        "Peace of mind comes with our reliable support - we've got your back!"
+      ]
+    },
+    {
+      "tag": "contact",
+      "patterns": [
+        "How to contact you",
+        "Contact information",
+        "Get in touch",
+        "Phone number",
+        "Email",
+        "Schedule meeting",
+        "Book consultation",
+        "Reach out",
+        "Connect with you",
+        "Contact form",
+        "Call you",
+        "Meeting request",
+        "Free consultation",
+        "Discuss project"
+      ],
+      "responses": [
+        "You can contact us through our contact form, email us directly, or schedule a free consultation call.",
+        "Reach out via our website's contact page or send us an email. We typically respond within 24 hours.",
+        "We're here to help! Use our contact form or email us to discuss your project requirements.",
+        "Ready to get started? Contact us for a free consultation to discuss your vision and requirements."
+      ]
+    },
+    {
+      "tag": "portfolio",
+      "patterns": [
+        "Show me your work",
+        "Portfolio",
+        "Previous projects",
+        "Examples",
+        "Case studies",
+        "Client work",
+        "Your websites",
+        "Past projects",
+        "Success stories",
+        "Testimonials",
+        "References",
+        "Sample work"
+      ],
+      "responses": [
+        "Check out our portfolio section to see examples of our recent work across various industries.",
+        "We've helped businesses of all sizes achieve their digital goals. Our portfolio showcases our diverse expertise.",
+        "Our case studies demonstrate real results - increased traffic, better user engagement, and business growth.",
+        "From e-commerce platforms to corporate websites, our portfolio reflects our commitment to quality and innovation."
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "Bye",
+        "Goodbye",
+        "See you later",
+        "Thanks",
+        "Thank you",
+        "That's all",
+        "Farewell",
+        "Take care",
+        "Until next time",
+        "Catch you later",
+        "Peace out",
+        "Have a good day",
+        "Talk to you later",
+        "Signing off"
+      ],
+      "responses": [
+        "Goodbye! Feel free to reach out anytime for web development assistance.",
+        "Thanks for chatting! Don't hesitate to contact us for your web development needs.",
+        "Have a great day! We're here whenever you need web development support.",
+        "Take care! Looking forward to helping you build something amazing.",
+        "Until next time! Remember, we're just a message away for any web development questions."
+      ]
+    }
+  ]
+}
