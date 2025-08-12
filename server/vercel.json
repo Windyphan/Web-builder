@@ -8,33 +8,14 @@
       "runtime": "python3.9"
     }
   },
-  "builds": [
-    {
-      "src": "api/*.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "chatbot_api.py",
-      "use": "@vercel/python"
-    }
-  ],
   "routes": [
     {
       "src": "/api/chat",
       "dest": "/chatbot_api.py"
     },
     {
-      "src": "/api/chat/status",
-      "dest": "/chatbot_api.py"
-    },
-    {
       "src": "/api/(.*)",
-      "dest": "/api/$1.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/api/index.js"
+      "dest": "/api/$1"
     }
-  ],
-  "outputDirectory": "dist"
+  ]
 }
