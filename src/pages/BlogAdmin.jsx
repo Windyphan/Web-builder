@@ -303,11 +303,6 @@ const BlogAdmin = () => {
                                 Login
                             </button>
                         </form>
-                        <div className="mt-4 p-3 bg-gray-100 dark:bg-gray-700 rounded-lg text-sm">
-                            <p><strong>Default credentials:</strong></p>
-                            <p>Email: info@theinnovationcurve.com</p>
-                            <p>Password: admin123</p>
-                        </div>
                     </motion.div>
                 </div>
             </div>
