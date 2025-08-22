@@ -34,8 +34,6 @@ async function testCompleteSetup() {
 
     console.log('\n🎉 Complete setup test successful! Your blog should be working now.');
     console.log('\n📋 Admin Login Credentials:');
-    console.log('   Email: info@theinnovationcurve.com');
-    console.log('   Password: TIC2025!@BlogAdmin#SecurePass789$');
 
     process.exit(0);
   } catch (error) {

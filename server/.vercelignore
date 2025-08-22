@@ -12,5 +12,4 @@ fly.toml
 wrangler.toml
 deploy.sh
 test-*.js
-create-admin.js
 setup-*.js

@@ -5,9 +5,6 @@ compatibility_date = "2025-08-07"
 
 [vars]
 NODE_ENV = "production"
-JWT_SECRET = "c270cc4a3a6a39ad40f60242a60e9e26a07e730bc15e56f4d81f4a2f9f7d930ffd1087f2edfb493a1acdae57888dad4f9900028ead9a528c269385964a78c197"
-ADMIN_EMAIL = "info@theinnovationcurve.com"
-ADMIN_PASSWORD = "TIC2025!@BlogAdmin#SecurePass789$"
 
 # D1 Database configuration (for future use if you want to migrate from SQLite)
 [[d1_databases]]

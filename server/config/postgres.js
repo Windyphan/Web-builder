@@ -68,8 +68,8 @@ export async function initDatabase() {
     `;
 
     // Check if admin user exists
-    const adminEmail = process.env.ADMIN_EMAIL || 'info@theinnovationcurve.com';
-    const adminPassword = process.env.ADMIN_PASSWORD || 'TIC2025!@BlogAdmin#SecurePass789$';
+    const adminEmail = process.env.ADMIN_EMAIL;
+    const adminPassword = process.env.ADMIN_PASSWORD;
 
     const existingUser = await sql`
       SELECT id FROM users WHERE email = ${adminEmail} LIMIT 1
