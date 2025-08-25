@@ -116,7 +116,7 @@ const Pricing = () => {
                 </motion.div>
 
                 {/* Pricing Cards */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-16">
                     {plans.map((plan, index) => (
                         <motion.div
                             key={plan.id}
@@ -124,53 +124,53 @@ const Pricing = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className={`relative flex flex-col bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/20 p-8 ${
-                                plan.popular ? 'ring-2 ring-primary-500 scale-105' : ''
+                            className={`relative flex flex-col bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/20 p-6 lg:p-8 min-h-[600px] ${
+                                plan.popular ? 'ring-2 ring-primary-500 lg:scale-105' : ''
                             }`}
                         >
                             {plan.popular && (
-                                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                                    <span className="bg-primary-500 text-white px-4 py-1 rounded-full text-sm font-medium">
+                                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                                    <span className="bg-primary-500 text-white px-4 py-1 rounded-full text-sm font-medium whitespace-nowrap">
                                         Most Popular
                                     </span>
                                 </div>
                             )}
 
-                            <div className="text-center mb-8">
-                                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+                            <div className="text-center mb-6">
+                                <h3 className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3 min-h-[3rem] flex items-center justify-center">
                                     {plan.name}
                                 </h3>
-                                <div className="text-4xl font-bold text-primary-600 dark:text-primary-400 mb-2">
+                                <div className="text-3xl lg:text-4xl font-bold text-primary-600 dark:text-primary-400 mb-3">
                                     {plan.price}
                                 </div>
                                 <div className="flex items-center justify-center text-gray-500 dark:text-gray-400 mb-4">
-                                    <FiClock className="mr-2" size={16} />
-                                    <span>{plan.duration}</span>
+                                    <FiClock className="mr-2 flex-shrink-0" size={16} />
+                                    <span className="text-sm lg:text-base">{plan.duration}</span>
                                 </div>
-                                <p className="text-gray-600 dark:text-gray-300 h-12">
+                                <p className="text-gray-600 dark:text-gray-300 text-sm lg:text-base min-h-[3rem] flex items-center justify-center">
                                     {plan.description}
                                 </p>
                             </div>
 
-                            <ul className="space-y-4 mb-8 flex-grow">
+                            <ul className="space-y-3 mb-6 flex-grow">
                                 {plan.features.map((feature, featureIndex) => (
                                     <li key={featureIndex} className="flex items-start">
                                         <FiCheck className="text-green-500 mr-3 mt-1 flex-shrink-0" size={16} />
-                                        <span className="text-gray-700 dark:text-gray-300">{feature}</span>
+                                        <span className="text-gray-700 dark:text-gray-300 text-sm lg:text-base leading-relaxed">{feature}</span>
                                     </li>
                                 ))}
                             </ul>
 
                             <button
                                 onClick={() => handleGetQuote(plan.id)}
-                                className={`w-full mt-auto py-3 px-6 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center ${
+                                className={`w-full mt-auto py-3 px-4 lg:px-6 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center text-sm lg:text-base ${
                                     plan.popular
                                         ? 'bg-primary-600 hover:bg-primary-700 text-white'
                                         : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100'
                                 }`}
                             >
-                                {plan.buttonText}
-                                <FiArrowRight className="ml-2" size={16} />
+                                <span className="truncate">{plan.buttonText}</span>
+                                <FiArrowRight className="ml-2 flex-shrink-0" size={16} />
                             </button>
                         </motion.div>
                     ))}
@@ -182,12 +182,12 @@ const Pricing = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true }}
-                    className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/20 p-8"
+                    className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/20 p-6 lg:p-8"
                 >
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-center">
+                    <h3 className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-center">
                         Optional Add-ons
                     </h3>
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
                         {addOns.map((addon, index) => (
                             <motion.div
                                 key={index}
@@ -195,13 +195,13 @@ const Pricing = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6, delay: index * 0.1 }}
                                 viewport={{ once: true }}
-                                className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-primary-300 dark:hover:border-primary-600 transition-colors"
+                                className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-primary-300 dark:hover:border-primary-600 transition-colors min-h-[120px] flex flex-col"
                             >
-                                <div className="flex justify-between items-start mb-2">
-                                    <h4 className="font-semibold text-gray-900 dark:text-gray-100">{addon.name}</h4>
-                                    <span className="text-primary-600 dark:text-primary-400 font-bold">{addon.price}</span>
+                                <div className="flex justify-between items-start mb-3 gap-2">
+                                    <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm lg:text-base leading-tight">{addon.name}</h4>
+                                    <span className="text-primary-600 dark:text-primary-400 font-bold text-sm lg:text-base whitespace-nowrap flex-shrink-0">{addon.price}</span>
                                 </div>
-                                <p className="text-gray-600 dark:text-gray-300 text-sm">{addon.description}</p>
+                                <p className="text-gray-600 dark:text-gray-300 text-xs lg:text-sm leading-relaxed flex-grow">{addon.description}</p>
                             </motion.div>
                         ))}
                     </div>
