@@ -7,75 +7,90 @@ const Pricing = () => {
 
     const plans = [
         {
-            id: 'starter',
-            name: 'Starter Package',
-            price: '£199',
-            duration: '2-3 weeks',
-            description: 'Perfect for small businesses and personal websites',
+            id: 'student',
+            name: 'Student / Portfolio',
+            price: '£299',
+            duration: '1-2 weeks',
+            description: 'A professional one-page site to showcase your work or CV.',
             popular: false,
             features: [
-                'Responsive design (up to 5 pages)',
+                'Single-page "scrolling" design',
+                'Built from a pre-selected premium template',
+                'Mobile & tablet responsive',
                 'Contact form integration',
-                'Basic SEO optimization',
-                'Social media integration',
-                'Mobile-friendly design',
+                'Link to your social media profiles',
                 'Free SSL certificate',
-                'Basic analytics setup',
                 '3 months free hosting'
             ],
             buttonText: 'Get Started'
         },
         {
-            id: 'professional',
-            name: 'Professional Package',
-            price: '£699',
+            id: 'launchpad',
+            name: 'Launchpad Package',
+            price: '£1,299',
             duration: '3-4 weeks',
-            description: 'Ideal for growing businesses and e-commerce',
+            description: 'Perfect for new businesses needing a professional online presence.',
+            popular: false,
+            features: [
+                'Up to 5 custom-designed pages',
+                'WordPress Content Management System (CMS)',
+                'On-Page SEO Foundation',
+                'Secure contact form',
+                'Social media integration',
+                'Google Analytics setup',
+                'Mobile & tablet responsive',
+                '6 months free hosting & SSL'
+            ],
+            buttonText: 'Choose Plan'
+        },
+        {
+            id: 'business-growth',
+            name: 'Business Growth',
+            price: '£3,499',
+            duration: '5-7 weeks',
+            description: 'For established businesses ready to scale and sell online.',
             popular: true,
             features: [
-                'Responsive design (up to 10 pages)',
+                'All features from Launchpad Package',
+                'Up to 15 pages',
                 'E-commerce functionality (up to 50 products)',
-                'Advanced SEO optimization',
-                'Content management system',
-                'Payment gateway integration',
-                'Free SSL certificate',
-                'Google Analytics & Search Console',
-                '6 months free hosting',
-                'Social media integration',
-                'Newsletter signup form'
+                'Advanced SEO & performance tuning',
+                'Blog / Content Hub setup',
+                'Payment gateway integration (Stripe/PayPal)',
+                'CMS training session',
+                '12 months free hosting & SSL'
             ],
             buttonText: 'Most Popular'
         },
         {
-            id: 'enterprise',
-            name: 'Enterprise Package',
-            price: '£2,999',
-            duration: '4-6 weeks',
-            description: 'For large businesses with complex requirements',
+            id: 'bespoke',
+            name: 'Bespoke Solution',
+            price: 'Starting at £7,999',
+            duration: 'Project-based Timeline',
+            description: 'For businesses with unique requirements needing custom solutions.',
             popular: false,
             features: [
-                'Unlimited pages',
-                'Advanced e-commerce (unlimited products)',
-                'Custom functionality development',
-                'Multi-language support',
-                'Advanced SEO & performance optimization',
-                'Custom integrations (CRM, APIs)',
-                'Priority support',
-                '12 months free hosting',
-                'Advanced analytics dashboard',
-                'Training & documentation'
+                'Fully custom design & development',
+                'Unlimited pages & products',
+                'Bespoke feature development',
+                'Third-party API integrations (CRM, etc.)',
+                'Advanced analytics & reporting',
+                'Dedicated project manager',
+                'Priority support & maintenance',
+                'Full documentation & training'
             ],
-            buttonText: 'Contact Us'
+            buttonText: 'Book a Consultation'
         }
     ];
 
     const addOns = [
-        { name: 'Logo Design', price: '£199', description: 'Professional logo design with multiple concepts' },
-        { name: 'Content Creation', price: '£299', description: 'Professional copywriting for all pages' },
-        { name: 'Photography', price: '£399', description: 'Professional product or business photography' },
-        { name: 'Additional Pages', price: '£99', description: 'Per additional page beyond package limit' },
-        { name: 'Rush Delivery', price: '£499', description: 'Priority development for faster delivery' }
+        { name: 'Logo & Brand Guide', price: '£399', description: 'Professional logo with a basic brand style guide.' },
+        { name: 'Content Strategy & Copywriting', price: '£599', description: 'Professional, SEO-friendly copy for up to 5 pages.' },
+        { name: 'Advanced SEO Pack', price: '£499', description: 'Local SEO setup, keyword research, and competitor analysis.' },
+        { name: 'Additional Pages', price: '£150', description: 'Per additional page beyond package limit.' },
+        { name: 'Rush Delivery', price: '25% of Total', description: 'Priority development to reduce delivery time by ~30%.' }
     ];
+
 
     const handleGetQuote = (planId) => {
         setShowNotification(true);
@@ -93,15 +108,15 @@ const Pricing = () => {
                     className="text-center mb-12"
                 >
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-                        Transparent Pricing
+                        Our Packages
                     </h2>
                     <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                        Choose the perfect package for your business needs. All prices include hosting setup and SSL certificate.
+                        Transparent pricing for every stage of your business journey. Find the perfect fit to achieve your goals.
                     </p>
                 </motion.div>
 
                 {/* Pricing Cards */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
                     {plans.map((plan, index) => (
                         <motion.div
                             key={plan.id}
@@ -109,7 +124,7 @@ const Pricing = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className={`relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/20 p-8 ${
+                            className={`relative flex flex-col bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/20 p-8 ${
                                 plan.popular ? 'ring-2 ring-primary-500 scale-105' : ''
                             }`}
                         >
@@ -132,12 +147,12 @@ const Pricing = () => {
                                     <FiClock className="mr-2" size={16} />
                                     <span>{plan.duration}</span>
                                 </div>
-                                <p className="text-gray-600 dark:text-gray-300">
+                                <p className="text-gray-600 dark:text-gray-300 h-12">
                                     {plan.description}
                                 </p>
                             </div>
 
-                            <ul className="space-y-4 mb-8">
+                            <ul className="space-y-4 mb-8 flex-grow">
                                 {plan.features.map((feature, featureIndex) => (
                                     <li key={featureIndex} className="flex items-start">
                                         <FiCheck className="text-green-500 mr-3 mt-1 flex-shrink-0" size={16} />
@@ -148,7 +163,7 @@ const Pricing = () => {
 
                             <button
                                 onClick={() => handleGetQuote(plan.id)}
-                                className={`w-full py-3 px-6 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center ${
+                                className={`w-full mt-auto py-3 px-6 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center ${
                                     plan.popular
                                         ? 'bg-primary-600 hover:bg-primary-700 text-white'
                                         : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100'
@@ -170,7 +185,7 @@ const Pricing = () => {
                     className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/20 p-8"
                 >
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-center">
-                        Additional Services
+                        Optional Add-ons
                     </h3>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {addOns.map((addon, index) => (
