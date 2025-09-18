@@ -120,27 +120,55 @@ const Services = () => {
 
                 {/* Call to Action */}
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.5 }}
                     viewport={{ once: true }}
-                    className="text-center mt-16"
+                    className="mt-24 relative"
                 >
-                    <div className="bg-gradient-navy dark:bg-gradient-card-dark rounded-3xl p-8 lg:p-12 shadow-premium dark:shadow-premium-dark">
-                        <h3 className="font-display text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
-                            Ready to Start Your Project?
-                        </h3>
-                        <p className="font-body text-navy-200 mb-8 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed">
-                            Let's discuss how we can help bring your vision to life with our expert development services.
-                        </p>
-                        <motion.button
-                            className="bg-gradient-accent hover:shadow-glow text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:scale-105 shadow-premium"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => window.location.href = '/contact'}
-                        >
-                            Get Free Consultation
-                        </motion.button>
+                    {/* Strategic Negative Space - Left Side */}
+                    <div className="grid lg:grid-cols-12 gap-12 items-center">
+                        <div className="lg:col-span-2">
+                            {/* Intentional negative space with floating accent */}
+                            <div className="hidden lg:block relative h-32">
+                                <div className="absolute top-8 right-0 w-8 h-8 bg-accent-500/30 rounded-full animate-pulse"></div>
+                            </div>
+                        </div>
+
+                        <div className="lg:col-span-8">
+                            <div className="bg-gradient-navy dark:bg-gradient-card-dark rounded-3xl shadow-premium dark:shadow-premium-dark relative overflow-hidden">
+                                {/* Overlapping Background Pattern */}
+                                <div className="absolute inset-0 bg-gradient-to-r from-accent-500/5 to-primary-500/5"></div>
+                                <div className="absolute top-0 right-0 w-40 h-40 bg-accent-500/10 rounded-full blur-2xl transform translate-x-8 -translate-y-8"></div>
+
+                                <div className="relative z-10 p-8 lg:p-12 text-center">
+                                    <h3 className="font-display text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
+                                        Ready to Start Your Project?
+                                    </h3>
+                                    <p className="font-body text-navy-200 mb-8 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed">
+                                        Let's discuss how we can help bring your vision to life with our expert development services.
+                                    </p>
+                                    <motion.button
+                                        className="bg-gradient-accent hover:shadow-glow text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:scale-105 shadow-premium relative overflow-hidden group"
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        onClick={() => window.location.href = '/contact'}
+                                    >
+                                        <span className="relative z-10">Get Free Consultation</span>
+
+                                        {/* Overlapping Shine Effect */}
+                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                                    </motion.button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="lg:col-span-2">
+                            {/* Strategic negative space with decorative element */}
+                            <div className="hidden lg:block relative h-32">
+                                <div className="absolute bottom-8 left-0 w-6 h-6 border-2 border-primary-500/30 rounded-full"></div>
+                            </div>
+                        </div>
                     </div>
                 </motion.div>
             </div>
@@ -151,6 +179,9 @@ const Services = () => {
                 onClose={closeModal}
                 service={selectedService}
             />
+
+            {/* Overlapping Section Divider */}
+            <div className="absolute bottom-0 right-0 w-full h-20 bg-gradient-to-l from-navy-800/10 to-transparent transform skew-y-1 translate-y-10 pointer-events-none"></div>
         </section>
     );
 };
