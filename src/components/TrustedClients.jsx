@@ -18,8 +18,6 @@ const TrustedClients = () => {
             company: "ArtSync",
             testimonial: "Excellent website, professional and consistent communication. Would definitely recommend!",
             rating: 5,
-            reviewCount: 3,
-            timeAgo: "2 weeks ago",
             verified: true
         },
         {
@@ -27,8 +25,6 @@ const TrustedClients = () => {
             author: "Lee Cooper",
             testimonial: "I was recommended this company from a previous business associate and I cant speak highly enough, honest, professional and most importantly extremely knowledgeable. Highly recommend 👌",
             rating: 5,
-            reviewCount: 2,
-            timeAgo: "5 weeks ago",
             verified: true
         },
         {
@@ -36,8 +32,6 @@ const TrustedClients = () => {
             author: "AzulPlays",
             testimonial: "I recently met the founder, and he was extremely helpful and knowledeable on the industy. They gave us some exciting website solutions, and really helped us innovate our business",
             rating: 5,
-            reviewCount: 9,
-            timeAgo: "5 weeks ago",
             verified: true
         },
         {
@@ -47,8 +41,6 @@ const TrustedClients = () => {
             position: "Founder",
             testimonial: "Excellent website designs and advice. Highly recommend!",
             rating: 5,
-            reviewCount: 4,
-            timeAgo: "6 weeks ago",
             verified: true
         }
     ];
@@ -155,9 +147,6 @@ const TrustedClients = () => {
                                     {[...Array(review.rating)].map((_, i) => (
                                         <FiStar key={i} className="text-accent-500 fill-current" size={18} />
                                     ))}
-                                    <span className="ml-2 font-body text-sm text-navy-500 dark:text-navy-400">
-                                        {review.timeAgo}
-                                    </span>
                                 </div>
 
                                 {/* Review Text */}
@@ -179,9 +168,6 @@ const TrustedClients = () => {
                                                 {review.position && `${review.position}, `}{review.company}
                                             </div>
                                         )}
-                                        <div className="font-body text-navy-600 dark:text-navy-400 text-sm">
-                                            {review.reviewCount} review{review.reviewCount !== 1 ? 's' : ''}
-                                        </div>
                                     </div>
                                 </div>
 
