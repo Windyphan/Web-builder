@@ -1,159 +1,222 @@
 import { motion } from 'framer-motion';
-import { FiStar, FiExternalLink } from 'react-icons/fi';
+import { FiStar, FiExternalLink, FiUser } from 'react-icons/fi';
 import { useTheme } from '../contexts/ThemeContext';
+import { useScrollAnimation, fadeInUp, staggerContainer, staggerItem } from '../hooks/useScrollAnimation';
 
 const TrustedClients = () => {
     const { isDark } = useTheme();
 
-    const trustedClient = {
-        name: "Local Business Solutions",
-        logo: "/api/placeholder/120/60",
-        testimonial: "The Innovation Curve transformed our online presence completely. Their attention to detail and technical expertise exceeded our expectations.",
-        author: "Sarah Johnson",
-        position: "Managing Director",
-        rating: 5,
-        projectUrl: "#"
-    };
+    // Scroll animation hooks
+    const [titleRef, titleControls] = useScrollAnimation(0.2);
+    const [testimonialsRef, testimonialsControls] = useScrollAnimation(0.1);
 
-    const additionalTestimonials = [
+    // Real customer reviews
+    const customerReviews = [
         {
-            author: "Mark Thompson",
-            position: "E-commerce Manager",
-            company: "TechStart Solutions",
-            testimonial: "Outstanding work on our e-commerce platform. The team delivered exactly what we needed, on time and within budget.",
-            rating: 5
+            id: 1,
+            author: "Jamie Osborne",
+            company: "ArtSync",
+            testimonial: "Excellent website, professional and consistent communication. Would definitely recommend!",
+            rating: 5,
+            reviewCount: 3,
+            timeAgo: "2 weeks ago",
+            verified: true
         },
         {
-            author: "Lisa Chen",
-            position: "Marketing Director",
-            company: "Digital Ventures",
-            testimonial: "Professional, creative, and technically sound. They helped us achieve our digital goals with innovative solutions.",
-            rating: 5
+            id: 2,
+            author: "Lee Cooper",
+            testimonial: "I was recommended this company from a previous business associate and I cant speak highly enough, honest, professional and most importantly extremely knowledgeable. Highly recommend 👌",
+            rating: 5,
+            reviewCount: 2,
+            timeAgo: "5 weeks ago",
+            verified: true
+        },
+        {
+            id: 3,
+            author: "AzulPlays",
+            testimonial: "I recently met the founder, and he was extremely helpful and knowledeable on the industy. They gave us some exciting website solutions, and really helped us innovate our business",
+            rating: 5,
+            reviewCount: 9,
+            timeAgo: "5 weeks ago",
+            verified: true
+        },
+        {
+            id: 4,
+            author: "Sam Hodgson",
+            company: "EnviroIT",
+            position: "Founder",
+            testimonial: "Excellent website designs and advice. Highly recommend!",
+            rating: 5,
+            reviewCount: 4,
+            timeAgo: "6 weeks ago",
+            verified: true
         }
     ];
 
+    // Animation variants
+    const cardVariants = {
+        rest: {
+            scale: 1,
+            y: 0,
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+            transition: { duration: 0.3, ease: "easeInOut" }
+        },
+        hover: {
+            scale: 1.02,
+            y: -5,
+            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15)",
+            transition: { duration: 0.3, ease: "easeInOut" }
+        }
+    };
+
     return (
-        <section id="trusted-clients" className="section-padding bg-gradient-to-br from-navy-50 via-white to-primary-50 dark:from-navy-900 dark:via-navy-800 dark:to-navy-950">
-            <div className="container-max">
+        <section id="trusted-clients" className="section-padding bg-gradient-to-br from-navy-50 via-white to-primary-50 dark:from-navy-900 dark:via-navy-800 dark:to-navy-950 relative overflow-hidden">
+            {/* Background Elements */}
+            <div className="absolute inset-0 opacity-30 dark:opacity-20">
+                <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-br from-accent-200 to-primary-200 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-br from-primary-200 to-accent-200 rounded-full blur-3xl"></div>
+            </div>
+
+            <div className="container mx-auto px-6 relative z-10">
                 {/* Header */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
+                    ref={titleRef}
+                    initial="hidden"
+                    animate={titleControls}
+                    variants={fadeInUp}
                     className="text-center mb-16"
                 >
                     <h2 className="font-display text-display-lg md:text-6xl font-extrabold bg-gradient-to-r from-navy-900 via-primary-600 to-accent-600 dark:from-navy-100 dark:via-primary-400 dark:to-accent-400 bg-clip-text text-transparent mb-6 tracking-headline">
-                        Client Success Stories
+                        Client Reviews
                     </h2>
                     <p className="font-body text-xl md:text-2xl text-navy-600 dark:text-navy-300 max-w-3xl mx-auto leading-relaxed font-medium">
-                        Building long-term partnerships with businesses who trust us with their digital success
+                        Real feedback from satisfied clients who trust us with their digital success
                     </p>
-                </motion.div>
 
-                {/* Featured Client */}
-                {trustedClient.name && (
+                    {/* Overall Rating Summary */}
                     <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
+                        className="flex items-center justify-center gap-4 mt-8"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, delay: 0.3 }}
                         viewport={{ once: true }}
-                        className="bg-gradient-card dark:bg-gradient-card-dark rounded-3xl shadow-premium dark:shadow-premium-dark p-8 lg:p-12 mb-16 border border-navy-200/20 dark:border-navy-700/20 text-center"
                     >
-                        <div className="flex justify-center mb-6">
-                            {[...Array(trustedClient.rating)].map((_, i) => (
-                                <FiStar key={i} className="text-accent-500 fill-current" size={24} />
+                        <div className="flex items-center gap-2">
+                            {[...Array(5)].map((_, i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.3, delay: 0.4 + (i * 0.1) }}
+                                    viewport={{ once: true }}
+                                >
+                                    <FiStar className="text-accent-500 fill-current" size={28} />
+                                </motion.div>
                             ))}
                         </div>
-
-                        <blockquote className="font-body text-xl md:text-2xl text-navy-700 dark:text-navy-300 mb-8 leading-relaxed italic">
-                            "{trustedClient.testimonial}"
-                        </blockquote>
-
-                        <div className="flex items-center justify-center gap-4 mb-6">
-                            <div className="text-center">
-                                <div className="font-display text-lg font-bold text-navy-900 dark:text-navy-100">
-                                    {trustedClient.author}
-                                </div>
-                                <div className="font-body text-accent-600 dark:text-accent-400 font-medium">
-                                    {trustedClient.position}
-                                </div>
-                                <div className="font-body text-navy-600 dark:text-navy-400">
-                                    {trustedClient.name}
-                                </div>
-                            </div>
+                        <div className="text-center">
+                            <div className="font-display text-2xl font-bold text-navy-900 dark:text-navy-100">5.0</div>
+                            <div className="font-body text-sm text-navy-600 dark:text-navy-400">Perfect Rating</div>
                         </div>
-
-                        {trustedClient.projectUrl !== "#" && (
-                            <a
-                                href={trustedClient.projectUrl}
-                                className="inline-flex items-center gap-2 text-accent-600 dark:text-accent-400 font-semibold hover:text-accent-500 transition-colors duration-300"
-                            >
-                                View Project <FiExternalLink size={18} />
-                            </a>
-                        )}
                     </motion.div>
-                )}
+                </motion.div>
 
-                {/* Additional Testimonials */}
-                <div className="grid md:grid-cols-2 gap-8">
-                    {additionalTestimonials.map((testimonial, index) => (
+                {/* Customer Reviews Grid */}
+                <motion.div
+                    ref={testimonialsRef}
+                    initial="hidden"
+                    animate={testimonialsControls}
+                    variants={staggerContainer}
+                    className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto"
+                >
+                    {customerReviews.map((review, index) => (
                         <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: index * 0.1 }}
-                            viewport={{ once: true }}
-                            className="bg-gradient-card dark:bg-gradient-card-dark rounded-3xl shadow-premium dark:shadow-premium-dark p-8 border border-navy-200/20 dark:border-navy-700/20 hover:shadow-glow-blue dark:hover:shadow-glow transition-all duration-300 hover:scale-105"
+                            key={review.id}
+                            variants={staggerItem}
+                            className="relative group"
                         >
-                            <div className="flex justify-center mb-4">
-                                {[...Array(testimonial.rating)].map((_, i) => (
-                                    <FiStar key={i} className="text-accent-500 fill-current" size={20} />
-                                ))}
-                            </div>
+                            <motion.div
+                                variants={cardVariants}
+                                initial="rest"
+                                whileHover="hover"
+                                className="bg-white/90 dark:bg-navy-800/90 backdrop-blur-sm rounded-2xl p-8 h-full border border-navy-200/30 dark:border-navy-700/30 relative overflow-hidden"
+                            >
+                                {/* Verified Badge */}
+                                {review.verified && (
+                                    <div className="absolute top-4 right-4">
+                                        <div className="flex items-center gap-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-1 rounded-full text-xs font-semibold">
+                                            ✓ Verified
+                                        </div>
+                                    </div>
+                                )}
 
-                            <blockquote className="font-body text-navy-700 dark:text-navy-300 mb-6 leading-relaxed italic">
-                                "{testimonial.testimonial}"
-                            </blockquote>
+                                {/* Rating Stars */}
+                                <div className="flex items-center gap-1 mb-4">
+                                    {[...Array(review.rating)].map((_, i) => (
+                                        <FiStar key={i} className="text-accent-500 fill-current" size={18} />
+                                    ))}
+                                    <span className="ml-2 font-body text-sm text-navy-500 dark:text-navy-400">
+                                        {review.timeAgo}
+                                    </span>
+                                </div>
 
-                            <div className="text-center">
-                                <div className="font-display text-lg font-bold text-navy-900 dark:text-navy-100 mb-1">
-                                    {testimonial.author}
+                                {/* Review Text */}
+                                <blockquote className="font-body text-navy-700 dark:text-navy-300 mb-6 leading-relaxed italic">
+                                    "{review.testimonial}"
+                                </blockquote>
+
+                                {/* Author Info */}
+                                <div className="flex items-center gap-3">
+                                    <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full text-white font-bold">
+                                        {review.author.charAt(0).toUpperCase()}
+                                    </div>
+                                    <div>
+                                        <div className="font-display text-lg font-bold text-navy-900 dark:text-navy-100 mb-1">
+                                            {review.author}
+                                        </div>
+                                        {review.company && (
+                                            <div className="font-body text-accent-600 dark:text-accent-400 font-medium mb-1">
+                                                {review.position && `${review.position}, `}{review.company}
+                                            </div>
+                                        )}
+                                        <div className="font-body text-navy-600 dark:text-navy-400 text-sm">
+                                            {review.reviewCount} review{review.reviewCount !== 1 ? 's' : ''}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="font-body text-accent-600 dark:text-accent-400 font-medium mb-1">
-                                    {testimonial.position}
-                                </div>
-                                <div className="font-body text-navy-600 dark:text-navy-400 text-sm">
-                                    {testimonial.company}
-                                </div>
-                            </div>
+
+                                {/* Hover Glow Effect */}
+                                <motion.div
+                                    className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-accent-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                                />
+                            </motion.div>
                         </motion.div>
                     ))}
-                </div>
+                </motion.div>
 
                 {/* Call to Action */}
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    className="text-center mt-16"
+                    initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                     viewport={{ once: true }}
-                    className="text-center mt-16"
                 >
-                    <div className="bg-gradient-navy dark:bg-gradient-card-dark rounded-3xl p-8 lg:p-12 shadow-premium dark:shadow-premium-dark">
+                    <div className="bg-gradient-to-r from-primary-600 to-accent-600 dark:from-primary-500 dark:to-accent-500 rounded-3xl p-8 text-white shadow-2xl">
                         <h3 className="font-display text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
-                            Ready to Join Our Success Stories?
+                            Join Our Satisfied Clients
                         </h3>
                         <p className="font-body text-navy-200 mb-8 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed">
-                            Let's work together to create something amazing that your customers will love.
+                            Experience the same level of excellence and professionalism that earned us these 5-star reviews
                         </p>
-                        <motion.button
+                        <motion.a
+                            href="/contact"
                             className="bg-gradient-accent hover:shadow-glow text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:scale-105 shadow-premium"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            onClick={() => window.location.href = '/contact'}
                         >
                             Start Your Project
-                        </motion.button>
+                        </motion.a>
                     </div>
                 </motion.div>
             </div>

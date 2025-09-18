@@ -11,10 +11,8 @@ const About = () => {
     const animationData = useThemeAnimation('about');
 
     const stats = [
-        { value: '50+', label: 'Projects Completed' },
         { value: '30+', label: 'Happy Clients' },
-        { value: '3+', label: 'Years Experience' },
-        { value: '99%', label: 'Client Satisfaction' }
+        { value: '100%', label: 'Client Satisfaction' }
     ];
 
     useEffect(() => {
