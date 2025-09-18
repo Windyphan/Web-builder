@@ -138,7 +138,7 @@ const Footer = () => {
                             <div className="flex items-center">
                                 <FiMapPin className="text-accent-400 mr-3" size={18} />
                                 <span className="font-body text-navy-200">
-                                    United Kingdom
+                                    1F23, Frenchay Campus, Coldharbour Ln, Bristol, United Kingdom BS16 1QY
                                 </span>
                             </div>
                         </div>

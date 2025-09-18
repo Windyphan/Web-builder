@@ -20,8 +20,8 @@ const Contact = () => {
         {
             icon: FiMapPin,
             title: 'Location',
-            content: 'United Kingdom',
-            link: '#'
+            content: '1F23, Frenchay Campus, Coldharbour Ln, Bristol, United Kingdom, BS16 1QY',
+            link: 'https://maps.google.com/?q=Frenchay+Campus+Coldharbour+Ln+Bristol+BS16+1QY'
         },
         {
             icon: FiClock,
@@ -102,7 +102,7 @@ const Contact = () => {
                     </p>
                 </motion.div>
 
-                <div className="grid lg:grid-cols-2 gap-12">
+                <div className="grid lg:grid-cols-2 gap-12 mb-16">
                     {/* Contact Information */}
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
@@ -280,6 +280,65 @@ const Contact = () => {
                         </form>
                     </motion.div>
                 </div>
+
+                {/* Google Map Section */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.3 }}
+                    viewport={{ once: true }}
+                    className="bg-gradient-card dark:bg-gradient-card-dark rounded-3xl p-8 shadow-premium dark:shadow-premium-dark border border-navy-200/20 dark:border-navy-700/20"
+                >
+                    <div className="text-center mb-8">
+                        <h3 className="font-display text-3xl font-bold text-navy-900 dark:text-navy-100 mb-4">
+                            Find Us
+                        </h3>
+                        <p className="font-body text-navy-600 dark:text-navy-300 leading-relaxed">
+                            Located at Frenchay Campus, Bristol. Visit us or schedule a meeting at our office.
+                        </p>
+                    </div>
+
+                    <div className="relative rounded-2xl overflow-hidden shadow-lg">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2475.8087654321!2d-2.5234567890123!3d51.4876543210987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sFrenchay%20Campus%2C%20University%20of%20the%20West%20of%20England%2C%20Coldharbour%20Ln%2C%20Bristol%20BS16%201QY%2C%20UK!5e0!3m2!1sen!2suk!4v1234567890"
+                            width="100%"
+                            height="400"
+                            style={{ border: 0 }}
+                            allowFullScreen=""
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            className="w-full h-[400px]"
+                            title="Our Office Location"
+                        ></iframe>
+
+                        {/* Map Overlay for Dark Mode */}
+                        <div className="absolute inset-0 bg-navy-900/10 dark:bg-navy-900/30 pointer-events-none rounded-2xl"></div>
+                    </div>
+
+                    <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
+                        <motion.a
+                            href="https://maps.google.com/?q=Frenchay+Campus+Coldharbour+Ln+Bristol+BS16+1QY"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center gap-2 bg-accent-600 hover:bg-accent-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <FiMapPin size={20} />
+                            Open in Google Maps
+                        </motion.a>
+
+                        <motion.a
+                            href="mailto:info@theinnovationcurve.com?subject=Schedule%20Office%20Visit"
+                            className="inline-flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <FiMail size={20} />
+                            Schedule a Visit
+                        </motion.a>
+                    </div>
+                </motion.div>
             </div>
         </section>
     );
