@@ -98,79 +98,107 @@ const Pricing = () => {
     };
 
     return (
-        <section id="pricing" className="section-padding bg-white dark:bg-gray-900">
+        <section id="pricing" className="section-padding bg-gradient-to-br from-navy-50 via-white to-navy-100 dark:from-navy-950 dark:via-navy-900 dark:to-navy-800">
             <div className="container-max">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true }}
-                    className="text-center mb-12"
+                    className="text-center mb-16"
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                    <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-navy-900 via-primary-600 to-navy-800 dark:from-navy-100 dark:via-primary-400 dark:to-navy-200 bg-clip-text text-transparent mb-6">
                         Our Packages
                     </h2>
-                    <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    <p className="text-xl text-navy-600 dark:text-navy-300 max-w-3xl mx-auto leading-relaxed">
                         Transparent pricing for every stage of your business journey. Find the perfect fit to achieve your goals.
                     </p>
                 </motion.div>
 
                 {/* Pricing Cards */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-16">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
                     {plans.map((plan, index) => (
                         <motion.div
                             key={plan.id}
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className={`relative flex flex-col bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/20 p-6 lg:p-8 min-h-[600px] ${
-                                plan.popular ? 'ring-2 ring-primary-500 lg:scale-105' : ''
+                            className={`relative flex flex-col rounded-3xl shadow-premium dark:shadow-premium-dark p-8 min-h-[650px] group hover:scale-105 transition-all duration-300 ${
+                                plan.popular 
+                                    ? 'bg-gradient-navy dark:bg-gradient-card-dark ring-2 ring-accent-500 shadow-glow' 
+                                    : 'bg-gradient-card dark:bg-gradient-card-dark hover:shadow-glow-blue'
                             }`}
                         >
                             {plan.popular && (
-                                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
-                                    <span className="bg-primary-500 text-white px-4 py-1 rounded-full text-sm font-medium whitespace-nowrap">
+                                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                                    <span className="bg-gradient-accent text-white px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap shadow-glow animate-glow-pulse">
                                         Most Popular
                                     </span>
                                 </div>
                             )}
 
-                            <div className="text-center mb-6">
-                                <h3 className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3 min-h-[3rem] flex items-center justify-center">
+                            <div className="text-center mb-8">
+                                <h3 className={`text-2xl font-bold mb-4 min-h-[3.5rem] flex items-center justify-center leading-tight ${
+                                    plan.popular 
+                                        ? 'text-white' 
+                                        : 'text-navy-900 dark:text-navy-100'
+                                }`}>
                                     {plan.name}
                                 </h3>
-                                <div className="text-3xl lg:text-4xl font-bold text-primary-600 dark:text-primary-400 mb-3">
+                                <div className={`text-4xl lg:text-5xl font-bold mb-4 ${
+                                    plan.popular 
+                                        ? 'text-accent-400' 
+                                        : 'text-primary-600 dark:text-primary-400'
+                                }`}>
                                     {plan.price}
                                 </div>
-                                <div className="flex items-center justify-center text-gray-500 dark:text-gray-400 mb-4">
-                                    <FiClock className="mr-2 flex-shrink-0" size={16} />
-                                    <span className="text-sm lg:text-base">{plan.duration}</span>
+                                <div className={`flex items-center justify-center mb-6 ${
+                                    plan.popular 
+                                        ? 'text-navy-300' 
+                                        : 'text-navy-500 dark:text-navy-400'
+                                }`}>
+                                    <FiClock className="mr-2 flex-shrink-0" size={18} />
+                                    <span className="font-medium">{plan.duration}</span>
                                 </div>
-                                <p className="text-gray-600 dark:text-gray-300 text-sm lg:text-base min-h-[3rem] flex items-center justify-center">
+                                <p className={`text-base min-h-[4rem] flex items-center justify-center leading-relaxed ${
+                                    plan.popular 
+                                        ? 'text-navy-200' 
+                                        : 'text-navy-600 dark:text-navy-300'
+                                }`}>
                                     {plan.description}
                                 </p>
                             </div>
 
-                            <ul className="space-y-3 mb-6 flex-grow">
+                            <ul className="space-y-4 mb-8 flex-grow">
                                 {plan.features.map((feature, featureIndex) => (
                                     <li key={featureIndex} className="flex items-start">
-                                        <FiCheck className="text-green-500 mr-3 mt-1 flex-shrink-0" size={16} />
-                                        <span className="text-gray-700 dark:text-gray-300 text-sm lg:text-base leading-relaxed">{feature}</span>
+                                        <FiCheck className={`mt-1 mr-3 flex-shrink-0 ${
+                                            plan.popular 
+                                                ? 'text-accent-400' 
+                                                : 'text-primary-500'
+                                        }`} size={18} />
+                                        <span className={`leading-relaxed ${
+                                            plan.popular 
+                                                ? 'text-navy-100' 
+                                                : 'text-navy-700 dark:text-navy-300'
+                                        }`}>
+                                            {feature}
+                                        </span>
                                     </li>
                                 ))}
                             </ul>
 
                             <button
                                 onClick={() => handleGetQuote(plan.id)}
-                                className={`w-full mt-auto py-3 px-4 lg:px-6 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center text-sm lg:text-base ${
+                                className={`w-full mt-auto py-4 px-6 rounded-xl font-bold transition-all duration-300 flex items-center justify-center text-base group-hover:scale-105 ${
                                     plan.popular
-                                        ? 'bg-primary-600 hover:bg-primary-700 text-white'
-                                        : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100'
+                                        ? 'bg-gradient-accent hover:shadow-glow text-white transform hover:scale-110'
+                                        : 'bg-gradient-primary hover:bg-gradient-accent text-white hover:shadow-glow-blue'
                                 }`}
                             >
-                                <span className="truncate">{plan.buttonText}</span>
-                                <FiArrowRight className="ml-2 flex-shrink-0" size={16} />
+                                {plan.buttonText}
+                                <FiArrowRight className="ml-3 flex-shrink-0 transition-transform group-hover:translate-x-1" size={18} />
                             </button>
                         </motion.div>
                     ))}
@@ -178,30 +206,36 @@ const Pricing = () => {
 
                 {/* Add-ons Section */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true }}
-                    className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/20 p-6 lg:p-8"
+                    className="bg-gradient-card dark:bg-gradient-card-dark rounded-3xl shadow-premium dark:shadow-premium-dark p-8 lg:p-12"
                 >
-                    <h3 className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-center">
+                    <h3 className="text-3xl font-bold bg-gradient-to-r from-navy-900 via-primary-600 to-accent-600 dark:from-navy-100 dark:via-primary-400 dark:to-accent-400 bg-clip-text text-transparent mb-8 text-center">
                         Optional Add-ons
                     </h3>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {addOns.map((addon, index) => (
                             <motion.div
                                 key={index}
-                                initial={{ opacity: 0, y: 10 }}
+                                initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6, delay: index * 0.1 }}
                                 viewport={{ once: true }}
-                                className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-primary-300 dark:hover:border-primary-600 transition-colors min-h-[120px] flex flex-col"
+                                className="border-2 border-navy-200 dark:border-navy-700 rounded-2xl p-6 hover:border-accent-400 dark:hover:border-accent-500 transition-all duration-300 min-h-[140px] flex flex-col hover:shadow-lg hover:scale-105 bg-white/50 dark:bg-navy-800/50 backdrop-blur-sm"
                             >
-                                <div className="flex justify-between items-start mb-3 gap-2">
-                                    <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm lg:text-base leading-tight">{addon.name}</h4>
-                                    <span className="text-primary-600 dark:text-primary-400 font-bold text-sm lg:text-base whitespace-nowrap flex-shrink-0">{addon.price}</span>
+                                <div className="flex justify-between items-start mb-4 gap-3">
+                                    <h4 className="font-bold text-navy-900 dark:text-navy-100 leading-tight flex-1">
+                                        {addon.name}
+                                    </h4>
+                                    <span className="bg-gradient-accent bg-clip-text text-transparent font-bold whitespace-nowrap flex-shrink-0 text-lg">
+                                        {addon.price}
+                                    </span>
                                 </div>
-                                <p className="text-gray-600 dark:text-gray-300 text-xs lg:text-sm leading-relaxed flex-grow">{addon.description}</p>
+                                <p className="text-navy-600 dark:text-navy-300 text-sm leading-relaxed flex-grow">
+                                    {addon.description}
+                                </p>
                             </motion.div>
                         ))}
                     </div>
@@ -210,10 +244,10 @@ const Pricing = () => {
                 {/* Notification */}
                 {showNotification && (
                     <motion.div
-                        initial={{ opacity: 0, y: -50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -50 }}
-                        className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50"
+                        initial={{ opacity: 0, y: -50, scale: 0.9 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -50, scale: 0.9 }}
+                        className="fixed top-6 right-6 bg-gradient-accent text-white px-8 py-4 rounded-2xl shadow-glow z-50 font-bold"
                     >
                         Quote request sent! We'll contact you soon.
                     </motion.div>
