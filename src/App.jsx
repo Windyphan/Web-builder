@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
-import AIChatbot from './components/AIChatbot';
 import Home from './pages/Home';
 import Portfolio from './pages/Portfolio';
 import Pricing from './pages/Pricing';
@@ -115,7 +114,6 @@ function App() {
                             <Route path="*" element={<NotFound />} />
                         </Routes>
                     </div>
-                    <AIChatbot />
                 </Router>
             </ThemeProvider>
         </ErrorBoundary>
