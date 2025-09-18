@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiCode, FiSmartphone, FiGlobe, FiSettings, FiMessageCircle, FiShield } from 'react-icons/fi';
+import { FiCode, FiSmartphone, FiGlobe, FiMessageCircle, FiShield } from 'react-icons/fi';
 import ServiceModal from './ServiceModal';
 
 const Services = () => {
@@ -60,10 +60,10 @@ const Services = () => {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-navy-900 via-primary-600 to-accent-600 dark:from-navy-100 dark:via-primary-400 dark:to-accent-400 bg-clip-text text-transparent mb-6">
+                    <h2 className="font-display text-display-lg md:text-6xl font-extrabold bg-gradient-to-r from-navy-900 via-primary-600 to-accent-600 dark:from-navy-100 dark:via-primary-400 dark:to-accent-400 bg-clip-text text-transparent mb-6 tracking-headline">
                         Our Services
                     </h2>
-                    <p className="text-xl text-navy-600 dark:text-navy-300 max-w-3xl mx-auto leading-relaxed">
+                    <p className="font-body text-xl md:text-2xl text-navy-600 dark:text-navy-300 max-w-3xl mx-auto leading-relaxed font-medium">
                         We provide comprehensive digital solutions to help your business thrive in the modern world.
                     </p>
                 </motion.div>
@@ -84,11 +84,11 @@ const Services = () => {
                                     <service.icon className="text-white" size={32} />
                                 </div>
 
-                                <h3 className="text-2xl font-bold text-navy-900 dark:text-navy-100 mb-4 group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors duration-300">
+                                <h3 className="font-display text-2xl font-bold text-navy-900 dark:text-navy-100 mb-4 group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors duration-300 tracking-tight">
                                     {service.title}
                                 </h3>
 
-                                <p className="text-navy-600 dark:text-navy-300 mb-6 leading-relaxed">
+                                <p className="font-body text-navy-600 dark:text-navy-300 mb-6 leading-relaxed">
                                     {service.description}
                                 </p>
 
@@ -96,7 +96,7 @@ const Services = () => {
                                     {service.features.map((feature, featureIndex) => (
                                         <li key={featureIndex} className="flex items-center text-navy-700 dark:text-navy-300">
                                             <div className="w-2 h-2 bg-gradient-accent rounded-full mr-3 flex-shrink-0"></div>
-                                            <span className="text-sm font-medium">{feature}</span>
+                                            <span className="font-body text-sm font-medium">{feature}</span>
                                         </li>
                                     ))}
                                 </ul>
@@ -127,10 +127,10 @@ const Services = () => {
                     className="text-center mt-16"
                 >
                     <div className="bg-gradient-navy dark:bg-gradient-card-dark rounded-3xl p-8 lg:p-12 shadow-premium dark:shadow-premium-dark">
-                        <h3 className="text-3xl font-bold text-white mb-4">
+                        <h3 className="font-display text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
                             Ready to Start Your Project?
                         </h3>
-                        <p className="text-navy-200 mb-8 text-lg max-w-2xl mx-auto">
+                        <p className="font-body text-navy-200 mb-8 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed">
                             Let's discuss how we can help bring your vision to life with our expert development services.
                         </p>
                         <motion.button

@@ -10,7 +10,6 @@ import heroAnimation from '../assets/Hero_section_animation.json';
 
 const Hero = () => {
     const [isVisible, setIsVisible] = useState(false);
-    const [animationLoaded, setAnimationLoaded] = useState(false);
     const lottieRef = useRef(null);
     const { isDark } = useTheme();
 
@@ -52,11 +51,7 @@ const Hero = () => {
     return (
         <section
             id="home"
-            className={`pt-16 relative overflow-hidden transition-colors duration-300 ${
-                isDark
-                    ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900'
-                    : 'bg-gradient-to-br from-primary-50 to-white'
-            }`}
+            className="pt-16 relative overflow-hidden transition-colors duration-300 bg-gradient-hero dark:bg-gradient-to-br dark:from-navy-950 dark:via-navy-900 dark:to-navy-800"
             style={{ minHeight: '100vh' }}
         >
             {/* Animated Background Particles */}
@@ -68,8 +63,8 @@ const Hero = () => {
                             key={i}
                             className={`absolute rounded-full transition-colors duration-300 ${
                                 isDark
-                                    ? 'bg-gradient-to-r from-blue-500/10 to-purple-500/10'
-                                    : 'bg-gradient-to-r from-primary-200/20 to-blue-300/20'
+                                    ? 'bg-gradient-to-r from-primary-500/20 to-accent-500/20'
+                                    : 'bg-gradient-to-r from-primary-200/30 to-accent-200/30'
                             }`}
                             style={{
                                 width: `${100 + i * 50}px`,
@@ -112,31 +107,26 @@ const Hero = () => {
 
             {/* Main Content */}
             <div className="container mx-auto px-6 py-20 relative z-20">
-                <div className="max-w-4xl mx-auto text-center">
+                <div className="max-w-5xl mx-auto text-center">
                     <motion.h1
-                        className={`text-5xl md:text-7xl font-bold mb-6 transition-colors duration-300 ${
-                            isDark ? 'text-white' : 'text-gray-900'
-                        }`}
-                        initial={{ opacity: 0, y: 20 }}
+                        className="font-display text-hero-lg md:text-hero-xl font-black mb-6 transition-colors duration-300 bg-gradient-to-r from-white via-navy-100 to-primary-100 dark:from-white dark:via-primary-200 dark:to-accent-200 bg-clip-text text-transparent tracking-headline"
+                        initial={{ opacity: 0, y: 30 }}
                         animate={isVisible ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 0.8 }}
                     >
                         Build Your
-                        <span className="text-primary-600 dark:text-primary-400 block">
+                        <span className="block bg-gradient-accent bg-clip-text text-transparent font-black tracking-tighter">
                             Digital Future
                         </span>
                     </motion.h1>
 
                     <motion.p
-                        className={`text-xl md:text-2xl mb-8 max-w-2xl mx-auto transition-colors duration-300 ${
-                            isDark ? 'text-gray-300' : 'text-gray-600'
-                        }`}
+                        className="font-body text-xl md:text-2xl mb-8 max-w-2xl mx-auto transition-colors duration-300 text-navy-100 dark:text-navy-200 font-medium leading-relaxed"
                         initial={{ opacity: 0, y: 20 }}
                         animate={isVisible ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 0.8, delay: 0.2 }}
                     >
-                        We create stunning, responsive websites that drive results
-                        and elevate your brand in the digital landscape.
+                        We help you create stunning, responsive websites.
                     </motion.p>
 
                     <motion.div
@@ -147,22 +137,18 @@ const Hero = () => {
                     >
                         <Link to="/contact">
                             <motion.button
-                                className="bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white px-8 py-4 rounded-full font-semibold flex items-center gap-2 transition-all duration-200 shadow-lg hover:shadow-xl"
+                                className="bg-gradient-accent hover:shadow-glow text-white px-8 py-4 rounded-full font-semibold flex items-center gap-2 transition-all duration-300 shadow-premium hover:scale-105"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                             >
-                                Get Free Consultation
-                                <FiArrowRight />
+                                Get Started Today
+                                <FiArrowRight className="transition-transform group-hover:translate-x-1" />
                             </motion.button>
                         </Link>
 
                         <Link to="/portfolio">
                             <motion.button
-                                className={`border-2 px-8 py-4 rounded-full font-semibold flex items-center gap-2 transition-all duration-200 ${
-                                    isDark
-                                        ? 'border-gray-600 text-gray-300 hover:border-primary-400 hover:text-primary-400'
-                                        : 'border-gray-300 text-gray-700 hover:border-primary-600 hover:text-primary-600'
-                                }`}
+                                className="border-2 border-white/30 hover:border-accent-400 text-white hover:bg-accent-500/10 px-8 py-4 rounded-full font-semibold flex items-center gap-2 transition-all duration-300 backdrop-blur-sm hover:scale-105"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                             >
@@ -171,8 +157,43 @@ const Hero = () => {
                             </motion.button>
                         </Link>
                     </motion.div>
+
+                    {/* Stats Section */}
+                    <motion.div
+                        className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 pt-16 border-t border-white/20"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 0.8, delay: 0.6 }}
+                    >
+                        {[
+                            { number: '50+', label: 'Projects Delivered' },
+                            { number: '98%', label: 'Client Satisfaction' },
+                            { number: '24/7', label: 'Support Available' },
+                            { number: '3+', label: 'Years Experience' }
+                        ].map((stat, index) => (
+                            <div key={index} className="text-center">
+                                <div className="font-display text-4xl md:text-5xl font-extrabold bg-gradient-accent bg-clip-text text-transparent mb-2">
+                                    {stat.number}
+                                </div>
+                                <div className="font-body text-navy-200 text-sm font-medium">
+                                    {stat.label}
+                                </div>
+                            </div>
+                        ))}
+                    </motion.div>
                 </div>
             </div>
+
+            {/* Scroll indicator */}
+            <motion.div
+                className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30"
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+            >
+                <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+                    <div className="w-1 h-3 bg-accent-400 rounded-full mt-2 animate-pulse"></div>
+                </div>
+            </motion.div>
         </section>
     );
 };

@@ -75,8 +75,58 @@ export default {
                 'gradient-subtle': 'linear-gradient(180deg, transparent 0%, rgba(15, 23, 42, 0.05) 100%)',
                 'gradient-subtle-dark': 'linear-gradient(180deg, transparent 0%, rgba(248, 250, 252, 0.05) 100%)',
             },
+            // Enhanced typography with personality
             fontFamily: {
-                'sans': ['Inter', 'system-ui', 'sans-serif'],
+                'display': ['Poppins', 'Inter', 'system-ui', 'sans-serif'], // Headlines with personality
+                'sans': ['Inter', 'system-ui', 'sans-serif'], // Clean body text
+                'body': ['Inter', 'system-ui', 'sans-serif'], // Explicit body font
+                'heading': ['Poppins', 'Inter', 'system-ui', 'sans-serif'], // Alternative heading font
+            },
+            // Sophisticated font sizes with stronger hierarchy
+            fontSize: {
+                'xs': ['0.75rem', { lineHeight: '1rem' }],
+                'sm': ['0.875rem', { lineHeight: '1.25rem' }],
+                'base': ['1rem', { lineHeight: '1.5rem' }],
+                'lg': ['1.125rem', { lineHeight: '1.75rem' }],
+                'xl': ['1.25rem', { lineHeight: '1.75rem' }],
+                '2xl': ['1.5rem', { lineHeight: '2rem' }],
+                '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+                '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+                '5xl': ['3rem', { lineHeight: '1.1' }],
+                '6xl': ['3.75rem', { lineHeight: '1.1' }],
+                '7xl': ['4.5rem', { lineHeight: '1.1' }],
+                '8xl': ['6rem', { lineHeight: '1.1' }],
+                '9xl': ['8rem', { lineHeight: '1.1' }],
+                // Custom display sizes for hero sections
+                'hero': ['5rem', { lineHeight: '1.1', fontWeight: '800' }],
+                'hero-lg': ['6rem', { lineHeight: '1.05', fontWeight: '800' }],
+                'hero-xl': ['7rem', { lineHeight: '1.05', fontWeight: '900' }],
+                // Custom sizes for different contexts
+                'display-sm': ['2.5rem', { lineHeight: '2.75rem', fontWeight: '700' }],
+                'display-md': ['3.5rem', { lineHeight: '3.75rem', fontWeight: '700' }],
+                'display-lg': ['4.5rem', { lineHeight: '4.75rem', fontWeight: '800' }],
+            },
+            // Enhanced font weights
+            fontWeight: {
+                'thin': '100',
+                'extralight': '200',
+                'light': '300',
+                'normal': '400',
+                'medium': '500',
+                'semibold': '600',
+                'bold': '700',
+                'extrabold': '800',
+                'black': '900',
+            },
+            // Letter spacing for headlines
+            letterSpacing: {
+                'tighter': '-0.05em',
+                'tight': '-0.025em',
+                'normal': '0em',
+                'wide': '0.025em',
+                'wider': '0.05em',
+                'widest': '0.1em',
+                'headline': '-0.02em', // Custom for headlines
             },
             // Enhanced shadows for depth
             boxShadow: {
@@ -84,12 +134,14 @@ export default {
                 'glow-blue': '0 0 20px rgba(14, 165, 233, 0.3)',
                 'premium': '0 20px 40px rgba(15, 23, 42, 0.1)',
                 'premium-dark': '0 20px 40px rgba(0, 0, 0, 0.3)',
+                'text-glow': '0 0 10px rgba(249, 115, 22, 0.5)',
             },
             // Animation for smooth transitions
             animation: {
                 'fade-in': 'fadeIn 0.5s ease-in-out',
                 'slide-up': 'slideUp 0.6s ease-out',
                 'glow-pulse': 'glowPulse 2s ease-in-out infinite alternate',
+                'text-shimmer': 'textShimmer 3s ease-in-out infinite',
             },
             keyframes: {
                 fadeIn: {
@@ -103,6 +155,10 @@ export default {
                 glowPulse: {
                     '0%': { boxShadow: '0 0 20px rgba(249, 115, 22, 0.3)' },
                     '100%': { boxShadow: '0 0 30px rgba(249, 115, 22, 0.6)' },
+                },
+                textShimmer: {
+                    '0%, 100%': { backgroundPosition: '0% 50%' },
+                    '50%': { backgroundPosition: '100% 50%' },
                 },
             },
         },

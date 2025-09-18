@@ -25,7 +25,9 @@ function Home() {
 
     return (
         <div className={`min-h-screen transition-colors duration-300 ${
-            isDark ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-900'
+            isDark 
+                ? 'bg-gradient-to-br from-navy-950 via-navy-900 to-navy-800 text-navy-100' 
+                : 'bg-gradient-to-br from-navy-50 via-white to-navy-100 text-navy-900'
         }`}>
             <Header />
             <Hero />
@@ -34,9 +36,9 @@ function Home() {
             <Footer />
 
             <Notification
+                isVisible={notification.isVisible}
                 type={notification.type}
                 message={notification.message}
-                isVisible={notification.isVisible}
                 onClose={hideNotification}
             />
         </div>

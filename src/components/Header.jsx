@@ -9,7 +9,6 @@ const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const location = useLocation();
-    const { isDark } = useTheme();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -48,7 +47,7 @@ const Header = () => {
                     {/* Logo */}
                     <Link to="/">
                         <motion.div
-                            className="text-2xl font-bold bg-gradient-to-r from-primary-600 via-accent-500 to-primary-700 dark:from-primary-400 dark:via-accent-400 dark:to-primary-500 bg-clip-text text-transparent"
+                            className="font-display text-2xl font-extrabold bg-gradient-to-r from-primary-600 via-accent-500 to-primary-700 dark:from-primary-400 dark:via-accent-400 dark:to-primary-500 bg-clip-text text-transparent tracking-tight"
                             whileHover={{ scale: 1.05 }}
                         >
                             The Innovation Curve

@@ -107,10 +107,10 @@ const Pricing = () => {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-navy-900 via-primary-600 to-navy-800 dark:from-navy-100 dark:via-primary-400 dark:to-navy-200 bg-clip-text text-transparent mb-6">
+                    <h2 className="font-display text-display-lg md:text-6xl font-extrabold bg-gradient-to-r from-navy-900 via-primary-600 to-navy-800 dark:from-navy-100 dark:via-primary-400 dark:to-navy-200 bg-clip-text text-transparent mb-6 tracking-headline">
                         Our Packages
                     </h2>
-                    <p className="text-xl text-navy-600 dark:text-navy-300 max-w-3xl mx-auto leading-relaxed">
+                    <p className="font-body text-xl md:text-2xl text-navy-600 dark:text-navy-300 max-w-3xl mx-auto leading-relaxed font-medium">
                         Transparent pricing for every stage of your business journey. Find the perfect fit to achieve your goals.
                     </p>
                 </motion.div>
