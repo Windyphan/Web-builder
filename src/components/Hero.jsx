@@ -135,27 +135,6 @@ const Hero = () => {
                         animate={isVisible ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 0.8, delay: 0.4 }}
                     >
-                        <Link to="/contact">
-                            <motion.button
-                                className="bg-gradient-accent hover:shadow-glow text-white px-8 py-4 rounded-full font-semibold flex items-center gap-2 transition-all duration-300 shadow-premium hover:scale-105"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                Get Started Today
-                                <FiArrowRight className="transition-transform group-hover:translate-x-1" />
-                            </motion.button>
-                        </Link>
-
-                        <Link to="/portfolio">
-                            <motion.button
-                                className="border-2 border-white/30 hover:border-accent-400 text-white hover:bg-accent-500/10 px-8 py-4 rounded-full font-semibold flex items-center gap-2 transition-all duration-300 backdrop-blur-sm hover:scale-105"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <FiPlay />
-                                View Our Work
-                            </motion.button>
-                        </Link>
                     </motion.div>
 
                     {/* Stats Section */}

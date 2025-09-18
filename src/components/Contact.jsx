@@ -54,7 +54,6 @@ const Contact = () => {
         setSubmitStatus(null);
 
         try {
-            // Replace these with your actual EmailJS service, template and user IDs
             await emailjs.send(
                 'service_4lbrwu9',
                 'template_sotia64',
@@ -68,7 +67,6 @@ const Contact = () => {
                 },
                 '_KGvnP1t8dVz7HVoB'
             );
-
             setSubmitStatus('success');
             setFormData({
                 name: '',
@@ -85,21 +83,22 @@ const Contact = () => {
             setIsSubmitting(false);
         }
     };
+
     return (
-        <section id="contact" className="section-padding bg-gray-50 dark:bg-gray-800">
+        <section id="contact" className="section-padding bg-gradient-to-br from-white via-navy-50 to-primary-50 dark:from-navy-950 dark:via-navy-900 dark:to-navy-800">
             <div className="container-max">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true }}
-                    className="text-center mb-12"
+                    className="text-center mb-16"
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                    <h2 className="font-display text-display-lg md:text-6xl font-extrabold bg-gradient-to-r from-navy-900 via-primary-600 to-accent-600 dark:from-navy-100 dark:via-primary-400 dark:to-accent-400 bg-clip-text text-transparent mb-6 tracking-headline">
                         Get In Touch
                     </h2>
-                    <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                        Ready to start your project? Let's discuss how we can help bring your vision to life
+                    <p className="font-body text-xl md:text-2xl text-navy-600 dark:text-navy-300 max-w-3xl mx-auto leading-relaxed font-medium">
+                        Ready to start your project? Let's discuss how we can help bring your vision to life.
                     </p>
                 </motion.div>
 
@@ -110,94 +109,58 @@ const Contact = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8 }}
                         viewport={{ once: true }}
+                        className="space-y-8"
                     >
-                        <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-6">
-                            Let's Start a Conversation
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-300 mb-8">
-                            We'd love to hear about your project and discuss how we can help you achieve your digital goals. Get in touch with us for a free consultation.
-                        </p>
+                        <div>
+                            <h3 className="font-display text-3xl font-bold text-navy-900 dark:text-navy-100 mb-6">
+                                Contact Information
+                            </h3>
+                            <p className="font-body text-navy-600 dark:text-navy-300 leading-relaxed mb-8">
+                                We're here to help you succeed. Reach out to us through any of the following channels.
+                            </p>
+                        </div>
 
-                        <div className="space-y-6">
+                        <div className="grid sm:grid-cols-2 gap-6">
                             {contactInfo.map((info, index) => (
-                                <motion.div
+                                <motion.a
                                     key={index}
-                                    className="flex items-start"
-                                    initial={{ opacity: 0, y: 10 }}
+                                    href={info.link}
+                                    initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.6, delay: index * 0.1 }}
                                     viewport={{ once: true }}
+                                    className="bg-gradient-card dark:bg-gradient-card-dark rounded-2xl p-6 shadow-premium dark:shadow-premium-dark hover:shadow-glow-blue dark:hover:shadow-glow transition-all duration-300 hover:scale-105 border border-navy-200/20 dark:border-navy-700/20 group"
                                 >
-                                    <div className="bg-primary-100 dark:bg-primary-900/30 rounded-full p-3 mr-4">
-                                        <info.icon className="text-primary-600 dark:text-primary-400" size={20} />
+                                    <div className="flex items-center justify-center w-12 h-12 bg-gradient-accent rounded-xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                                        <info.icon className="text-white" size={24} />
                                     </div>
-                                    <div>
-                                        <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-1">
-                                            {info.title}
-                                        </h4>
-                                        {info.link !== '#' ? (
-                                            <a
-                                                href={info.link}
-                                                className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
-                                            >
-                                                {info.content}
-                                            </a>
-                                        ) : (
-                                            <span className="text-gray-600 dark:text-gray-300">{info.content}</span>
-                                        )}
-                                    </div>
-                                </motion.div>
+                                    <h4 className="font-display text-lg font-semibold text-navy-900 dark:text-navy-100 mb-2 group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors duration-300">
+                                        {info.title}
+                                    </h4>
+                                    <p className="font-body text-navy-600 dark:text-navy-300 text-sm">
+                                        {info.content}
+                                    </p>
+                                </motion.a>
                             ))}
                         </div>
-
-                        {/* Why Choose Us */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 0.4 }}
-                            viewport={{ once: true }}
-                            className="mt-8 p-6 bg-white dark:bg-gray-700 rounded-xl shadow-sm"
-                        >
-                            <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">
-                                Why Choose Us?
-                            </h4>
-                            <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                                <li className="flex items-center">
-                                    <div className="w-2 h-2 bg-primary-600 dark:bg-primary-400 rounded-full mr-3"></div>
-                                    Free consultation and project estimate
-                                </li>
-                                <li className="flex items-center">
-                                    <div className="w-2 h-2 bg-primary-600 dark:bg-primary-400 rounded-full mr-3"></div>
-                                    Fast response within 24 hours
-                                </li>
-                                <li className="flex items-center">
-                                    <div className="w-2 h-2 bg-primary-600 dark:bg-primary-400 rounded-full mr-3"></div>
-                                    Transparent pricing with no hidden costs
-                                </li>
-                                <li className="flex items-center">
-                                    <div className="w-2 h-2 bg-primary-600 dark:bg-primary-400 rounded-full mr-3"></div>
-                                    3+ years of proven track record
-                                </li>
-                            </ul>
-                        </motion.div>
                     </motion.div>
 
                     {/* Contact Form */}
                     <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
                         viewport={{ once: true }}
-                        className="bg-white dark:bg-gray-700 p-8 rounded-xl shadow-lg dark:shadow-gray-900/20"
+                        className="bg-gradient-card dark:bg-gradient-card-dark rounded-3xl p-8 shadow-premium dark:shadow-premium-dark border border-navy-200/20 dark:border-navy-700/20"
                     >
-                        <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-6">
+                        <h3 className="font-display text-3xl font-bold text-navy-900 dark:text-navy-100 mb-6">
                             Send Us a Message
                         </h3>
 
                         <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="grid md:grid-cols-2 gap-6">
+                            <div className="grid sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    <label className="font-body block text-navy-700 dark:text-navy-300 font-medium mb-2">
                                         Name *
                                     </label>
                                     <input
@@ -206,12 +169,12 @@ const Contact = () => {
                                         value={formData.name}
                                         onChange={handleChange}
                                         required
-                                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-200"
-                                        placeholder="Your Name"
+                                        className="w-full px-4 py-3 bg-white dark:bg-navy-800 border border-navy-300 dark:border-navy-600 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-transparent transition-all duration-300 font-body"
+                                        placeholder="Your name"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    <label className="font-body block text-navy-700 dark:text-navy-300 font-medium mb-2">
                                         Email *
                                     </label>
                                     <input
@@ -220,121 +183,101 @@ const Contact = () => {
                                         value={formData.email}
                                         onChange={handleChange}
                                         required
-                                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-200"
-                                        placeholder="your@email.com"
+                                        className="w-full px-4 py-3 bg-white dark:bg-navy-800 border border-navy-300 dark:border-navy-600 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-transparent transition-all duration-300 font-body"
+                                        placeholder="your.email@example.com"
                                     />
                                 </div>
                             </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                    Phone (Optional)
-                                </label>
-                                <input
-                                    type="tel"
-                                    name="phone"
-                                    value={formData.phone}
-                                    onChange={handleChange}
-                                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-200"
-                                    placeholder="Your phone number"
-                                />
+                            <div className="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="font-body block text-navy-700 dark:text-navy-300 font-medium mb-2">
+                                        Phone
+                                    </label>
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-3 bg-white dark:bg-navy-800 border border-navy-300 dark:border-navy-600 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-transparent transition-all duration-300 font-body"
+                                        placeholder="Your phone number"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="font-body block text-navy-700 dark:text-navy-300 font-medium mb-2">
+                                        Project Type
+                                    </label>
+                                    <select
+                                        name="projectType"
+                                        value={formData.projectType}
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-3 bg-white dark:bg-navy-800 border border-navy-300 dark:border-navy-600 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-transparent transition-all duration-300 font-body"
+                                    >
+                                        <option value="">Select a project type</option>
+                                        <option value="website">Website Development</option>
+                                        <option value="ecommerce">E-commerce Store</option>
+                                        <option value="mobile">Mobile App</option>
+                                        <option value="consultation">Consultation</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                    Project Type
-                                </label>
-                                <select
-                                    name="projectType"
-                                    value={formData.projectType}
-                                    onChange={handleChange}
-                                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-200"
-                                >
-                                    <option value="">Select a service</option>
-                                    <option value="web-development">Web Development</option>
-                                    <option value="ecommerce">E-commerce Solution</option>
-                                    <option value="mobile-app">Mobile App</option>
-                                    <option value="maintenance">Website Maintenance</option>
-                                    <option value="consultation">Consultation</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <label className="font-body block text-navy-700 dark:text-navy-300 font-medium mb-2">
                                     Budget Range
                                 </label>
                                 <select
                                     name="budget"
                                     value={formData.budget}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-200"
+                                    className="w-full px-4 py-3 bg-white dark:bg-navy-800 border border-navy-300 dark:border-navy-600 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-transparent transition-all duration-300 font-body"
                                 >
-                                    <option value="">Select budget range</option>
-                                    <option value="under-1000">Under £1,000</option>
-                                    <option value="1000-3000">£1,000 - £3,000</option>
-                                    <option value="3000-5000">£3,000 - £5,000</option>
-                                    <option value="5000-10000">£5,000 - £10,000</option>
-                                    <option value="over-10000">Over £10,000</option>
+                                    <option value="">Select your budget range</option>
+                                    <option value="under-1k">Under £1,000</option>
+                                    <option value="1k-5k">£1,000 - £5,000</option>
+                                    <option value="5k-10k">£5,000 - £10,000</option>
+                                    <option value="10k-plus">£10,000+</option>
                                 </select>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                    Project Details *
+                                <label className="font-body block text-navy-700 dark:text-navy-300 font-medium mb-2">
+                                    Message *
                                 </label>
                                 <textarea
-                                    rows="6"
                                     name="message"
                                     value={formData.message}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-200"
-                                    placeholder="Tell us about your project, goals, timeline, and any specific requirements..."
-                                ></textarea>
+                                    rows={6}
+                                    className="w-full px-4 py-3 bg-white dark:bg-navy-800 border border-navy-300 dark:border-navy-600 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-transparent transition-all duration-300 font-body resize-none"
+                                    placeholder="Tell us about your project..."
+                                />
                             </div>
-
-                            {submitStatus === 'success' && (
-                                <div className="p-4 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-lg">
-                                    Thank you! Your message has been sent successfully.
-                                </div>
-                            )}
-
-                            {submitStatus === 'error' && (
-                                <div className="p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-lg">
-                                    There was an error sending your message. Please try again or contact us directly.
-                                </div>
-                            )}
 
                             <motion.button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className={`w-full ${isSubmitting ? 'bg-gray-400' : 'bg-primary-600 hover:bg-primary-700'} text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center`}
+                                className="w-full bg-gradient-accent hover:shadow-glow text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 shadow-premium disabled:opacity-50 disabled:cursor-not-allowed"
                                 whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                                 whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                             >
                                 {isSubmitting ? 'Sending...' : 'Send Message'}
                             </motion.button>
-                        </form>
 
-                        <div className="mt-6 text-center">
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                                Or contact us directly at{' '}
-                                <a
-                                    href="mailto:info@theinnovationcurve.com"
-                                    className="text-primary-600 dark:text-primary-400 hover:underline"
-                                >
-                                    info@theinnovationcurve.com
-                                </a>
-                                {' '}or{' '}
-                                <a
-                                    href="tel:07340764930"
-                                    className="text-primary-600 dark:text-primary-400 hover:underline"
-                                >
-                                    07340764930
-                                </a>
-                            </p>
-                        </div>
+                            {submitStatus === 'success' && (
+                                <div className="text-green-600 dark:text-green-400 font-body text-center">
+                                    Message sent successfully! We'll get back to you soon.
+                                </div>
+                            )}
+
+                            {submitStatus === 'error' && (
+                                <div className="text-red-600 dark:text-red-400 font-body text-center">
+                                    Failed to send message. Please try again or contact us directly.
+                                </div>
+                            )}
+                        </form>
                     </motion.div>
                 </div>
             </div>

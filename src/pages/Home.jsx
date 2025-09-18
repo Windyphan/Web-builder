@@ -32,7 +32,6 @@ function Home() {
             <Header />
             <Hero />
             <Services />
-            <TrustedClients />
             <Footer />
 
             <Notification

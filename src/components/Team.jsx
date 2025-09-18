@@ -18,19 +18,19 @@ const Team = () => {
     ];
 
     return (
-        <section id="team" className="section-padding bg-gray-50 dark:bg-gray-800">
+        <section id="team" className="section-padding bg-gradient-to-br from-navy-50 via-white to-primary-50 dark:from-navy-900 dark:via-navy-800 dark:to-navy-950">
             <div className="container-max">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true }}
-                    className="text-center mb-12"
+                    className="text-center mb-16"
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                    <h2 className="font-display text-display-lg md:text-6xl font-extrabold bg-gradient-to-r from-navy-900 via-primary-600 to-accent-600 dark:from-navy-100 dark:via-primary-400 dark:to-accent-400 bg-clip-text text-transparent mb-6 tracking-headline">
                         Meet Our Team
                     </h2>
-                    <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    <p className="font-body text-xl md:text-2xl text-navy-600 dark:text-navy-300 max-w-3xl mx-auto leading-relaxed font-medium">
                         Passionate professionals dedicated to delivering exceptional web solutions
                     </p>
                 </motion.div>
@@ -43,24 +43,26 @@ const Team = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className="bg-white dark:bg-gray-700 rounded-xl shadow-lg dark:shadow-gray-900/20 p-6 text-center hover:shadow-xl dark:hover:shadow-gray-900/30 transition-shadow duration-300"
+                            className="bg-gradient-card dark:bg-gradient-card-dark rounded-3xl shadow-premium dark:shadow-premium-dark p-8 text-center hover:shadow-glow-blue dark:hover:shadow-glow transition-all duration-300 hover:scale-105 border border-navy-200/20 dark:border-navy-700/20 group"
                         >
                             <div className="relative mb-6">
                                 <img
                                     src={member.image}
                                     alt={member.name}
-                                    className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
+                                    className="w-32 h-32 rounded-full mx-auto object-cover border-4 border-accent-500 shadow-glow group-hover:scale-110 transition-transform duration-300"
                                 />
-                                <div className="absolute inset-0 bg-primary-600 rounded-full opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+                                <div className="absolute inset-0 rounded-full bg-gradient-to-t from-accent-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             </div>
 
-                            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                            <h3 className="font-display text-2xl font-bold text-navy-900 dark:text-navy-100 mb-2 group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors duration-300">
                                 {member.name}
                             </h3>
-                            <p className="text-primary-600 dark:text-primary-400 font-medium mb-3">
+
+                            <p className="font-body text-accent-600 dark:text-accent-400 font-semibold mb-4">
                                 {member.role}
                             </p>
-                            <p className="text-gray-600 dark:text-gray-300 mb-4">
+
+                            <p className="font-body text-navy-600 dark:text-navy-300 mb-6 leading-relaxed">
                                 {member.bio}
                             </p>
 
@@ -69,42 +71,46 @@ const Team = () => {
                                 {member.skills.map((skill, skillIndex) => (
                                     <span
                                         key={skillIndex}
-                                        className="bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 px-3 py-1 rounded-full text-sm"
+                                        className="bg-navy-100 dark:bg-navy-800 text-navy-600 dark:text-navy-300 px-3 py-1 rounded-full text-xs font-medium"
                                     >
                                         {skill}
                                     </span>
                                 ))}
                             </div>
 
-                            {/* Contact Information */}
-                            <div className="space-y-2 mb-6">
-                                <div className="flex items-center justify-center text-gray-600 dark:text-gray-300">
-                                    <FiMail size={16} className="mr-2" />
-                                    <span className="text-sm">{member.email}</span>
-                                </div>
-                                <div className="flex items-center justify-center text-gray-600 dark:text-gray-300">
-                                    <FiPhone size={16} className="mr-2" />
-                                    <span className="text-sm">{member.phone}</span>
-                                </div>
-                            </div>
-
-                            {/* Social Links */}
-                            <div className="flex justify-center space-x-4">
+                            {/* Contact Links */}
+                            <div className="flex justify-center gap-4">
+                                <a
+                                    href={`mailto:${member.email}`}
+                                    className="p-3 bg-gradient-accent text-white rounded-full shadow-glow hover:scale-110 transition-all duration-300"
+                                    title="Email"
+                                >
+                                    <FiMail size={18} />
+                                </a>
+                                <a
+                                    href={`tel:${member.phone}`}
+                                    className="p-3 bg-primary-600 text-white rounded-full hover:bg-primary-700 hover:scale-110 transition-all duration-300"
+                                    title="Phone"
+                                >
+                                    <FiPhone size={18} />
+                                </a>
                                 <a
                                     href={member.linkedin}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                                    className="p-3 bg-navy-800 text-white rounded-full hover:bg-navy-700 hover:scale-110 transition-all duration-300"
+                                    title="LinkedIn"
                                 >
-                                    <FiLinkedin size={20} />
+                                    <FiLinkedin size={18} />
                                 </a>
                                 <a
                                     href={member.github}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                                    className="p-3 bg-gray-800 text-white rounded-full hover:bg-gray-700 hover:scale-110 transition-all duration-300"
+                                    title="GitHub"
                                 >
-                                    <FiGithub size={20} />
+                                    <FiGithub size={18} />
                                 </a>
                             </div>
                         </motion.div>

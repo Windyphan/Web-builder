@@ -23,7 +23,7 @@ const Footer = () => {
     ];
 
     return (
-        <footer className="bg-gray-900 dark:bg-gray-950 text-white">
+        <footer className="bg-gradient-navy dark:bg-gradient-to-br dark:from-navy-950 dark:via-navy-900 dark:to-navy-800 text-white">
             <div className="container-max section-padding">
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {/* Company Info */}
@@ -33,30 +33,30 @@ const Footer = () => {
                         transition={{ duration: 0.8 }}
                         viewport={{ once: true }}
                     >
-                        <h3 className="text-2xl font-bold text-white mb-4">
+                        <h3 className="font-display text-2xl font-bold bg-gradient-to-r from-white via-primary-200 to-accent-400 bg-clip-text text-transparent mb-4">
                             The Innovation Curve
                         </h3>
-                        <p className="text-gray-300 dark:text-gray-400 mb-6">
+                        <p className="font-body text-navy-200 mb-6 leading-relaxed">
                             Building digital excellence through innovative web solutions. We help businesses thrive online with cutting-edge technology and outstanding design.
                         </p>
                         <div className="flex space-x-4">
                             <a
                                 href="https://www.linkedin.com/company/the-innovation-curve/"
-                                className="text-gray-400 dark:text-gray-500 hover:text-white dark:hover:text-gray-300 transition-colors duration-200"
+                                className="p-2 bg-navy-800 text-navy-200 hover:bg-accent-600 hover:text-white rounded-lg transition-all duration-300 hover:scale-110"
                             >
-                                <FiLinkedin size={24} />
+                                <FiLinkedin size={20} />
                             </a>
                             <a
                                 href="https://github.com/Windyphan"
-                                className="text-gray-400 dark:text-gray-500 hover:text-white dark:hover:text-gray-300 transition-colors duration-200"
+                                className="p-2 bg-navy-800 text-navy-200 hover:bg-primary-600 hover:text-white rounded-lg transition-all duration-300 hover:scale-110"
                             >
-                                <FiGithub size={24} />
+                                <FiGithub size={20} />
                             </a>
                             <a
                                 href="mailto:info@theinnovationcurve.com"
-                                className="text-gray-400 dark:text-gray-500 hover:text-white dark:hover:text-gray-300 transition-colors duration-200"
+                                className="p-2 bg-navy-800 text-navy-200 hover:bg-accent-600 hover:text-white rounded-lg transition-all duration-300 hover:scale-110"
                             >
-                                <FiMail size={24} />
+                                <FiMail size={20} />
                             </a>
                         </div>
                     </motion.div>
@@ -68,7 +68,7 @@ const Footer = () => {
                         transition={{ duration: 0.8, delay: 0.1 }}
                         viewport={{ once: true }}
                     >
-                        <h4 className="text-lg font-semibold text-white mb-4">
+                        <h4 className="font-display text-lg font-bold text-white mb-4">
                             Quick Links
                         </h4>
                         <ul className="space-y-2">
@@ -76,7 +76,7 @@ const Footer = () => {
                                 <li key={index}>
                                     <a
                                         href={link.href}
-                                        className="text-gray-300 dark:text-gray-400 hover:text-white dark:hover:text-gray-300 transition-colors duration-200"
+                                        className="font-body text-navy-200 hover:text-accent-400 transition-colors duration-200"
                                     >
                                         {link.name}
                                     </a>
@@ -92,13 +92,13 @@ const Footer = () => {
                         transition={{ duration: 0.8, delay: 0.2 }}
                         viewport={{ once: true }}
                     >
-                        <h4 className="text-lg font-semibold text-white mb-4">
+                        <h4 className="font-display text-lg font-bold text-white mb-4">
                             Services
                         </h4>
                         <ul className="space-y-2">
                             {services.map((service, index) => (
                                 <li key={index}>
-                                    <span className="text-gray-300 dark:text-gray-400">
+                                    <span className="font-body text-navy-200">
                                         {service}
                                     </span>
                                 </li>
@@ -113,31 +113,31 @@ const Footer = () => {
                         transition={{ duration: 0.8, delay: 0.3 }}
                         viewport={{ once: true }}
                     >
-                        <h4 className="text-lg font-semibold text-white mb-4">
+                        <h4 className="font-display text-lg font-bold text-white mb-4">
                             Contact Info
                         </h4>
                         <div className="space-y-3">
                             <div className="flex items-center">
-                                <FiMail className="text-gray-400 dark:text-gray-500 mr-3" size={18} />
+                                <FiMail className="text-accent-400 mr-3" size={18} />
                                 <a
                                     href="mailto:info@theinnovationcurve.com"
-                                    className="text-gray-300 dark:text-gray-400 hover:text-white dark:hover:text-gray-300 transition-colors duration-200"
+                                    className="font-body text-navy-200 hover:text-accent-400 transition-colors duration-200"
                                 >
                                     info@theinnovationcurve.com
                                 </a>
                             </div>
                             <div className="flex items-center">
-                                <FiPhone className="text-gray-400 dark:text-gray-500 mr-3" size={18} />
+                                <FiPhone className="text-accent-400 mr-3" size={18} />
                                 <a
                                     href="tel:07340764930"
-                                    className="text-gray-300 dark:text-gray-400 hover:text-white dark:hover:text-gray-300 transition-colors duration-200"
+                                    className="font-body text-navy-200 hover:text-accent-400 transition-colors duration-200"
                                 >
                                     07340764930
                                 </a>
                             </div>
                             <div className="flex items-center">
-                                <FiMapPin className="text-gray-400 dark:text-gray-500 mr-3" size={18} />
-                                <span className="text-gray-300 dark:text-gray-400">
+                                <FiMapPin className="text-accent-400 mr-3" size={18} />
+                                <span className="font-body text-navy-200">
                                     United Kingdom
                                 </span>
                             </div>
@@ -145,16 +145,16 @@ const Footer = () => {
                     </motion.div>
                 </div>
 
-                {/* Bottom Bar */}
+                {/* Bottom Section */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                     viewport={{ once: true }}
-                    className="border-t border-gray-800 dark:border-gray-700 mt-12 pt-8 text-center"
+                    className="border-t border-navy-700 mt-12 pt-8 text-center"
                 >
-                    <p className="text-gray-400 dark:text-gray-500">
-                        © {currentYear} The Innovation Curve. All rights reserved. Built with passion by Phong Minh Phan.
+                    <p className="font-body text-navy-300">
+                        © {currentYear} The Innovation Curve. All rights reserved.
                     </p>
                 </motion.div>
             </div>

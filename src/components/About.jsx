@@ -41,7 +41,7 @@ const About = () => {
     };
 
     return (
-        <section id="about" className="section-padding bg-white dark:bg-gray-900">
+        <section id="about" className="section-padding bg-gradient-to-br from-white via-navy-50 to-primary-50 dark:from-navy-950 dark:via-navy-900 dark:to-navy-800">
             <div className="container-max">
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
                     {/* Content (Left) */}
@@ -50,97 +50,65 @@ const About = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8 }}
                         viewport={{ once: true }}
-                        onViewportEnter={() => setIsInView(true)}
+                        className="space-y-6"
                     >
-                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-                            About The Innovation Curve
-                        </h2>
-                        <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-                            We are a UK-based web development company specializing in creating exceptional digital experiences. Our mission is to help businesses thrive online through innovative web solutions that combine cutting-edge technology with outstanding design.
-                        </p>
-                        <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-                            Founded by experienced developer Phong Minh Phan, we bring years of expertise in modern web technologies, ensuring your project is built with the latest industry standards and best practices.
-                        </p>
+                        <div>
+                            <h2 className="font-display text-display-lg md:text-6xl font-extrabold bg-gradient-to-r from-navy-900 via-primary-600 to-accent-600 dark:from-navy-100 dark:via-primary-400 dark:to-accent-400 bg-clip-text text-transparent mb-6 tracking-headline">
+                                About Us
+                            </h2>
+                            <p className="font-body text-xl md:text-2xl text-navy-600 dark:text-navy-300 mb-6 font-medium leading-relaxed">
+                                We're passionate about creating digital experiences that make a difference.
+                            </p>
+                            <p className="font-body text-navy-600 dark:text-navy-300 leading-relaxed mb-6">
+                                At The Innovation Curve, we believe in the power of technology to transform businesses.
+                                Our team combines creativity with technical expertise to deliver solutions that not only
+                                look great but perform exceptionally.
+                            </p>
+                            <p className="font-body text-navy-600 dark:text-navy-300 leading-relaxed">
+                                From startups to established enterprises, we've helped countless businesses establish
+                                their digital presence and achieve their goals through innovative web solutions.
+                            </p>
+                        </div>
 
-                        {/* Why Choose Us */}
-                        <div className="space-y-4">
-                            {[
-                                { icon: FiAward, title: "Quality First", desc: "We never compromise on quality and deliver pixel-perfect solutions" },
-                                { icon: FiClock, title: "On-Time Delivery", desc: "We respect deadlines and deliver projects on schedule" },
-                                { icon: FiUsers, title: "Client-Focused", desc: "Your success is our priority, and we're with you every step" }
-                            ].map((item, index) => (
+                        {/* Stats Grid */}
+                        <div className="grid grid-cols-2 gap-6 pt-8">
+                            {stats.map((stat, index) => (
                                 <motion.div
                                     key={index}
-                                    className="flex items-start"
-                                    initial={{ opacity: 0, x: -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.6, delay: index * 0.1 }}
                                     viewport={{ once: true }}
+                                    className="text-center bg-gradient-card dark:bg-gradient-card-dark rounded-2xl p-6 shadow-premium dark:shadow-premium-dark border border-navy-200/20 dark:border-navy-700/20"
                                 >
-                                    <motion.div
-                                        className="bg-primary-100 dark:bg-primary-900/30 rounded-full p-2 mr-4"
-                                        whileHover={{ scale: 1.1 }}
-                                    >
-                                        <item.icon className="text-primary-600 dark:text-primary-400" size={20} />
-                                    </motion.div>
-                                    <div>
-                                        <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-1">{item.title}</h4>
-                                        <p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
+                                    <div className="font-display text-3xl md:text-4xl font-extrabold bg-gradient-accent bg-clip-text text-transparent mb-2">
+                                        {stat.value}
+                                    </div>
+                                    <div className="font-body text-navy-600 dark:text-navy-300 text-sm font-medium">
+                                        {stat.label}
                                     </div>
                                 </motion.div>
                             ))}
                         </div>
                     </motion.div>
 
-                    {/* Animation + Stats (Right) */}
+                    {/* Animation (Right) */}
                     <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
                         viewport={{ once: true }}
-                        className="relative flex items-center justify-center min-h-[340px]"
+                        className="relative"
+                        onViewportEnter={() => setIsInView(true)}
                     >
-                        {/* Optimized Lottie Background */}
-                        <motion.div
-                            className="w-80 h-80 flex items-center justify-center"
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 1, delay: 0.3 }}
-                            viewport={{ once: true }}
-                        >
-                            {animationLoaded && (
+                        <div className="aspect-square max-w-lg mx-auto">
+                            {animationData && (
                                 <Lottie
                                     lottieRef={lottieRef}
                                     {...lottieOptions}
-                                    className="w-full h-full opacity-80 dark:opacity-60"
+                                    className="w-full h-full"
                                 />
                             )}
-                        </motion.div>
-
-                        {/* Stats positioned over animation */}
-                        <div className="absolute inset-0 grid grid-cols-2 gap-4 p-8">
-                            {stats.map((stat, index) => (
-                                <motion.div
-                                    key={index}
-                                    className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl p-4 text-center shadow-lg border border-white/20 dark:border-gray-700/50"
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    transition={{ duration: 0.6, delay: index * 0.15 }}
-                                    viewport={{ once: true }}
-                                    whileHover={{ scale: 1.05 }}
-                                >
-                                    <motion.div
-                                        className="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-1"
-                                        initial={{ opacity: 0, scale: 0.5 }}
-                                        whileInView={{ opacity: 1, scale: 1 }}
-                                        transition={{ duration: 0.5, delay: index * 0.15 + 0.5 }}
-                                        viewport={{ once: true }}
-                                    >
-                                        {stat.value}
-                                    </motion.div>
-                                    <div className="text-gray-600 dark:text-gray-300">{stat.label}</div>
-                                </motion.div>
-                            ))}
                         </div>
                     </motion.div>
                 </div>
