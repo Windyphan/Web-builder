@@ -28,7 +28,7 @@ const Team = () => {
                     className="text-center mb-16"
                 >
                     <h2 className="font-display text-display-lg md:text-6xl font-extrabold bg-gradient-to-r from-navy-900 via-primary-600 to-accent-600 dark:from-navy-100 dark:via-primary-400 dark:to-accent-400 bg-clip-text text-transparent mb-6 tracking-headline">
-                        Meet Our Team
+                        Meet Our Founder
                     </h2>
                     <p className="font-body text-xl md:text-2xl text-navy-600 dark:text-navy-300 max-w-3xl mx-auto leading-relaxed font-medium">
                         Passionate professionals dedicated to delivering exceptional web solutions
