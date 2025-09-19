@@ -1,9 +1,16 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiCheck, FiClock, FiArrowRight } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 const Pricing = () => {
     const [showNotification, setShowNotification] = useState(false);
+    const navigate = useNavigate();
+
+    // Function to redirect to contact page
+    const handleContactRedirect = () => {
+        navigate('/contact');
+    };
 
     const plans = [
         {
@@ -22,7 +29,7 @@ const Pricing = () => {
                 'Free SSL certificate',
                 '3 months free hosting'
             ],
-            buttonText: 'Get Started'
+            buttonText: 'Contact us'
         },
         {
             id: 'launchpad',
@@ -41,7 +48,7 @@ const Pricing = () => {
                 'Mobile & tablet responsive',
                 '6 months free hosting & SSL'
             ],
-            buttonText: 'Choose Plan'
+            buttonText: 'Contact us'
         },
         {
             id: 'business-growth',
@@ -60,7 +67,7 @@ const Pricing = () => {
                 'CMS training session',
                 '12 months free hosting & SSL'
             ],
-            buttonText: 'Most Popular'
+            buttonText: 'Contact us'
         },
         {
             id: 'bespoke',
@@ -79,7 +86,7 @@ const Pricing = () => {
                 'Priority support & maintenance',
                 'Full documentation & training'
             ],
-            buttonText: 'Book a Consultation'
+            buttonText: 'Contact us'
         }
     ];
 
@@ -98,7 +105,7 @@ const Pricing = () => {
     };
 
     return (
-        <section id="pricing" className="section-padding bg-gradient-to-br from-white via-navy-50 to-primary-50 dark:from-navy-950 dark:via-navy-900 dark:to-navy-800">
+        <section id="pricing" className="section-padding bg-gradient-to-br from-navy-50 via-white to-navy-100 dark:from-navy-950 dark:via-navy-900 dark:to-navy-800">
             <div className="container-max">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -107,11 +114,11 @@ const Pricing = () => {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <h2 className="font-display text-display-lg md:text-6xl font-black bg-gradient-to-r from-navy-900 via-primary-600 to-accent-600 dark:from-navy-100 dark:via-primary-400 dark:to-accent-400 bg-clip-text text-transparent mb-6 tracking-headline">
-                        Transparent Pricing
+                    <h2 className="font-display text-display-lg md:text-6xl font-extrabold bg-gradient-to-r from-navy-900 via-primary-600 to-navy-800 dark:from-navy-100 dark:via-primary-400 dark:to-navy-200 bg-clip-text text-transparent mb-6 tracking-headline">
+                        Our Packages
                     </h2>
-                    <p className="font-body text-xl md:text-2xl text-navy-600 dark:text-navy-300 max-w-3xl mx-auto leading-relaxed font-bold">
-                        Choose the perfect plan for your project. No hidden fees, no surprises.
+                    <p className="font-body text-xl md:text-2xl text-navy-600 dark:text-navy-300 max-w-3xl mx-auto leading-relaxed font-medium">
+                        Transparent pricing for every stage of your business journey. Find the perfect fit to achieve your goals.
                     </p>
                 </motion.div>
 
@@ -190,7 +197,9 @@ const Pricing = () => {
                             </ul>
 
                             <button
-                                onClick={() => handleGetQuote(plan.id)}
+                                onClick={() => {
+                                    handleContactRedirect();
+                                }}
                                 className={`w-full mt-auto py-4 px-6 rounded-xl font-bold transition-all duration-300 flex items-center justify-center text-base group-hover:scale-105 ${
                                     plan.popular
                                         ? 'bg-gradient-accent hover:shadow-glow text-white transform hover:scale-110'
@@ -258,3 +267,4 @@ const Pricing = () => {
 };
 
 export default Pricing;
+

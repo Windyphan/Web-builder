@@ -5,54 +5,85 @@ const ScrollToTop = () => {
     const { pathname } = useLocation();
 
     useEffect(() => {
-        // Prevent browser's scroll restoration
+        // Disable browser scroll restoration completely
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
         }
 
-        // Force immediate scroll to top with multiple methods
-        const scrollToTopImmediately = () => {
-            // Method 1: Standard window scroll
-            window.scrollTo(0, 0);
+        // ULTRA AGGRESSIVE scroll-to-top function
+        const forceScrollToTop = () => {
+            // Method 1: Instant scroll with behavior override
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
-            // Method 2: Document element scroll
+            // Method 2: Direct DOM manipulation
             document.documentElement.scrollTop = 0;
             document.body.scrollTop = 0;
 
-            // Method 3: Force scroll using scrollIntoView on body
-            document.body.scrollIntoView({
-                behavior: 'auto',
-                block: 'start',
-                inline: 'start'
+            // Method 3: CSS override
+            document.documentElement.style.scrollBehavior = 'auto';
+            window.scrollTo(0, 0);
+
+            // Method 4: Force pageYOffset (if possible)
+            try {
+                if (window.pageYOffset !== 0) {
+                    window.pageYOffset = 0;
+                }
+            } catch (e) {
+                // Ignore if read-only
+            }
+
+            // Method 5: ScrollIntoView fallback
+            try {
+                document.body.scrollIntoView({
+                    behavior: 'instant',
+                    block: 'start',
+                    inline: 'start'
+                });
+            } catch (e) {
+                // Fallback to regular scrollTo
+                window.scrollTo(0, 0);
+            }
+
+            // Method 6: Force all scroll containers to top
+            const scrollableElements = document.querySelectorAll('*');
+            scrollableElements.forEach(el => {
+                if (el.scrollTop > 0) {
+                    el.scrollTop = 0;
+                }
             });
         };
 
-        // Execute immediately
-        scrollToTopImmediately();
+        // Execute IMMEDIATELY when route changes
+        forceScrollToTop();
 
-        // Execute in next frame
+        // Execute multiple times to catch any async rendering delays
+        setTimeout(forceScrollToTop, 0);
+        setTimeout(forceScrollToTop, 1);
+        setTimeout(forceScrollToTop, 5);
+        setTimeout(forceScrollToTop, 10);
+        setTimeout(forceScrollToTop, 25);
+        setTimeout(forceScrollToTop, 50);
+        setTimeout(forceScrollToTop, 100);
+        setTimeout(forceScrollToTop, 200);
+        setTimeout(forceScrollToTop, 300);
+
+        // Use requestAnimationFrame for better timing
         requestAnimationFrame(() => {
-            scrollToTopImmediately();
+            forceScrollToTop();
+            setTimeout(forceScrollToTop, 0);
         });
 
-        // Execute after short delays to handle React rendering
-        const timeoutId1 = setTimeout(() => {
-            scrollToTopImmediately();
-        }, 0);
+        // Double RAF for React 18 concurrent features
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                forceScrollToTop();
+            });
+        });
 
-        const timeoutId2 = setTimeout(() => {
-            scrollToTopImmediately();
-        }, 50);
-
-        const timeoutId3 = setTimeout(() => {
-            scrollToTopImmediately();
-        }, 100);
-
-        // Cleanup timeouts
+        // Cleanup function
         return () => {
-            clearTimeout(timeoutId1);
-            clearTimeout(timeoutId2);
-            clearTimeout(timeoutId3);
+            // Reset scroll behavior to normal
+            document.documentElement.style.scrollBehavior = 'smooth';
         };
 
     }, [pathname]);

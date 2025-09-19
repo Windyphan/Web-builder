@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { Link, useLocation } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
-import { useTheme } from '../contexts/ThemeContext';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,11 +28,47 @@ const Header = () => {
 
     const handleNavClick = () => {
         setIsMenuOpen(false);
-    };
-    // Force immediate scroll to top when navigating
-    const forceScrollToTop = () => {
-        window.scrollTo(0, 0);
-        document.documentElement.scrollTop = 0;
+
+        // ULTRA AGGRESSIVE scroll to top - execute IMMEDIATELY
+        const ultimateScrollToTop = () => {
+            // Method 1: Standard scrollTo with instant behavior
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+
+            // Method 2: Direct property assignment
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+
+            // Method 3: Force pageYOffset to 0
+            try {
+                window.pageYOffset = 0;
+            } catch (e) {
+                // Some browsers don't allow setting pageYOffset
+            }
+
+            // Method 4: Using scrollIntoView
+            document.body.scrollIntoView({ behavior: 'instant', block: 'start' });
+
+            // Method 5: CSS scroll behavior override
+            document.documentElement.style.scrollBehavior = 'auto';
+            window.scrollTo(0, 0);
+        };
+
+        // Execute IMMEDIATELY (before React Router processes the navigation)
+        ultimateScrollToTop();
+
+        // Execute multiple times at different intervals to catch any async rendering
+        setTimeout(ultimateScrollToTop, 0);
+        setTimeout(ultimateScrollToTop, 1);
+        setTimeout(ultimateScrollToTop, 10);
+        setTimeout(ultimateScrollToTop, 25);
+        setTimeout(ultimateScrollToTop, 50);
+        setTimeout(ultimateScrollToTop, 100);
+        setTimeout(ultimateScrollToTop, 200);
+
+        requestAnimationFrame(ultimateScrollToTop);
+        requestAnimationFrame(() => {
+            setTimeout(ultimateScrollToTop, 0);
+        });
     };
 
     return (
@@ -50,7 +85,7 @@ const Header = () => {
             <nav className="container mx-auto px-6 py-4">
                 <div className="flex items-center justify-between">
                     {/* Logo */}
-                    <Link to="/">
+                    <Link to="/" onClick={handleNavClick}>
                         <motion.div
                             className="font-display text-2xl font-extrabold bg-gradient-to-r from-primary-600 via-accent-500 to-primary-700 dark:from-primary-400 dark:via-accent-400 dark:to-primary-500 bg-clip-text text-transparent tracking-tight"
                             whileHover={{ scale: 1.05 }}
@@ -65,6 +100,7 @@ const Header = () => {
                             <Link
                                 key={item.path}
                                 to={item.path}
+                                onClick={handleNavClick}
                                 className={`relative transition-all duration-300 hover:text-accent-500 dark:hover:text-accent-400 ${
                                     location.pathname === item.path
                                         ? 'text-accent-600 dark:text-accent-400 font-bold'
@@ -73,6 +109,7 @@ const Header = () => {
                             >
                                 <motion.span
                                     whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
                                     className="relative z-10"
                                 >
                                     {item.name}
@@ -90,7 +127,6 @@ const Header = () => {
                         <ThemeToggle className="ml-4" />
                     </div>
 
-                    {/* Mobile Menu Toggle + Theme Toggle */}
                     <div className="md:hidden flex items-center space-x-4">
                         <ThemeToggle />
                         <motion.button
