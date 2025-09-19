@@ -1,32 +1,52 @@
 import { motion } from 'framer-motion';
+import { FiArrowRight, FiPlay } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
+import Lottie from 'lottie-react';
 import { useState, useEffect, useRef } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 
+// Import the optimized animation
+import heroAnimation from '../assets/Hero_section_animation.json';
+
 const Hero = () => {
     const [isVisible, setIsVisible] = useState(false);
-    const [currentVideo, setCurrentVideo] = useState(0);
-    const videoRef = useRef(null);
+    const lottieRef = useRef(null);
     const { isDark } = useTheme();
-
-    // Video sources array for cycling between background.mp4 and background_2.mp4
-    const videoSources = ['/background.mp4', '/background_2.mp4'];
 
     useEffect(() => {
         setIsVisible(true);
     }, []);
 
-    // Handle video sequence cycling - switches to next video when current ends
-    const handleVideoEnd = () => {
-        setCurrentVideo((prev) => (prev + 1) % videoSources.length);
+    // Enhanced animation data with theme-aware colors
+    const enhancedAnimationData = {
+        ...heroAnimation,
+        layers: heroAnimation.layers?.map(layer => ({
+            ...layer,
+            ks: {
+                ...layer.ks,
+                o: {
+                    ...layer.ks?.o,
+                    k: Array.isArray(layer.ks?.o?.k)
+                        ? layer.ks.o.k.map(frame => ({
+                            ...frame,
+                            s: frame.s ? frame.s.map(val => Math.min(val * (isDark ? 3 : 4), 100)) : [100]
+                        }))
+                        : Math.min((layer.ks?.o?.k || 15) * (isDark ? 4 : 6), 100)
+                }
+            },
+            shapes: layer.shapes?.map(shape => ({
+                ...shape,
+                ...(shape.ty === 'fl' && {
+                    c: {
+                        ...shape.c,
+                        k: isDark
+                            ? [0.6, 0.8, 1, 1] // Light blue for dark mode
+                            : shape.c?.k || [0.12, 0.15, 0.25, 1]
+                    }
+                })
+            })) || layer.shapes
+        })) || []
     };
-
-    // Reload video when source changes
-    useEffect(() => {
-        if (videoRef.current) {
-            videoRef.current.load();
-            videoRef.current.play().catch(console.error);
-        }
-    }, [currentVideo]);
 
     return (
         <section
@@ -34,31 +54,55 @@ const Hero = () => {
             className="pt-16 relative overflow-hidden transition-colors duration-300 bg-gradient-hero dark:bg-gradient-to-br dark:from-navy-950 dark:via-navy-900 dark:to-navy-800"
             style={{ minHeight: '100vh' }}
         >
-            {/* Background Video Cycling */}
-            <div className="absolute inset-0 z-0">
-                <video
-                    ref={videoRef}
-                    autoPlay
-                    muted
-                    playsInline
-                    className="absolute inset-0 w-full h-full object-cover"
-                    style={{
-                        filter: isDark
-                            ? 'brightness(0.7) contrast(1.2) saturate(0.8)'
-                            : 'brightness(0.8) contrast(1.1) saturate(0.9)'
-                    }}
-                    onEnded={handleVideoEnd}
-                >
-                    <source src={videoSources[currentVideo]} type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
+            {/* Animated Background Particles */}
+            <div className="absolute inset-0 overflow-hidden z-0">
+                {/* CSS Animated Background */}
+                <div className="absolute inset-0">
+                    {[...Array(6)].map((_, i) => (
+                        <motion.div
+                            key={i}
+                            className={`absolute rounded-full transition-colors duration-300 ${
+                                isDark
+                                    ? 'bg-gradient-to-r from-primary-500/20 to-accent-500/20'
+                                    : 'bg-gradient-to-r from-primary-200/30 to-accent-200/30'
+                            }`}
+                            style={{
+                                width: `${100 + i * 50}px`,
+                                height: `${100 + i * 50}px`,
+                                left: `${10 + i * 15}%`,
+                                top: `${10 + i * 10}%`,
+                            }}
+                            animate={{
+                                x: [0, 30, 0],
+                                y: [0, -20, 0],
+                                rotate: [0, 180, 360],
+                                scale: [1, 1.1, 1],
+                            }}
+                            transition={{
+                                duration: 8 + i * 2,
+                                repeat: Infinity,
+                                ease: "easeInOut",
+                                delay: i * 0.5,
+                            }}
+                        />
+                    ))}
+                </div>
 
-                {/* Video Overlay for better text readability */}
-                <div className={`absolute inset-0 ${
-                    isDark 
-                        ? 'bg-gradient-to-br from-navy-950/70 via-navy-900/60 to-navy-800/70' 
-                        : 'bg-gradient-to-br from-navy-900/60 via-navy-800/50 to-primary-900/60'
-                }`}></div>
+                {/* Lottie Animation Overlay */}
+                <div className="absolute inset-0 z-10">
+                    <Lottie
+                        lottieRef={lottieRef}
+                        animationData={enhancedAnimationData}
+                        loop={true}
+                        autoplay={true}
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            opacity: isDark ? 0.4 : 0.2,
+                            filter: isDark ? 'brightness(1.5) hue-rotate(180deg)' : 'none',
+                        }}
+                    />
+                </div>
             </div>
 
             {/* Main Content */}
