@@ -200,7 +200,7 @@ const BlogPage = () => {
                 <section className="py-20 px-6">
                     <div className="container mx-auto text-center">
                         <motion.h1
-                            className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6"
+                            className="font-display text-display-lg md:text-6xl font-extrabold bg-gradient-to-r from-navy-900 via-primary-600 to-navy-800 dark:from-navy-100 dark:via-primary-400 dark:to-navy-200 bg-clip-text text-transparent mb-6 tracking-headline"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
@@ -208,7 +208,7 @@ const BlogPage = () => {
                             Our Blog
                         </motion.h1>
                         <motion.p
-                            className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8"
+                            className="font-body text-xl md:text-2xl text-navy-600 dark:text-navy-300 max-w-3xl mx-auto leading-relaxed font-bold"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.1 }}
