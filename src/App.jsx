@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
+import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import Portfolio from './pages/Portfolio';
 import Pricing from './pages/Pricing';
@@ -99,6 +100,7 @@ function App() {
             <ThemeProvider>
                 <Router>
                     <RouteDebugger />
+                    <ScrollToTop />
                     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
                         <Routes>
                             <Route path="/" element={<Home />} />

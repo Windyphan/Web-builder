@@ -115,7 +115,7 @@ const Hero = () => {
                         transition={{ duration: 0.8 }}
                     >
                         Build Your
-                        <span className="block bg-gradient-accent bg-clip-text text-transparent font-black tracking-tighter">
+                        <span className="block bg-gradient-accent bg-clip-text text-transparent font-black tracking-tighter leading-tight">
                             Digital Future
                         </span>
                     </motion.h1>

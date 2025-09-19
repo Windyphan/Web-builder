@@ -98,7 +98,7 @@ const Pricing = () => {
     };
 
     return (
-        <section id="pricing" className="section-padding bg-gradient-to-br from-navy-50 via-white to-navy-100 dark:from-navy-950 dark:via-navy-900 dark:to-navy-800">
+        <section id="pricing" className="section-padding bg-gradient-to-br from-white via-navy-50 to-primary-50 dark:from-navy-950 dark:via-navy-900 dark:to-navy-800">
             <div className="container-max">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -107,11 +107,11 @@ const Pricing = () => {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <h2 className="font-display text-display-lg md:text-6xl font-extrabold bg-gradient-to-r from-navy-900 via-primary-600 to-navy-800 dark:from-navy-100 dark:via-primary-400 dark:to-navy-200 bg-clip-text text-transparent mb-6 tracking-headline">
-                        Our Packages
+                    <h2 className="font-display text-display-lg md:text-6xl font-black bg-gradient-to-r from-navy-900 via-primary-600 to-accent-600 dark:from-navy-100 dark:via-primary-400 dark:to-accent-400 bg-clip-text text-transparent mb-6 tracking-headline">
+                        Transparent Pricing
                     </h2>
-                    <p className="font-body text-xl md:text-2xl text-navy-600 dark:text-navy-300 max-w-3xl mx-auto leading-relaxed font-medium">
-                        Transparent pricing for every stage of your business journey. Find the perfect fit to achieve your goals.
+                    <p className="font-body text-xl md:text-2xl text-navy-600 dark:text-navy-300 max-w-3xl mx-auto leading-relaxed font-bold">
+                        Choose the perfect plan for your project. No hidden fees, no surprises.
                     </p>
                 </motion.div>
 

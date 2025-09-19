@@ -51,18 +51,18 @@ const About = () => {
                         className="space-y-6"
                     >
                         <div>
-                            <h2 className="font-display text-display-lg md:text-6xl font-extrabold bg-gradient-to-r from-navy-900 via-primary-600 to-accent-600 dark:from-navy-100 dark:via-primary-400 dark:to-accent-400 bg-clip-text text-transparent mb-6 tracking-headline">
+                            <h2 className="font-display text-display-lg md:text-6xl font-black bg-gradient-to-r from-navy-900 via-primary-600 to-accent-600 dark:from-navy-100 dark:via-primary-400 dark:to-accent-400 bg-clip-text text-transparent mb-6 tracking-headline">
                                 About Us
                             </h2>
-                            <p className="font-body text-xl md:text-2xl text-navy-600 dark:text-navy-300 mb-6 font-medium leading-relaxed">
+                            <p className="font-body text-xl md:text-2xl text-navy-600 dark:text-navy-300 mb-6 font-bold leading-relaxed">
                                 We're passionate about creating digital experiences that make a difference.
                             </p>
-                            <p className="font-body text-navy-600 dark:text-navy-300 leading-relaxed mb-6">
+                            <p className="font-body text-navy-600 dark:text-navy-300 leading-relaxed mb-6 font-semibold">
                                 At The Innovation Curve, we believe in the power of technology to transform businesses.
                                 Our team combines creativity with technical expertise to deliver solutions that not only
                                 look great but perform exceptionally.
                             </p>
-                            <p className="font-body text-navy-600 dark:text-navy-300 leading-relaxed">
+                            <p className="font-body text-navy-600 dark:text-navy-300 leading-relaxed font-semibold">
                                 From startups to established enterprises, we've helped countless businesses establish
                                 their digital presence and achieve their goals through innovative web solutions.
                             </p>

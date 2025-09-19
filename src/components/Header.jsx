@@ -30,6 +30,11 @@ const Header = () => {
     const handleNavClick = () => {
         setIsMenuOpen(false);
     };
+    // Force immediate scroll to top when navigating
+    const forceScrollToTop = () => {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+    };
 
     return (
         <motion.header
@@ -68,7 +73,6 @@ const Header = () => {
                             >
                                 <motion.span
                                     whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
                                     className="relative z-10"
                                 >
                                     {item.name}
