@@ -42,15 +42,6 @@ const Hero = () => {
                 ></iframe>
             </div>
 
-            {/* Theme-based Color Overlay */}
-            <div
-                className={`absolute inset-0 z-10 transition-colors duration-300 ${
-                    isDark
-                        ? 'bg-gradient-to-r from-primary-500/20 to-accent-500/20'
-                        : 'bg-gradient-to-r from-primary-200/30 to-accent-200/30'
-                }`}
-            ></div>
-
             {/* Main Content */}
             <div className="container mx-auto px-6 pt-36 pb-20 relative z-20">
                 <div className="max-w-5xl mx-auto text-center">
