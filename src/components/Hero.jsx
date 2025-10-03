@@ -15,7 +15,7 @@ const Hero = () => {
     return (
         <section
             id="home"
-            className="pt-16 relative overflow-hidden transition-colors duration-300 bg-gradient-hero dark:bg-gradient-to-br dark:from-navy-950 dark:via-navy-900 dark:to-navy-800"
+            className="relative overflow-hidden bg-navy-950"
             style={{ minHeight: '100vh' }}
         >
             {/* Vimeo Background */}
@@ -37,6 +37,15 @@ const Hero = () => {
                     title="background video"
                 ></iframe>
             </div>
+
+            {/* Theme-based Color Overlay */}
+            <div
+                className={`absolute inset-0 z-10 transition-colors duration-300 ${
+                    isDark
+                        ? 'bg-gradient-to-r from-primary-500/20 to-accent-500/20'
+                        : 'bg-gradient-to-r from-primary-200/30 to-accent-200/30'
+                }`}
+            ></div>
 
             {/* Main Content */}
             <div className="container mx-auto px-6 pt-36 pb-20 relative z-20">
