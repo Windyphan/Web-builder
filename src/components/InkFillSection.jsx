@@ -11,10 +11,28 @@ const Character = ({ children, progress, range }) => {
     ]);
 
     return (
-        <motion.span style={{ color }}>
-            {/* Use a non-breaking space to ensure spaces are rendered correctly in flex layout */}
-            {children === ' ' ? '\u00A0' : children}
+        <motion.span style={{ color }} className="inline">
+            {children}
         </motion.span>
+    );
+};
+
+const Word = ({ word, progress, wordStart, wordDuration }) => {
+    const characters = word.split('');
+
+    return (
+        <span className="inline-block whitespace-nowrap">
+            {characters.map((char, charIndex) => {
+                const charStart = wordStart + (charIndex / characters.length) * wordDuration;
+                const charEnd = charStart + (1 / characters.length) * wordDuration;
+
+                return (
+                    <Character key={charIndex} progress={progress} range={[charStart, charEnd]}>
+                        {char}
+                    </Character>
+                );
+            })}
+        </span>
     );
 };
 
@@ -22,7 +40,7 @@ const InkFillSection = () => {
     const container = useRef(null);
     const { scrollYProgress } = useScroll({
         target: container,
-        offset: ['start 0.2', 'end 0.9'] // Widen the scroll area for a smoother animation
+        offset: ['start 0.2', 'end 0.9']
     });
 
     const lines = [
@@ -34,23 +52,36 @@ const InkFillSection = () => {
     return (
         <section ref={container} className="relative bg-white dark:bg-black transition-colors duration-300" style={{ minHeight: '150vh' }}>
             <div className="sticky top-0 h-screen flex items-center justify-center">
-                <div className="max-w-4xl p-10 text-5xl font-display font-bold leading-tight flex flex-col items-center text-center">
+                <div className="max-w-4xl p-10 text-5xl font-display font-bold leading-tight text-center">
                     {lines.map((line, lineIndex) => {
-                        const characters = line.split('');
+                        const words = line.split(' ');
                         const lineDuration = 0.5;
                         const lineOverlap = 0.2;
                         const lineStart = lineIndex * (lineDuration - lineOverlap);
 
                         return (
-                            <p key={lineIndex} className="flex flex-wrap justify-center">
-                                {characters.map((char, charIndex) => {
-                                    const charStart = lineStart + (charIndex / characters.length) * lineDuration;
-                                    const charEnd = charStart + (0.5 / characters.length) * lineDuration;
+                            <p key={lineIndex} className="mb-4">
+                                {words.map((word, wordIndex) => {
+                                    const wordDuration = lineDuration / words.length;
+                                    const wordStart = lineStart + (wordIndex * wordDuration);
 
                                     return (
-                                        <Character key={charIndex} progress={scrollYProgress} range={[charStart, charEnd]}>
-                                            {char}
-                                        </Character>
+                                        <span key={wordIndex}>
+                                            <Word
+                                                word={word}
+                                                progress={scrollYProgress}
+                                                wordStart={wordStart}
+                                                wordDuration={wordDuration}
+                                            />
+                                            {wordIndex < words.length - 1 && (
+                                                <Character
+                                                    progress={scrollYProgress}
+                                                    range={[wordStart + wordDuration * 0.8, wordStart + wordDuration]}
+                                                >
+                                                    {' '}
+                                                </Character>
+                                            )}
+                                        </span>
                                     );
                                 })}
                             </p>
