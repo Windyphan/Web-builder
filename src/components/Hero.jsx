@@ -19,7 +19,11 @@ const Hero = () => {
             style={{ minHeight: '100vh' }}
         >
             {/* Vimeo Background */}
-            <div className="absolute inset-0 z-0" style={{ pointerEvents: 'none' }}>
+            <div className={`absolute inset-0 z-0 ${
+                isDark
+                    ? 'bg-gradient-to-r from-primary-500/20 to-accent-500/20'
+                    : 'bg-gradient-to-r from-primary-200/30 to-accent-200/30'
+            }`} style={{ pointerEvents: 'none' }}>
                 <iframe
                     src="https://player.vimeo.com/video/1124235622?background=1"
                     frameBorder="0"
