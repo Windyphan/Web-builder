@@ -48,13 +48,13 @@ const Hero = () => {
     return (
         <section
             id="home"
-            className="relative overflow-hidden bg-black"
+            className="relative overflow-hidden bg-black flex items-center justify-center"
             style={{ minHeight: '100vh' }}
         >
             <Starfield />
 
             {/* Main Content */}
-            <div className="container mx-auto px-6 relative z-20 flex flex-col justify-center items-center text-center" style={{minHeight: '100vh'}}>
+            <div className="container mx-auto px-6 relative z-20 flex flex-col justify-center items-center text-center pt-24">
                 <motion.h1
                     className="font-display text-hero-lg md:text-hero-xl font-black mb-6 bg-gradient-to-r from-white via-navy-100 to-primary-100 bg-clip-text text-transparent tracking-headline"
                     initial={{ opacity: 0, y: 30 }}
