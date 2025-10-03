@@ -73,12 +73,6 @@ const generateFallbackSitemap = () => {
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://www.theinnovationcurve.com/pricing</loc>
-        <lastmod>${currentDate}</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
         <loc>https://www.theinnovationcurve.com/contact</loc>
         <lastmod>${currentDate}</lastmod>
         <changefreq>monthly</changefreq>

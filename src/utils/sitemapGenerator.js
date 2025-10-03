@@ -30,12 +30,6 @@ export const generateSitemap = async () => {
         priority: '0.9'
       },
       {
-        loc: 'https://www.theinnovationcurve.com/pricing',
-        lastmod: currentDate,
-        changefreq: 'monthly',
-        priority: '0.8'
-      },
-      {
         loc: 'https://www.theinnovationcurve.com/portfolio',
         lastmod: currentDate,
         changefreq: 'monthly',
