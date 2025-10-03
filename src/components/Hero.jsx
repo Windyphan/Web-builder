@@ -1,108 +1,36 @@
 import { motion } from 'framer-motion';
 import { FiArrowRight, FiPlay } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import Lottie from 'lottie-react';
 import { useState, useEffect, useRef } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 
-// Import the optimized animation
-import heroAnimation from '../assets/Hero_section_animation.json';
-
 const Hero = () => {
     const [isVisible, setIsVisible] = useState(false);
-    const lottieRef = useRef(null);
     const { isDark } = useTheme();
 
     useEffect(() => {
         setIsVisible(true);
     }, []);
 
-    // Enhanced animation data with theme-aware colors
-    const enhancedAnimationData = {
-        ...heroAnimation,
-        layers: heroAnimation.layers?.map(layer => ({
-            ...layer,
-            ks: {
-                ...layer.ks,
-                o: {
-                    ...layer.ks?.o,
-                    k: Array.isArray(layer.ks?.o?.k)
-                        ? layer.ks.o.k.map(frame => ({
-                            ...frame,
-                            s: frame.s ? frame.s.map(val => Math.min(val * (isDark ? 3 : 4), 100)) : [100]
-                        }))
-                        : Math.min((layer.ks?.o?.k || 15) * (isDark ? 4 : 6), 100)
-                }
-            },
-            shapes: layer.shapes?.map(shape => ({
-                ...shape,
-                ...(shape.ty === 'fl' && {
-                    c: {
-                        ...shape.c,
-                        k: isDark
-                            ? [0.6, 0.8, 1, 1] // Light blue for dark mode
-                            : shape.c?.k || [0.12, 0.15, 0.25, 1]
-                    }
-                })
-            })) || layer.shapes
-        })) || []
-    };
-
     return (
         <section
             id="home"
-            className="pt-16 relative overflow-hidden transition-colors duration-300 bg-gradient-hero dark:bg-gradient-to-br dark:from-navy-950 dark:via-navy-900 dark:to-navy-800"
+            className="pt-16 relative overflow-hidden transition-colors duration-300"
             style={{ minHeight: '100vh' }}
         >
-            {/* Animated Background Particles */}
-            <div className="absolute inset-0 overflow-hidden z-0">
-                {/* CSS Animated Background */}
-                <div className="absolute inset-0">
-                    {[...Array(6)].map((_, i) => (
-                        <motion.div
-                            key={i}
-                            className={`absolute rounded-full transition-colors duration-300 ${
-                                isDark
-                                    ? 'bg-gradient-to-r from-primary-500/20 to-accent-500/20'
-                                    : 'bg-gradient-to-r from-primary-200/30 to-accent-200/30'
-                            }`}
-                            style={{
-                                width: `${100 + i * 50}px`,
-                                height: `${100 + i * 50}px`,
-                                left: `${10 + i * 15}%`,
-                                top: `${10 + i * 10}%`,
-                            }}
-                            animate={{
-                                x: [0, 30, 0],
-                                y: [0, -20, 0],
-                                rotate: [0, 180, 360],
-                                scale: [1, 1.1, 1],
-                            }}
-                            transition={{
-                                duration: 8 + i * 2,
-                                repeat: Infinity,
-                                ease: "easeInOut",
-                                delay: i * 0.5,
-                            }}
-                        />
-                    ))}
+            {/* Vimeo Background */}
+            <div className="absolute inset-0 z-0">
+                <div style={{padding: '56.25% 0 0 0', position: 'relative', width: '100%', height: '100%'}}>
+                    <iframe
+                        src="https://player.vimeo.com/video/1124235622?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1"
+                        frameBorder="0"
+                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}
+                        title="1350205-hd_1920_1080_30fps"
+                    ></iframe>
                 </div>
-
-                {/* Lottie Animation Overlay */}
-                <div className="absolute inset-0 z-10">
-                    <Lottie
-                        lottieRef={lottieRef}
-                        animationData={enhancedAnimationData}
-                        loop={true}
-                        autoplay={true}
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            opacity: isDark ? 0.4 : 0.2,
-                            filter: isDark ? 'brightness(1.5) hue-rotate(180deg)' : 'none',
-                        }}
-                    />
-                </div>
+                <script src="https://player.vimeo.com/api/player.js"></script>
             </div>
 
             {/* Main Content */}
