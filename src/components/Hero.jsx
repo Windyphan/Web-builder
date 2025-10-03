@@ -15,7 +15,7 @@ const Hero = () => {
     return (
         <section
             id="home"
-            className="relative overflow-hidden bg-navy-950"
+            className="pt-16 relative overflow-hidden transition-colors duration-300 bg-gradient-hero dark:bg-gradient-to-br dark:from-navy-950 dark:via-navy-900 dark:to-navy-800"
             style={{ minHeight: '100vh' }}
         >
             {/* Vimeo Background */}
