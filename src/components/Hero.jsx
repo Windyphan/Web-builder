@@ -16,19 +16,26 @@ const Hero = () => {
         <section
             id="home"
             className="pt-16 relative overflow-hidden transition-colors duration-300"
-            style={{ minHeight: '100vh' }}
+            style={{ minHeight: '100vh', backgroundColor: '#000010' }}
         >
             {/* Vimeo Background */}
             <div className="absolute inset-0 z-0" style={{ pointerEvents: 'none' }}>
-                <div style={{padding: '56.25% 0 0 0', position: 'relative', width: '100%', height: '100%'}}>
-                    <iframe
-                        src="https://player.vimeo.com/video/1124235622?background=1"
-                        frameBorder="0"
-                        allow="autoplay; fullscreen; picture-in-picture"
-                        style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}
-                        title="background video"
-                    ></iframe>
-                </div>
+                <iframe
+                    src="https://player.vimeo.com/video/1124235622?background=1"
+                    frameBorder="0"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        width: '100vw',
+                        height: '56.25vw', // 16:9 aspect ratio
+                        minWidth: '100%',
+                        minHeight: '100%',
+                        transform: 'translate(-50%, -50%)',
+                    }}
+                    title="background video"
+                ></iframe>
             </div>
 
             {/* Main Content */}
