@@ -15,8 +15,8 @@ const Hero = () => {
     return (
         <section
             id="home"
-            className="pt-16 relative overflow-hidden transition-colors duration-300"
-            style={{ minHeight: '100vh', backgroundColor: '#000010' }}
+            className="relative overflow-hidden bg-navy-950"
+            style={{ minHeight: '100vh' }}
         >
             {/* Vimeo Background */}
             <div className="absolute inset-0 z-0" style={{ pointerEvents: 'none' }}>
@@ -39,7 +39,7 @@ const Hero = () => {
             </div>
 
             {/* Main Content */}
-            <div className="container mx-auto px-6 py-20 relative z-20">
+            <div className="container mx-auto px-6 pt-36 pb-20 relative z-20">
                 <div className="max-w-5xl mx-auto text-center">
                     <motion.h1
                         className="font-display text-hero-lg md:text-hero-xl font-black mb-6 transition-colors duration-300 bg-gradient-to-r from-white via-navy-100 to-primary-100 dark:from-white dark:via-primary-200 dark:to-accent-200 bg-clip-text text-transparent tracking-headline"
