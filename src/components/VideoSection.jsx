@@ -5,13 +5,15 @@ const VideoSection = () => {
     const sectionRef = useRef(null);
     const { scrollYProgress } = useScroll({
         target: sectionRef,
-        offset: ["start end", "start center"] // Animation starts when section enters viewport, ends when section top reaches center
+        offset: ["start end", "end start"] // Start animation when section enters viewport from bottom, end when it exits from top
     });
 
-    // Animate scale from 0.7 (smaller) to 1 (full size)
-    const scale = useTransform(scrollYProgress, [0, 1], [0.7, 1]);
-    // Animate vertical position from 10% offset to 0% offset (slides up slightly)
-    const y = useTransform(scrollYProgress, [0, 1], ["10%", "0%"]);
+    // Create more dramatic scaling: start very small (0.3) and grow to full size (1)
+    const scale = useTransform(scrollYProgress, [0, 0.7], [0.3, 1]);
+    // Animate vertical position for smooth entry
+    const y = useTransform(scrollYProgress, [0, 0.5], ["30%", "0%"]);
+    // Add opacity animation for smoother entrance
+    const opacity = useTransform(scrollYProgress, [0, 0.3], [0.5, 1]);
 
     return (
         <section ref={sectionRef} className="relative h-screen overflow-hidden bg-black flex items-center justify-center">
@@ -23,6 +25,7 @@ const VideoSection = () => {
                     x: '-50%', // Center horizontally
                     y: y,      // Animated vertical position
                     scale: scale, // Animated scale
+                    opacity: opacity, // Animated opacity
                     width: '100%', // Container fills the section
                     height: '100%', // Container fills the section
                     overflow: 'hidden', // Hide parts of the video that go beyond the container during scaling
