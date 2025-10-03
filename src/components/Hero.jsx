@@ -1,12 +1,45 @@
 import { motion } from 'framer-motion';
-import { FiArrowRight, FiPlay } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
-import { useState, useEffect, useRef } from 'react';
-import { useTheme } from '../contexts/ThemeContext';
+import { useState, useEffect } from 'react';
+
+// Individual star component with a looping animation
+const Star = ({ style }) => (
+    <motion.div
+        className="absolute rounded-full bg-white"
+        style={style}
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{
+            opacity: [0, 1, 0.5, 1, 0],
+            scale: [0, 1, 0.8, 1, 0],
+        }}
+        transition={{
+            duration: Math.random() * 3 + 2, // Twinkle duration
+            repeat: Infinity,
+            repeatType: "loop",
+            delay: Math.random() * 7, // Staggered start time
+            ease: "easeInOut"
+        }}
+    />
+);
+
+// Component to generate a field of stars
+const Starfield = () => {
+    // Create an array of 150 stars with random positions and sizes
+    const stars = Array.from({ length: 150 }).map((_, i) => {
+        const size = Math.random() * 2 + 1;
+        const style = {
+            width: `${size}px`,
+            height: `${size}px`,
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+        };
+        return <Star key={i} style={style} />;
+    });
+
+    return <div className="absolute inset-0 z-0">{stars}</div>;
+};
 
 const Hero = () => {
     const [isVisible, setIsVisible] = useState(false);
-    const { isDark } = useTheme();
 
     useEffect(() => {
         setIsVisible(true);
@@ -15,87 +48,55 @@ const Hero = () => {
     return (
         <section
             id="home"
-            className="relative overflow-hidden bg-navy-950"
+            className="relative overflow-hidden bg-black"
             style={{ minHeight: '100vh' }}
         >
-            {/* Vimeo Background */}
-            <div className={`absolute inset-0 z-0 ${
-                isDark
-                    ? 'bg-gradient-to-r from-primary-500/20 to-accent-500/20'
-                    : 'bg-white'
-            }`} style={{ pointerEvents: 'none' }}>
-                <iframe
-                    src="https://player.vimeo.com/video/1124235622?background=1"
-                    frameBorder="0"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        width: '100vw',
-                        height: '56.25vw', // 16:9 aspect ratio
-                        minWidth: '100%',
-                        minHeight: '100%',
-                        transform: 'translate(-50%, -50%)',
-                    }}
-                    title="background video"
-                ></iframe>
-            </div>
+            <Starfield />
 
             {/* Main Content */}
-            <div className="container mx-auto px-6 pt-36 pb-20 relative z-20">
-                <div className="max-w-5xl mx-auto text-center">
-                    <motion.h1
-                        className="font-display text-hero-lg md:text-hero-xl font-black mb-6 transition-colors duration-300 bg-gradient-to-r from-white via-navy-100 to-primary-100 dark:from-white dark:via-primary-200 dark:to-accent-200 bg-clip-text text-transparent tracking-headline"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                        transition={{ duration: 0.8 }}
-                    >
-                        Build Your
-                        <span className="block bg-gradient-accent bg-clip-text text-transparent font-black tracking-tighter leading-tight">
-                            Digital Future
-                        </span>
-                    </motion.h1>
+            <div className="container mx-auto px-6 relative z-20 flex flex-col justify-center items-center text-center" style={{minHeight: '100vh'}}>
+                <motion.h1
+                    className="font-display text-hero-lg md:text-hero-xl font-black mb-6 bg-gradient-to-r from-white via-navy-100 to-primary-100 bg-clip-text text-transparent tracking-headline"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.8 }}
+                >
+                    Build Your
+                    <span className="block bg-gradient-accent bg-clip-text text-transparent font-black tracking-tighter leading-tight">
+                        Digital Future
+                    </span>
+                </motion.h1>
 
-                    <motion.p
-                        className="font-body text-xl md:text-2xl mb-8 max-w-2xl mx-auto transition-colors duration-300 text-navy-100 dark:text-navy-200 font-medium leading-relaxed"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                    >
-                        We help you create stunning, responsive websites.
-                    </motion.p>
+                <motion.p
+                    className="font-body text-xl md:text-2xl mb-8 max-w-2xl mx-auto text-navy-200 font-medium leading-relaxed"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                >
+                    We help you create stunning, responsive websites.
+                </motion.p>
 
-                    <motion.div
-                        className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                        transition={{ duration: 0.8, delay: 0.4 }}
-                    >
-                    </motion.div>
-
-                    {/* Stats Section */}
-                    <motion.div
-                        className="grid grid-cols-2 md:grid-cols-2 gap-8 mt-16 pt-16 border-t border-white/20"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                        transition={{ duration: 0.8, delay: 0.6 }}
-                    >
-                        {[
-                            { number: '100%', label: 'Client Satisfaction' },
-                            { number: '24/7', label: 'Support Available' }
-                        ].map((stat, index) => (
-                            <div key={index} className="text-center">
-                                <div className="font-display text-4xl md:text-5xl font-extrabold bg-gradient-accent bg-clip-text text-transparent mb-2">
-                                    {stat.number}
-                                </div>
-                                <div className="font-body text-navy-200 text-sm font-medium">
-                                    {stat.label}
-                                </div>
+                {/* Stats Section */}
+                <motion.div
+                    className="grid grid-cols-2 gap-8 mt-16 pt-16 border-t border-white/20 w-full max-w-2xl"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.8, delay: 0.6 }}
+                >
+                    {[
+                        { number: '100%', label: 'Client Satisfaction' },
+                        { number: '24/7', label: 'Support Available' }
+                    ].map((stat, index) => (
+                        <div key={index} className="text-center">
+                            <div className="font-display text-4xl md:text-5xl font-extrabold bg-gradient-accent bg-clip-text text-transparent mb-2">
+                                {stat.number}
                             </div>
-                        ))}
-                    </motion.div>
-                </div>
+                            <div className="font-body text-navy-200 text-sm font-medium">
+                                {stat.label}
+                            </div>
+                        </div>
+                    ))}
+                </motion.div>
             </div>
 
             {/* Scroll indicator */}

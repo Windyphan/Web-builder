@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
+import VideoSection from '../components/VideoSection';
+import InkFillSection from '../components/InkFillSection';
 import Services from '../components/Services';
 import TrustedClients from '../components/TrustedClients';
 import Footer from '../components/Footer';
@@ -26,11 +28,13 @@ function Home() {
     return (
         <div className={`min-h-screen transition-colors duration-300 ${
             isDark 
-                ? 'bg-gradient-to-br from-navy-950 via-navy-900 to-navy-800 text-navy-100' 
-                : 'bg-gradient-to-br from-navy-50 via-white to-navy-100 text-navy-900'
+                ? 'bg-navy-950 text-navy-100' 
+                : 'bg-white text-navy-900'
         }`}>
             <Header />
             <Hero />
+            <VideoSection />
+            <InkFillSection />
             <TrustedClients />
             <Services />
             <Footer />
