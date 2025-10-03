@@ -21,21 +21,87 @@ const Star = ({ style }) => (
     />
 );
 
-// Component to generate a field of stars
+// New component for shooting stars
+const ShootingStar = () => {
+    const duration = Math.random() * 2 + 1;
+    const delay = Math.random() * 5 + 5;
+
+    return (
+        <motion.div
+            className="absolute h-0.5 w-24 bg-gradient-to-l from-white"
+            style={{
+                top: `${Math.random() * 50}%`, // Start in the top half
+                left: '-100px',
+            }}
+            initial={{
+                x: 0,
+                y: 0,
+                opacity: 0,
+            }}
+            animate={{
+                x: '150vw', // Move across the screen
+                y: '50vh', // and downwards
+                opacity: [0, 1, 0],
+            }}
+            transition={{
+                duration,
+                delay,
+                repeat: Infinity,
+                repeatDelay: delay,
+                ease: 'linear',
+            }}
+        />
+    );
+};
+
+// New component for a galaxy effect
+const Galaxy = () => (
+    <motion.div
+        className="absolute"
+        style={{
+            top: '15%',
+            left: '25%',
+            width: '50%',
+            height: '50%',
+            background: 'radial-gradient(ellipse at center, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 70%)',
+            transform: 'rotate(-25deg)'
+        }}
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: [0, 0.8, 0.2, 0.8, 0], scale: 1 }}
+        transition={{
+            duration: 30,
+            repeat: Infinity,
+            repeatType: "mirror",
+            ease: "easeInOut"
+        }}
+    />
+);
+
+// Component to generate a field of stars, now with galaxy and shooting stars
 const Starfield = () => {
-    // Create an array of 150 stars with random positions and sizes
-    const stars = Array.from({ length: 150 }).map((_, i) => {
+    // Create an array of 250 stars with random positions and sizes
+    const stars = Array.from({ length: 250 }).map((_, i) => {
         const size = Math.random() * 2 + 1;
         const style = {
             width: `${size}px`,
             height: `${size}px`,
             top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`
         };
-        return <Star key={i} style={style} />;
+        return <Star key={`star-${i}`} style={style} />;
     });
 
-    return <div className="absolute inset-0 z-0">{stars}</div>;
+    const shootingStars = Array.from({ length: 3 }).map((_, i) => (
+        <ShootingStar key={`shooting-star-${i}`} />
+    ));
+
+    return (
+        <div className="absolute inset-0 z-0 overflow-hidden">
+            <Galaxy />
+            {stars}
+            {shootingStars}
+        </div>
+    );
 };
 
 const Hero = () => {
@@ -78,16 +144,6 @@ const Hero = () => {
 
             </div>
 
-            {/* Scroll indicator */}
-            <motion.div
-                className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30"
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-            >
-                <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-                    <div className="w-1 h-3 bg-accent-400 rounded-full mt-2 animate-pulse"></div>
-                </div>
-            </motion.div>
         </section>
     );
 };
