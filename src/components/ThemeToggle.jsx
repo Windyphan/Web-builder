@@ -35,7 +35,7 @@ const ThemeToggle = ({ className = '' }) => {
                 <motion.div
                     initial={false}
                     animate={{
-                        rotate: isDark ? 180 : 0,
+                        rotate: isDark ? 0 : 180,
                         scale: isDark ? 0.8 : 1,
                     }}
                     transition={{ duration: 0.3 }}
