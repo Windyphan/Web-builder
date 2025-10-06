@@ -40,7 +40,7 @@ const InkFillSection = () => {
     const container = useRef(null);
     const { scrollYProgress } = useScroll({
         target: container,
-        offset: ['start 0.2', 'end 0.9']
+        offset: ['start 0.2', 'end 0.7']
     });
 
     const lines = [
@@ -55,8 +55,8 @@ const InkFillSection = () => {
                 <div className="max-w-4xl p-10 text-5xl font-display font-bold leading-tight text-center">
                     {lines.map((line, lineIndex) => {
                         const words = line.split(' ');
-                        const lineDuration = 0.5;
-                        const lineOverlap = 0.2;
+                        const lineDuration = 0.4;
+                        const lineOverlap = 0.15;
                         const lineStart = lineIndex * (lineDuration - lineOverlap);
 
                         return (

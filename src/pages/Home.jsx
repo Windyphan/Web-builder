@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import InkFillSection from '../components/InkFillSection';
+import VideoSection from '../components/VideoSection';
 import Services from '../components/Services';
 import TrustedClients from '../components/TrustedClients';
 import Footer from '../components/Footer';
@@ -33,6 +34,7 @@ function Home() {
             <Header />
             <Hero />
             <InkFillSection />
+            <VideoSection />
             <TrustedClients />
             <Services />
             <Footer />
