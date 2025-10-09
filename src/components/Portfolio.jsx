@@ -14,9 +14,9 @@ const Portfolio = () => {
             description: 'A comprehensive travel booking platform featuring tour packages, news updates, and seamless booking experience. Built with modern design principles and user-centric functionality.',
             category: 'Web Application',
             client: 'Travel Agency',
-            year: '2024',
+            year: '2025',
             thumbnail: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80',
-            technologies: ['React', 'Node.js', 'MongoDB', 'Tailwind CSS', 'Express'],
+            technologies: ['React', 'Node.js', 'PostgresSQL', 'Tailwind CSS', 'Express'],
             features: [
                 'Interactive tour filtering system',
                 'Real-time booking management',
@@ -51,6 +51,62 @@ const Portfolio = () => {
                     embedUrl: 'https://drive.google.com/file/d/11QHSOhnImkfOoKwETlQKcqip6l4UOwba/preview'
                 }
             ]
+        },
+        {
+            id: 2,
+            title: 'CIWUW - 3D Body Mapping Platform',
+            shortDescription: 'Innovative tattoo business platform with 3D body mapping technology for demo requests and licensing.',
+            description: 'CIWUW (Call It What U Wanna) is a cutting-edge tattoo business platform that enables customers to request demos of advanced 3D body mapping technology and obtain licenses. The platform bridges the gap between tattoo artists and technology, offering a seamless experience for exploring body art possibilities.',
+            category: 'Tech Platform',
+            client: 'CIWUW Tattoo Technology',
+            year: '2025',
+            thumbnail: 'https://images.unsplash.com/photo-1590246814883-57c511a3865a?auto=format&fit=crop&w=800&q=80',
+            technologies: ['React', 'Three.js', 'WebGL', 'Node.js', 'Tailwind CSS'],
+            features: [
+                '3D body mapping visualization',
+                'Demo request management system',
+                'License acquisition workflow',
+                'Intuitive user interface',
+                'Modern, bold design aesthetic'
+            ],
+            images: [
+                {
+                    title: 'Hero Section',
+                    description: 'Bold and modern homepage design with striking visuals',
+                    embedUrl: 'https://drive.google.com/file/d/1HEZFnyiv4FXpYWrNwOWqBhFBi43DqEFA/preview'
+                }
+            ]
+        },
+        {
+            id: 3,
+            title: 'XcySound - Artist Music Platform',
+            shortDescription: 'Custom music streaming platform for independent artist to showcase and share her original music.',
+            description: 'XcySound is a personalized music platform built for an independent artist to showcase her musical talent. The platform features a hero track section highlighting her most impressive work, along with a curated collection of featured tracks. Built with a focus on audio quality and user experience, it provides fans with an immersive listening experience.',
+            category: 'Music Platform',
+            client: 'XcySound Artist',
+            year: '2025',
+            thumbnail: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=800&q=80',
+            technologies: ['React', 'Web Audio API', 'Node.js', 'MongoDB', 'Tailwind CSS'],
+            features: [
+                'Hero track showcase for best songs',
+                'Featured tracks section',
+                'Integrated audio player',
+                'Responsive music controls',
+                'Artist portfolio and biography',
+                'Social media integration'
+            ],
+            images: [
+                {
+                    title: 'Hero Track Section',
+                    description: 'Showcase of the artist\'s most impressive track with immersive design',
+                    embedUrl: 'https://drive.google.com/file/d/1-eA8X1GtZJnUk-dDou7QcAKhrcv7gyjo/preview'
+                },
+                {
+                    title: 'Featured Tracks',
+                    description: 'Curated collection of featured music tracks on homepage',
+                    embedUrl: 'https://drive.google.com/file/d/1NRPcK7PXheVBM1zvbiMRRLTsnWGnQzlN/preview'
+                }
+            ]
         }
     ];
 
@@ -73,7 +129,7 @@ const Portfolio = () => {
                 </motion.div>
 
                 {/* Project Cards Grid */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid md:grid-cols-2 gap-8">
                     {projects.map((project, index) => (
                         <motion.div
                             key={project.id}
@@ -82,67 +138,63 @@ const Portfolio = () => {
                             transition={{ duration: 0.6, delay: index * 0.1 }}
                             viewport={{ once: true }}
                             onClick={() => setSelectedProject(project)}
-                            className="group cursor-pointer bg-gradient-card dark:bg-gradient-card-dark rounded-3xl shadow-premium dark:shadow-premium-dark overflow-hidden hover:shadow-glow-blue dark:hover:shadow-glow transition-all duration-300 hover:scale-105 border border-navy-200/20 dark:border-navy-700/20"
+                            className="group cursor-pointer rounded-3xl overflow-hidden hover:shadow-glow-blue dark:hover:shadow-glow transition-all duration-500 hover:scale-105 border border-navy-200/20 dark:border-navy-700/20 shadow-premium dark:shadow-premium-dark"
                         >
-                            {/* Project Thumbnail */}
-                            <div className="relative overflow-hidden h-64">
-                                <img
-                                    src={project.thumbnail}
-                                    alt={project.title}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-navy-900/40 to-transparent"></div>
-
-                                {/* Category Badge */}
-                                <div className="absolute top-4 left-4">
-                                    <span className="bg-accent-500 text-white px-4 py-2 rounded-full text-xs font-black shadow-lg">
-                                        {project.category}
-                                    </span>
+                            {/* Project Thumbnail - Full Card */}
+                            <div className="relative overflow-hidden aspect-[4/3] w-full">
+                                {/* Homepage Featured Image */}
+                                <div className="absolute inset-0">
+                                    <iframe
+                                        src={project.images[0].embedUrl}
+                                        className="w-full h-full pointer-events-none"
+                                        allow="autoplay"
+                                        title={project.title}
+                                    />
                                 </div>
 
-                                {/* View Details Button */}
-                                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                    <div className="flex items-center gap-2 bg-white dark:bg-navy-800 text-navy-900 dark:text-navy-100 px-4 py-2 rounded-full font-black text-sm shadow-lg">
-                                        <span>View Details</span>
-                                        <FiExternalLink size={16} />
-                                    </div>
-                                </div>
-                            </div>
+                                {/* Hover Overlay with Name and Learn More */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-navy-900/95 via-navy-900/80 to-navy-900/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center gap-6 p-8">
+                                    {/* Project Name */}
+                                    <motion.h3
+                                        className="font-display text-3xl md:text-4xl font-black text-white text-center leading-tight"
+                                        initial={{ y: 20, opacity: 0 }}
+                                        whileInView={{ y: 0, opacity: 1 }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        {project.title}
+                                    </motion.h3>
 
-                            {/* Project Info */}
-                            <div className="p-6">
-                                <h3 className="font-display text-2xl font-black text-navy-900 dark:text-navy-100 mb-3 group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors duration-300">
-                                    {project.title}
-                                </h3>
-                                <p className="font-body text-navy-600 dark:text-navy-300 mb-4 leading-relaxed font-medium line-clamp-2">
-                                    {project.shortDescription}
-                                </p>
-
-                                {/* Meta Info */}
-                                <div className="flex items-center justify-between text-sm">
-                                    <span className="text-navy-500 dark:text-navy-400 font-bold">
-                                        {project.client}
-                                    </span>
-                                    <span className="text-navy-500 dark:text-navy-400 font-bold">
-                                        {project.year}
-                                    </span>
-                                </div>
-
-                                {/* Technologies Preview */}
-                                <div className="flex flex-wrap gap-2 mt-4">
-                                    {project.technologies.slice(0, 3).map((tech, techIndex) => (
-                                        <span
-                                            key={techIndex}
-                                            className="bg-navy-100 dark:bg-navy-800 text-navy-600 dark:text-navy-300 px-3 py-1 rounded-full text-xs font-bold"
-                                        >
-                                            {tech}
+                                    {/* Category Badge */}
+                                    <motion.div
+                                        initial={{ y: 20, opacity: 0 }}
+                                        whileInView={{ y: 0, opacity: 1 }}
+                                        transition={{ duration: 0.3, delay: 0.1 }}
+                                    >
+                                        <span className="bg-accent-500 text-white px-6 py-2 rounded-full text-sm font-black shadow-lg">
+                                            {project.category}
                                         </span>
-                                    ))}
-                                    {project.technologies.length > 3 && (
-                                        <span className="bg-navy-100 dark:bg-navy-800 text-navy-600 dark:text-navy-300 px-3 py-1 rounded-full text-xs font-bold">
-                                            +{project.technologies.length - 3}
-                                        </span>
-                                    )}
+                                    </motion.div>
+
+                                    {/* Learn More Button */}
+                                    <motion.div
+                                        initial={{ y: 20, opacity: 0 }}
+                                        whileInView={{ y: 0, opacity: 1 }}
+                                        transition={{ duration: 0.3, delay: 0.2 }}
+                                        className="flex items-center gap-3 bg-white dark:bg-accent-600 text-navy-900 dark:text-white px-8 py-3 rounded-full font-black text-lg shadow-2xl hover:scale-110 transition-transform duration-300"
+                                    >
+                                        <span>Learn More</span>
+                                        <FiExternalLink size={20} />
+                                    </motion.div>
+
+                                    {/* Short Description */}
+                                    <motion.p
+                                        initial={{ y: 20, opacity: 0 }}
+                                        whileInView={{ y: 0, opacity: 1 }}
+                                        transition={{ duration: 0.3, delay: 0.3 }}
+                                        className="text-white/90 text-center text-base font-medium max-w-md line-clamp-2"
+                                    >
+                                        {project.shortDescription}
+                                    </motion.p>
                                 </div>
                             </div>
                         </motion.div>
