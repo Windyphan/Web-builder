@@ -137,7 +137,7 @@ const Portfolio = () => {
                         Our Works
                     </h2>
                     <p className="font-body text-xl md:text-2xl text-navy-600 dark:text-navy-300 max-w-3xl mx-auto leading-relaxed font-bold">
-                        Explore our latest projects and the innovative solutions we've crafted for our clients.
+                        Innovative solutions we've crafted for our clients.
                     </p>
                 </motion.div>
 
@@ -169,7 +169,7 @@ const Portfolio = () => {
                                 <div className="absolute inset-0 bg-gradient-to-t from-navy-900/95 via-navy-900/80 to-navy-900/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center gap-6 p-8">
                                     {/* Project Name */}
                                     <motion.h3
-                                        className="font-display text-3xl md:text-4xl font-black text-white text-center leading-tight"
+                                        className="font-display text-2xl md:text-3xl font-black text-white text-center leading-tight"
                                         initial={{ y: 20, opacity: 0 }}
                                         whileInView={{ y: 0, opacity: 1 }}
                                         transition={{ duration: 0.3 }}
@@ -177,37 +177,16 @@ const Portfolio = () => {
                                         {project.title}
                                     </motion.h3>
 
-                                    {/* Category Badge */}
-                                    <motion.div
-                                        initial={{ y: 20, opacity: 0 }}
-                                        whileInView={{ y: 0, opacity: 1 }}
-                                        transition={{ duration: 0.3, delay: 0.1 }}
-                                    >
-                                        <span className="bg-accent-500 text-white px-6 py-2 rounded-full text-sm font-black shadow-lg">
-                                            {project.category}
-                                        </span>
-                                    </motion.div>
-
                                     {/* Learn More Button */}
                                     <motion.div
                                         initial={{ y: 20, opacity: 0 }}
                                         whileInView={{ y: 0, opacity: 1 }}
-                                        transition={{ duration: 0.3, delay: 0.2 }}
+                                        transition={{ duration: 0.3, delay: 0.1 }}
                                         className="flex items-center gap-3 bg-white dark:bg-accent-600 text-navy-900 dark:text-white px-8 py-3 rounded-full font-black text-lg shadow-2xl hover:scale-110 transition-transform duration-300"
                                     >
                                         <span>Learn More</span>
                                         <FiExternalLink size={20} />
                                     </motion.div>
-
-                                    {/* Short Description */}
-                                    <motion.p
-                                        initial={{ y: 20, opacity: 0 }}
-                                        whileInView={{ y: 0, opacity: 1 }}
-                                        transition={{ duration: 0.3, delay: 0.3 }}
-                                        className="text-white/90 text-center text-base font-medium max-w-md line-clamp-2"
-                                    >
-                                        {project.shortDescription}
-                                    </motion.p>
                                 </div>
                             </div>
                         </motion.div>
@@ -227,7 +206,7 @@ const Portfolio = () => {
                             Ready to Start Your Project?
                         </h3>
                         <p className="font-body text-navy-200 mb-8 text-lg md:text-xl max-w-2xl mx-auto font-bold leading-relaxed">
-                            Let's discuss how we can bring your vision to life with a custom solution tailored to your needs.
+                            Let's bring your vision to life with a custom solution.
                         </p>
                         <motion.button
                             className="bg-gradient-accent hover:shadow-glow text-white px-8 py-4 rounded-full font-black text-lg transition-all duration-300 hover:scale-105 shadow-premium"
@@ -267,16 +246,10 @@ const Portfolio = () => {
                                             <span className="bg-accent-500 text-white px-4 py-1.5 rounded-full text-xs font-black shadow-lg">
                                                 {selectedProject.category}
                                             </span>
-                                            <span className="text-navy-600 dark:text-navy-300 font-bold">
-                                                {selectedProject.year}
-                                            </span>
                                         </div>
                                         <h2 className="font-display text-3xl md:text-4xl font-black text-navy-900 dark:text-navy-100 mb-2">
                                             {selectedProject.title}
                                         </h2>
-                                        <p className="text-lg text-navy-600 dark:text-navy-300 font-medium">
-                                            Client: <span className="font-bold">{selectedProject.client}</span>
-                                        </p>
                                     </div>
                                     <button
                                         onClick={() => setSelectedProject(null)}
@@ -291,48 +264,25 @@ const Portfolio = () => {
                             <div className="p-6 lg:p-8">
                                 {/* Description */}
                                 <div className="mb-8">
-                                    <h3 className="font-display text-2xl font-black text-navy-900 dark:text-navy-100 mb-4">
-                                        Project Overview
-                                    </h3>
                                     <p className="font-body text-lg text-navy-600 dark:text-navy-300 leading-relaxed font-medium">
                                         {selectedProject.description}
                                     </p>
                                 </div>
 
-                                {/* Technologies & Features */}
-                                <div className="grid md:grid-cols-2 gap-8 mb-8">
-                                    {/* Technologies */}
-                                    <div>
-                                        <h4 className="font-display text-xl font-black text-navy-900 dark:text-navy-100 mb-4">
-                                            Technologies Used
-                                        </h4>
-                                        <div className="flex flex-wrap gap-2">
-                                            {selectedProject.technologies.map((tech, techIndex) => (
-                                                <span
-                                                    key={techIndex}
-                                                    className="bg-navy-100 dark:bg-navy-800 text-navy-700 dark:text-navy-200 px-4 py-2 rounded-full text-sm font-bold shadow-sm border border-navy-200 dark:border-navy-600"
-                                                >
-                                                    {tech}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    {/* Key Features */}
-                                    <div>
-                                        <h4 className="font-display text-xl font-black text-navy-900 dark:text-navy-100 mb-4">
-                                            Key Features
-                                        </h4>
-                                        <ul className="space-y-2">
-                                            {selectedProject.features.map((feature, featureIndex) => (
-                                                <li key={featureIndex} className="flex items-start gap-2">
-                                                    <span className="text-accent-500 mt-1 font-bold">✓</span>
-                                                    <span className="text-sm text-navy-600 dark:text-navy-300 font-medium">
-                                                        {feature}
-                                                    </span>
-                                                </li>
-                                            ))}
-                                        </ul>
+                                {/* Technologies */}
+                                <div className="mb-8">
+                                    <h4 className="font-display text-xl font-black text-navy-900 dark:text-navy-100 mb-4">
+                                        Technologies
+                                    </h4>
+                                    <div className="flex flex-wrap gap-2">
+                                        {selectedProject.technologies.map((tech, techIndex) => (
+                                            <span
+                                                key={techIndex}
+                                                className="bg-navy-100 dark:bg-navy-800 text-navy-700 dark:text-navy-200 px-4 py-2 rounded-full text-sm font-bold shadow-sm border border-navy-200 dark:border-navy-600"
+                                            >
+                                                {tech}
+                                            </span>
+                                        ))}
                                     </div>
                                 </div>
 
