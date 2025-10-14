@@ -28,27 +28,27 @@ const Portfolio = () => {
                 {
                     title: 'Hero Section',
                     description: 'Stunning homepage with immersive hero section',
-                    embedUrl: 'https://drive.google.com/file/d/1UQKTeJXueKudxXzUgLLpSas_32LAyJq8/preview'
+                    embedUrl: 'https://assets.theinnovationcurve.com/Trang-thanh-travel/TrangThanh_case_study.png'
                 },
                 {
                     title: 'Tours Page',
                     description: 'Advanced filtering and comprehensive tour listings',
-                    embedUrl: 'https://drive.google.com/file/d/1bJnYyTkA0jstY4mP7UjmQwKTu2AUcF2f/preview'
+                    embedUrl: 'https://assets.theinnovationcurve.com/Trang-thanh-travel/Tours_page_2.png'
                 },
                 {
                     title: 'News Section',
                     description: 'Travel news and destination highlights',
-                    embedUrl: 'https://drive.google.com/file/d/1ZAmKsE2muC74tI4LWrSOPSgUYDVoDt9L/preview'
+                    embedUrl: 'https://assets.theinnovationcurve.com/Trang-thanh-travel/News.png'
                 },
                 {
                     title: 'Featured Tours',
                     description: 'Curated tour packages on homepage',
-                    embedUrl: 'https://drive.google.com/file/d/1dNp8r2Q2pCHGmxus6PkP4JpLc8p0zSm2/preview'
+                    embedUrl: 'https://assets.theinnovationcurve.com/Trang-thanh-travel/Home_page.png'
                 },
                 {
                     title: 'Booking Form',
                     description: 'Streamlined booking process',
-                    embedUrl: 'https://drive.google.com/file/d/11QHSOhnImkfOoKwETlQKcqip6l4UOwba/preview'
+                    embedUrl: 'https://assets.theinnovationcurve.com/Trang-thanh-travel/Booking_form.png'
                 }
             ]
         },
@@ -73,7 +73,7 @@ const Portfolio = () => {
                 {
                     title: 'Hero Section',
                     description: 'Bold and modern homepage design with striking visuals',
-                    embedUrl: 'https://drive.google.com/file/d/1HEZFnyiv4FXpYWrNwOWqBhFBi43DqEFA/preview'
+                    embedUrl: 'https://assets.theinnovationcurve.com/CIWUW/Hoempage_hero_section.png'
                 }
             ]
         },
@@ -102,22 +102,22 @@ const Portfolio = () => {
                 {
                     title: 'Hero Track Section',
                     description: 'Showcase of the artist\'s most impressive track with immersive design',
-                    embedUrl: 'https://drive.google.com/file/d/1-eA8X1GtZJnUk-dDou7QcAKhrcv7gyjo/preview'
+                    embedUrl: 'https://assets.theinnovationcurve.com/XCY-Sounds/Homepage_hero_track.png'
                 },
                 {
                     title: 'Featured Tracks',
                     description: 'Curated collection of featured music tracks on homepage',
-                    embedUrl: 'https://drive.google.com/file/d/1NRPcK7PXheVBM1zvbiMRRLTsnWGnQzlN/preview'
+                    embedUrl: 'https://assets.theinnovationcurve.com/XCY-Sounds/Homepage_featured_track.png'
                 },
                 {
                     title: 'Browsing Page',
                     description: 'Complete music catalog with search and filter functionality',
-                    embedUrl: 'https://drive.google.com/file/d/1xWaGcqYtD-YTAsXjJ2LoWheH54XnDzfO/preview'
+                    embedUrl: 'https://assets.theinnovationcurve.com/XCY-Sounds/Browsing_page.png'
                 },
                 {
                     title: 'Track Details',
                     description: 'Detailed track information with vinyl record purchase options',
-                    embedUrl: 'https://drive.google.com/file/d/19tI1TdXeM8HjRiK0rIA7hIXcgGKn52IZ/preview'
+                    embedUrl: 'https://assets.theinnovationcurve.com/XCY-Sounds/Track_details.png'
                 }
             ]
         }
@@ -151,19 +151,16 @@ const Portfolio = () => {
                             transition={{ duration: 0.6, delay: index * 0.1 }}
                             viewport={{ once: true }}
                             onClick={() => setSelectedProject(project)}
-                            className="group cursor-pointer rounded-3xl overflow-hidden hover:shadow-glow-blue dark:hover:shadow-glow transition-all duration-500 hover:scale-105 border border-navy-200/20 dark:border-navy-700/20 shadow-premium dark:shadow-premium-dark"
+                            className="group cursor-pointer overflow-hidden hover:shadow-glow-blue dark:hover:shadow-glow transition-all duration-500 hover:scale-105 border border-navy-200/20 dark:border-navy-700/20"
                         >
                             {/* Project Thumbnail - Full Card */}
-                            <div className="relative overflow-hidden aspect-[4/3] w-full">
+                            <div className="relative overflow-hidden aspect-[16/10] w-full bg-navy-100 dark:bg-navy-800">
                                 {/* Homepage Featured Image */}
-                                <div className="absolute inset-0">
-                                    <iframe
-                                        src={project.images[0].embedUrl}
-                                        className="w-full h-full pointer-events-none"
-                                        allow="autoplay"
-                                        title={project.title}
-                                    />
-                                </div>
+                                <img
+                                    src={project.images[0].embedUrl}
+                                    alt={project.title}
+                                    className="w-full h-full object-contain object-center"
+                                />
 
                                 {/* Hover Overlay with Name and Learn More */}
                                 <div className="absolute inset-0 bg-gradient-to-t from-navy-900/95 via-navy-900/80 to-navy-900/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center gap-6 p-8">
@@ -182,7 +179,7 @@ const Portfolio = () => {
                                         initial={{ y: 20, opacity: 0 }}
                                         whileInView={{ y: 0, opacity: 1 }}
                                         transition={{ duration: 0.3, delay: 0.1 }}
-                                        className="flex items-center gap-3 bg-white dark:bg-accent-600 text-navy-900 dark:text-white px-8 py-3 rounded-full font-black text-lg shadow-2xl hover:scale-110 transition-transform duration-300"
+                                        className="flex items-center gap-3 bg-white dark:bg-accent-600 text-navy-900 dark:text-white px-8 py-3 rounded-full font-black text-lg hover:scale-110 transition-transform duration-300"
                                     >
                                         <span>Learn More</span>
                                         <FiExternalLink size={20} />
@@ -209,7 +206,7 @@ const Portfolio = () => {
                             Let's bring your vision to life with a custom solution.
                         </p>
                         <motion.button
-                            className="bg-gradient-accent hover:shadow-glow text-white px-8 py-4 rounded-full font-black text-lg transition-all duration-300 hover:scale-105 shadow-premium"
+                            className="bg-gradient-accent hover:shadow-glow text-white px-8 py-4 rounded-full font-black text-lg transition-all duration-300 hover:scale-105"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             onClick={() => window.location.href = '/contact'}
@@ -236,14 +233,14 @@ const Portfolio = () => {
                             exit={{ scale: 0.9, opacity: 0 }}
                             transition={{ type: "spring", damping: 25, stiffness: 300 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="bg-white dark:bg-navy-900 rounded-3xl max-w-6xl w-full max-h-[90vh] overflow-y-auto shadow-2xl my-8"
+                            className="bg-white dark:bg-navy-900 rounded-3xl max-w-6xl w-full max-h-[90vh] overflow-y-auto my-8"
                         >
                             {/* Modal Header */}
                             <div className="sticky top-0 z-10 bg-gradient-to-br from-primary-50 to-accent-50 dark:from-navy-800 dark:to-navy-700 p-6 lg:p-8 border-b border-navy-200 dark:border-navy-600">
                                 <div className="flex items-start justify-between gap-4">
                                     <div className="flex-1">
                                         <div className="flex items-center gap-3 mb-3">
-                                            <span className="bg-accent-500 text-white px-4 py-1.5 rounded-full text-xs font-black shadow-lg">
+                                            <span className="bg-accent-500 text-white px-4 py-1.5 rounded-full text-xs font-black">
                                                 {selectedProject.category}
                                             </span>
                                         </div>
@@ -253,7 +250,7 @@ const Portfolio = () => {
                                     </div>
                                     <button
                                         onClick={() => setSelectedProject(null)}
-                                        className="p-3 bg-white dark:bg-navy-800 text-navy-900 dark:text-navy-100 rounded-full hover:bg-navy-100 dark:hover:bg-navy-700 transition-all duration-300 hover:scale-110 shadow-lg"
+                                        className="p-3 bg-white dark:bg-navy-800 text-navy-900 dark:text-navy-100 rounded-full hover:bg-navy-100 dark:hover:bg-navy-700 transition-all duration-300 hover:scale-110"
                                     >
                                         <FiX size={24} />
                                     </button>
@@ -278,7 +275,7 @@ const Portfolio = () => {
                                         {selectedProject.technologies.map((tech, techIndex) => (
                                             <span
                                                 key={techIndex}
-                                                className="bg-navy-100 dark:bg-navy-800 text-navy-700 dark:text-navy-200 px-4 py-2 rounded-full text-sm font-bold shadow-sm border border-navy-200 dark:border-navy-600"
+                                                className="bg-navy-100 dark:bg-navy-800 text-navy-700 dark:text-navy-200 px-4 py-2 rounded-full text-sm font-bold border border-navy-200 dark:border-navy-600"
                                             >
                                                 {tech}
                                             </span>
@@ -298,16 +295,15 @@ const Portfolio = () => {
                                                 initial={{ opacity: 0, scale: 0.95 }}
                                                 animate={{ opacity: 1, scale: 1 }}
                                                 transition={{ duration: 0.3, delay: imageIndex * 0.1 }}
-                                                className="group relative bg-navy-100 dark:bg-navy-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-glow-blue dark:hover:shadow-glow transition-all duration-300 cursor-pointer"
+                                                className="group relative bg-navy-100 dark:bg-navy-800 overflow-hidden hover:shadow-glow-blue dark:hover:shadow-glow transition-all duration-300 cursor-pointer"
                                                 onClick={() => setSelectedImage(image)}
                                             >
                                                 {/* Image Frame */}
                                                 <div className="relative aspect-video overflow-hidden">
-                                                    <iframe
+                                                    <img
                                                         src={image.embedUrl}
-                                                        className="w-full h-full pointer-events-none"
-                                                        allow="autoplay"
-                                                        title={image.title}
+                                                        alt={image.title}
+                                                        className="w-full h-full object-cover"
                                                     />
 
                                                     {/* Overlay on hover */}
@@ -360,14 +356,13 @@ const Portfolio = () => {
                             animate={{ scale: 1 }}
                             exit={{ scale: 0.9 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="w-full max-w-6xl bg-navy-900 rounded-2xl overflow-hidden shadow-2xl"
+                            className="w-full max-w-6xl bg-navy-900 overflow-hidden"
                         >
                             <div className="aspect-video">
-                                <iframe
+                                <img
                                     src={selectedImage.embedUrl}
-                                    className="w-full h-full"
-                                    allow="autoplay"
-                                    title={selectedImage.title}
+                                    alt={selectedImage.title}
+                                    className="w-full h-full object-contain"
                                 />
                             </div>
                             <div className="p-6 bg-navy-800">
