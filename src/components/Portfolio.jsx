@@ -80,8 +80,8 @@ const Portfolio = () => {
         {
             id: 3,
             title: 'XCY SOUNDS - Artist Music Platform',
-            shortDescription: 'Custom music streaming platform for independent artist to showcase and share her original music.',
-            description: 'XCY SOUNDS is a personalized music platform built for an independent artist to showcase her musical talent. The platform features a hero track section highlighting her most impressive work, along with a curated collection of featured tracks. Built with a focus on audio quality and user experience, it provides fans with an immersive listening experience.',
+            shortDescription: 'Custom music streaming platform with vinyl record sales for independent artist to showcase and sell original music.',
+            description: 'XCY SOUNDS is a personalized music streaming and vinyl record sales platform built for an independent artist. The platform features a hero track section highlighting her most impressive work, along with a curated collection of featured tracks. Fans can browse the complete music catalog and purchase vinyl records of their favorite songs. Built with a focus on audio quality and seamless e-commerce integration, it provides an immersive listening and shopping experience.',
             category: 'Music Platform',
             client: 'XCY SOUNDS Artist',
             year: '2025',
@@ -91,6 +91,9 @@ const Portfolio = () => {
                 'Hero track showcase for best songs',
                 'Featured tracks section',
                 'Integrated audio player',
+                'Vinyl record e-commerce',
+                'Browse and search music catalog',
+                'Track details and purchase options',
                 'Responsive music controls',
                 'Artist portfolio and biography',
                 'Social media integration'
@@ -105,6 +108,16 @@ const Portfolio = () => {
                     title: 'Featured Tracks',
                     description: 'Curated collection of featured music tracks on homepage',
                     embedUrl: 'https://drive.google.com/file/d/1NRPcK7PXheVBM1zvbiMRRLTsnWGnQzlN/preview'
+                },
+                {
+                    title: 'Browsing Page',
+                    description: 'Complete music catalog with search and filter functionality',
+                    embedUrl: 'https://drive.google.com/file/d/1xWaGcqYtD-YTAsXjJ2LoWheH54XnDzfO/preview'
+                },
+                {
+                    title: 'Track Details',
+                    description: 'Detailed track information with vinyl record purchase options',
+                    embedUrl: 'https://drive.google.com/file/d/19tI1TdXeM8HjRiK0rIA7hIXcgGKn52IZ/preview'
                 }
             ]
         }
