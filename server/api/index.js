@@ -14,6 +14,9 @@ dotenv.config();
 
 const app = express();
 
+// Trust proxy - Required for Vercel and other proxy environments
+app.set('trust proxy', 1);
+
 // Rate limiting - more restrictive for serverless
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
