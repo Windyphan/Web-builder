@@ -1,16 +1,16 @@
 import { motion } from 'framer-motion';
 import { FiLinkedin, FiGithub, FiMail, FiPhone, FiMapPin } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
 
     const quickLinks = [
-        { name: 'Home', href: '#home' },
-        { name: 'About', href: '#about' },
-        { name: 'Services', href: '#services' },
-        { name: 'Portfolio', href: '#portfolio' },
-        { name: 'Team', href: '#team' },
-        { name: 'Contact', href: '#contact' }
+        { name: 'Home', href: '/' },
+        { name: 'About', href: '/about' },
+        { name: 'Services', href: '/#services' },
+        { name: 'Portfolio', href: '/portfolio' },
+        { name: 'Contact', href: '/contact' }
     ];
 
     const services = [
@@ -74,12 +74,12 @@ const Footer = () => {
                         <ul className="space-y-2">
                             {quickLinks.map((link, index) => (
                                 <li key={index}>
-                                    <a
-                                        href={link.href}
+                                    <Link
+                                        to={link.href}
                                         className="font-body text-navy-200 hover:text-accent-400 transition-colors duration-200"
                                     >
                                         {link.name}
-                                    </a>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
