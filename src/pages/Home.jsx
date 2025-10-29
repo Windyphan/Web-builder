@@ -7,6 +7,7 @@ import Services from '../components/Services';
 import TrustedClients from '../components/TrustedClients';
 import Footer from '../components/Footer';
 import Notification from '../components/Notification';
+import JackOLantern from '../components/JackOLantern'; // Import the new component
 import { useTheme } from '../contexts/ThemeContext';
 
 function Home() {
@@ -38,6 +39,8 @@ function Home() {
             <TrustedClients />
             <Services />
             <Footer />
+
+            <JackOLantern /> {/* Add the Jack-o'-lantern here */}
 
             <Notification
                 isVisible={notification.isVisible}
