@@ -41,15 +41,15 @@ const BatAnimation = () => {
         return () => clearInterval(interval);
     }, [isDark]);
 
-    // Don't show bats in light mode
-    if (!isDark) {
-        return null;
-    }
-
     return (
-        <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden">
+        <motion.div
+            className="fixed inset-0 pointer-events-none z-40 overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isDark ? 1 : 0 }}
+            transition={{ duration: 1.5, ease: 'easeInOut' }}
+        >
             <AnimatePresence>
-                {bats.map(bat => (
+                {isDark && bats.map(bat => (
                     <motion.div
                         key={bat.id}
                         initial={{
@@ -99,7 +99,7 @@ const BatAnimation = () => {
                     </motion.div>
                 ))}
             </AnimatePresence>
-        </div>
+        </motion.div>
     );
 };
 

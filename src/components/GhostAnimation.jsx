@@ -42,15 +42,15 @@ const GhostAnimation = () => {
         return () => clearInterval(interval);
     }, [isDark]);
 
-    // Don't show ghosts in light mode
-    if (!isDark) {
-        return null;
-    }
-
     return (
-        <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden">
+        <motion.div
+            className="fixed inset-0 pointer-events-none z-40 overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isDark ? 1 : 0 }}
+            transition={{ duration: 1.5, ease: 'easeInOut' }}
+        >
             <AnimatePresence>
-                {ghosts.map(ghost => (
+                {isDark && ghosts.map(ghost => (
                     <motion.div
                         key={ghost.id}
                         initial={{
@@ -115,7 +115,7 @@ const GhostAnimation = () => {
                     </motion.div>
                 ))}
             </AnimatePresence>
-        </div>
+        </motion.div>
     );
 };
 
