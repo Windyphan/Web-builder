@@ -9,6 +9,8 @@ import Contact from './pages/Contact';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import BlogAdmin from './pages/BlogAdmin';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsConditions from './pages/TermsConditions';
 
 // Debug component to log routing
 const RouteDebugger = () => {
@@ -109,6 +111,8 @@ function App() {
                             <Route path="/blog" element={<Blog />} />
                             <Route path="/blog/:slug" element={<BlogPost />} />
                             <Route path="/admin/blog" element={<BlogAdmin />} />
+                            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                            <Route path="/terms-conditions" element={<TermsConditions />} />
                             {/* Removed sitemap.xml route - let backend handle it */}
                             {/* Catch-all route for 404 */}
                             <Route path="*" element={<NotFound />} />

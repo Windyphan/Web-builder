@@ -150,9 +150,27 @@ const Footer = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                     viewport={{ once: true }}
-                    className="border-t border-navy-700 mt-12 pt-8 text-center"
+                    className="border-t border-navy-700 mt-12 pt-8"
                 >
-                    <p className="font-body text-navy-300">
+                    {/* Legal Links */}
+                    <div className="flex flex-wrap justify-center gap-6 mb-6">
+                        <Link
+                            to="/privacy-policy"
+                            className="font-body text-navy-200 hover:text-accent-400 transition-colors duration-200"
+                        >
+                            Privacy Policy
+                        </Link>
+                        <span className="text-navy-500">|</span>
+                        <Link
+                            to="/terms-conditions"
+                            className="font-body text-navy-200 hover:text-accent-400 transition-colors duration-200"
+                        >
+                            Terms &amp; Conditions
+                        </Link>
+                    </div>
+
+                    {/* Copyright */}
+                    <p className="font-body text-navy-300 text-center">
                         © {currentYear} The Innovation Curve. All rights reserved.
                     </p>
                 </motion.div>
