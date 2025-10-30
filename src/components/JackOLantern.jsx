@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTheme } from '../contexts/ThemeContext';
 
 // --- Main Scene Component ---
 const JackOLantern = () => {
+    const { isDark } = useTheme();
+
     const flickerAnimation = {
         opacity: [0.8, 0.95, 0.85, 1, 0.9, 1],
         transition: { duration: 1.2, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' },
@@ -98,28 +101,32 @@ const JackOLantern = () => {
                     />
                 </g>
 
-                {/* Bright inner glow with flicker */}
-                <motion.g filter="url(#bloomEffect)" animate={flickerAnimation}>
-                    <path d="M 55,70 L 80,78 L 67,90 Z" fill="#FFF4E0" />
-                    <path d="M 145,70 L 120,78 L 133,90 Z" fill="#FFF4E0" />
-                    <path d="M 97,100 L 103,100 L 100,108 Z" fill="#FFF4E0" />
-                    <path
-                        d="M 50,123 C 63,138 82,142 100,142 C 118,142 137,138 150,123 L 143,128 L 132,124 L 118,133 L 100,127 L 82,133 L 68,124 L 57,128 Z"
-                        fill="#FFF4E0"
-                    />
-                </motion.g>
+                {/* Bright inner glow with flicker - only in dark mode */}
+                {isDark && (
+                    <motion.g filter="url(#bloomEffect)" animate={flickerAnimation}>
+                        <path d="M 55,70 L 80,78 L 67,90 Z" fill="#FFF4E0" />
+                        <path d="M 145,70 L 120,78 L 133,90 Z" fill="#FFF4E0" />
+                        <path d="M 97,100 L 103,100 L 100,108 Z" fill="#FFF4E0" />
+                        <path
+                            d="M 50,123 C 63,138 82,142 100,142 C 118,142 137,138 150,123 L 143,128 L 132,124 L 118,133 L 100,127 L 82,133 L 68,124 L 57,128 Z"
+                            fill="#FFF4E0"
+                        />
+                    </motion.g>
+                )}
 
-                {/* Mid-tone orange glow */}
-                <motion.g animate={flickerAnimation}>
-                    <path d="M 56,71 L 79,79 L 68,89 Z" fill="#FFB300" opacity="0.8" />
-                    <path d="M 144,71 L 121,79 L 132,89 Z" fill="#FFB300" opacity="0.8" />
-                    <path d="M 97,101 L 103,101 L 100,107 Z" fill="#FFB300" opacity="0.8" />
-                    <path
-                        d="M 51,124 C 62,137 83,141 100,141 C 117,141 138,137 149,124 L 142,127 L 133,125 L 119,132 L 100,128 L 81,132 L 67,125 L 58,127 Z"
-                        fill="#FFB300"
-                        opacity="0.8"
-                    />
-                </motion.g>
+                {/* Mid-tone orange glow - only in dark mode */}
+                {isDark && (
+                    <motion.g animate={flickerAnimation}>
+                        <path d="M 56,71 L 79,79 L 68,89 Z" fill="#FFB300" opacity="0.8" />
+                        <path d="M 144,71 L 121,79 L 132,89 Z" fill="#FFB300" opacity="0.8" />
+                        <path d="M 97,101 L 103,101 L 100,107 Z" fill="#FFB300" opacity="0.8" />
+                        <path
+                            d="M 51,124 C 62,137 83,141 100,141 C 117,141 138,137 149,124 L 142,127 L 133,125 L 119,132 L 100,128 L 81,132 L 67,125 L 58,127 Z"
+                            fill="#FFB300"
+                            opacity="0.8"
+                        />
+                    </motion.g>
+                )}
 
                 {/* --- Pumpkin Stem --- */}
                 <path

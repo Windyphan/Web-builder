@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from '../contexts/ThemeContext';
 
 const GhostAnimation = () => {
+    const { isDark } = useTheme();
     const [ghosts, setGhosts] = useState([]);
 
     useEffect(() => {
+        // Only generate ghosts in dark mode
+        if (!isDark) return;
+
         // Generate random ghosts at intervals
         const generateGhost = () => {
             const newGhost = {
@@ -35,7 +40,12 @@ const GhostAnimation = () => {
         }, 1000 + Math.random() * 1000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [isDark]);
+
+    // Don't show ghosts in light mode
+    if (!isDark) {
+        return null;
+    }
 
     return (
         <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden">

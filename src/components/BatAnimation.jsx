@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from '../contexts/ThemeContext';
 
 const BatAnimation = () => {
+    const { isDark } = useTheme();
     const [bats, setBats] = useState([]);
 
     useEffect(() => {
+        // Only generate bats in dark mode
+        if (!isDark) return;
+
         // Generate random bats at intervals
         const generateBat = () => {
             const newBat = {
@@ -34,7 +39,12 @@ const BatAnimation = () => {
         }, 1000 + Math.random() * 1000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [isDark]);
+
+    // Don't show bats in light mode
+    if (!isDark) {
+        return null;
+    }
 
     return (
         <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden">
