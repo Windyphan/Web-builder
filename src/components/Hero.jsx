@@ -1,7 +1,5 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import BatAnimation from './BatAnimation';
-import GhostAnimation from './GhostAnimation';
 
 // Animated particles background
 const AnimatedBackground = () => {
@@ -94,12 +92,6 @@ const Hero = () => {
             style={{ minHeight: '100vh' }}
         >
             <AnimatedBackground />
-
-            {/* Flying Bats Animation - Separate component for easy removal */}
-            <BatAnimation />
-
-            {/* Flying Ghosts Animation - Separate component for easy removal */}
-            <GhostAnimation />
 
             {/* Main Content */}
             <div className="container mx-auto px-6 relative z-10 flex flex-col justify-center items-center text-center pt-24">
