@@ -54,6 +54,7 @@ const Contact = () => {
         setSubmitStatus(null);
 
         try {
+            // Send email to company
             await emailjs.send(
                 'service_4lbrwu9',
                 'template_sotia64',
@@ -67,7 +68,27 @@ const Contact = () => {
                 },
                 '_KGvnP1t8dVz7HVoB'
             );
+
+            // Send thank you email to customer
+            await emailjs.send(
+                'service_4lbrwu9',
+                'template_thank_you', // You'll need to create this template in EmailJS
+                {
+                    to_name: formData.name,
+                    to_email: formData.email,
+                    from_name: 'The Innovation Curve',
+                    message: `Thank you for contacting us! We've received your message and will get back to you within 24 hours.`,
+                },
+                '_KGvnP1t8dVz7HVoB'
+            );
+
             setSubmitStatus('success');
+
+            // Show notification popup
+            if (onNotification) {
+                onNotification('success', 'Thank you for contacting us! We\'ve received your message and will get back to you within 24 hours.');
+            }
+
             setFormData({
                 name: '',
                 email: '',
@@ -79,6 +100,11 @@ const Contact = () => {
         } catch (error) {
             console.error('Error sending email:', error);
             setSubmitStatus('error');
+
+            // Show error notification
+            if (onNotification) {
+                onNotification('error', 'Failed to send message. Please try again or contact us directly at info@theinnovationcurve.com');
+            }
         } finally {
             setIsSubmitting(false);
         }
