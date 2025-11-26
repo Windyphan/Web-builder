@@ -3,7 +3,7 @@ import { FiMail, FiPhone, FiMapPin, FiClock } from 'react-icons/fi';
 import emailjs from '@emailjs/browser';
 import {useState} from "react";
 
-const Contact = () => {
+const Contact = ({ onNotification }) => {
     const contactInfo = [
         {
             icon: FiMail,
@@ -54,7 +54,7 @@ const Contact = () => {
         setSubmitStatus(null);
 
         try {
-            // Send email to company
+            // Send email to company (main email)
             await emailjs.send(
                 'service_4lbrwu9',
                 'template_sotia64',
@@ -69,18 +69,23 @@ const Contact = () => {
                 '_KGvnP1t8dVz7HVoB'
             );
 
-            // Send thank you email to customer
-            await emailjs.send(
-                'service_4lbrwu9',
-                'template_thank_you', // You'll need to create this template in EmailJS
-                {
-                    to_name: formData.name,
-                    to_email: formData.email,
-                    from_name: 'The Innovation Curve',
-                    message: `Thank you for contacting us! We've received your message and will get back to you within 24 hours.`,
-                },
-                '_KGvnP1t8dVz7HVoB'
-            );
+            // Try to send thank you email to customer (optional - don't fail if this errors)
+            try {
+                await emailjs.send(
+                    'service_4lbrwu9',
+                    'template_thank_you',
+                    {
+                        to_name: formData.name,
+                        to_email: formData.email,
+                        from_name: 'The Innovation Curve',
+                        message: `Thank you for contacting us! We've received your message and will get back to you within 24 hours.`,
+                    },
+                    '_KGvnP1t8dVz7HVoB'
+                );
+            } catch (thankYouError) {
+                console.log('Thank you email failed, but main email was sent:', thankYouError);
+                // Don't throw - we still want to show success since the main email was sent
+            }
 
             setSubmitStatus('success');
 
