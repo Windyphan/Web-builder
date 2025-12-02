@@ -35,22 +35,29 @@ const VideoSection = () => {
     ];
 
     return (
-        <section ref={sectionRef} className="relative bg-gray-900 py-20 overflow-hidden">
+        <section ref={sectionRef} className="relative bg-gray-900 overflow-hidden">
             {/* Video Background with Lighter Overlay */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-gradient-to-b from-gray-900/60 via-gray-900/40 to-gray-900/60 z-10"></div>
-                <iframe
-                    src="https://player.vimeo.com/video/1124235622?background=1&autoplay=1&loop=1&muted=1"
-                    frameBorder="0"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    className="absolute top-1/2 left-1/2 w-screen h-screen object-cover"
-                    style={{
-                        transform: 'translate(-50%, -50%)',
-                        minWidth: '100%',
-                        minHeight: '100%',
-                    }}
-                    title="background video"
-                ></iframe>
+                <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+                    <iframe
+                        src="https://player.vimeo.com/video/1124235622?background=1&autoplay=1&loop=1&muted=1"
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        className="border-0"
+                        style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            width: '133.33vh',
+                            height: '100vh',
+                            minWidth: '100vw',
+                            minHeight: '75vw',
+                            transform: 'translate(-50%, -50%)',
+                            pointerEvents: 'none',
+                        }}
+                        title="background video"
+                    ></iframe>
+                </div>
             </div>
 
             {/* Content */}
@@ -61,7 +68,7 @@ const VideoSection = () => {
                 {/* Section Header */}
                 <motion.div
                     className="text-center mb-16"
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 15 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true }}

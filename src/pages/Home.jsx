@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
-import InkFillSection from '../components/InkFillSection';
 import VideoSection from '../components/VideoSection';
 import Services from '../components/Services';
 import TrustedClients from '../components/TrustedClients';
+import FeaturedPortfolio from '../components/FeaturedPortfolio';
 import Footer from '../components/Footer';
 import Notification from '../components/Notification';
 import { useTheme } from '../contexts/ThemeContext';
@@ -33,8 +33,8 @@ function Home() {
         }`}>
             <Header />
             <Hero />
-            <InkFillSection />
             <VideoSection />
+            <FeaturedPortfolio />
             <TrustedClients />
             <Services />
             <Footer />
