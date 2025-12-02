@@ -58,7 +58,7 @@ const FeaturedPortfolio = () => {
                     <p className={`text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed ${
                         isDark ? 'text-navy-300' : 'text-navy-600'
                     }`}>
-                        Explore some of our recent projects and success stories
+                        Explore some of our recent projects
                     </p>
                 </motion.div>
 
