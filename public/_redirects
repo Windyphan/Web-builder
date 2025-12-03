@@ -1,0 +1,3 @@
+# Redirect non-www to www
+http://theinnovationcurve.com/* https://www.theinnovationcurve.com/:splat 301!
+https://theinnovationcurve.com/* https://www.theinnovationcurve.com/:splat 301!
