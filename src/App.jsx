@@ -11,6 +11,7 @@ import BlogPost from './pages/BlogPost';
 import BlogAdmin from './pages/BlogAdmin';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsConditions from './pages/TermsConditions';
+import React from 'react';
 
 // Error Boundary component
 class ErrorBoundary extends React.Component {
