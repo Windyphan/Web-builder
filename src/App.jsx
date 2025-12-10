@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import ScrollToTop from './components/ScrollToTop';
 import CanonicalURL from './components/CanonicalURL';
@@ -12,37 +11,6 @@ import BlogPost from './pages/BlogPost';
 import BlogAdmin from './pages/BlogAdmin';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsConditions from './pages/TermsConditions';
-
-// Debug component to log routing
-const RouteDebugger = () => {
-    const location = useLocation();
-
-    useEffect(() => {
-        console.log('=== ROUTE DEBUG ===');
-        console.log('Current route:', location.pathname);
-        console.log('Search params:', location.search);
-        console.log('Hash:', location.hash);
-        console.log('Full URL:', window.location.href);
-        console.log('Document URL:', document.URL);
-        console.log('Location href:', location.href);
-        console.log('History length:', window.history.length);
-        console.log('API URL:', import.meta.env.VITE_API_URL);
-        console.log('===================');
-
-        // Log when route changes
-        return () => {
-            console.log('Route changing from:', location.pathname);
-        };
-    }, [location]);
-
-    // Also log immediately when component mounts
-    useEffect(() => {
-        console.log('⚠️ RouteDebugger mounted with initial URL:', window.location.href);
-        console.log('⚠️ Initial pathname:', window.location.pathname);
-    }, []);
-
-    return null;
-};
 
 // Error Boundary component
 class ErrorBoundary extends React.Component {
