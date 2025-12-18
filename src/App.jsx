@@ -11,6 +11,7 @@ import BlogPost from './pages/BlogPost';
 import BlogAdmin from './pages/BlogAdmin';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsConditions from './pages/TermsConditions';
+import SEOTool from './pages/SEOTool';
 import React from 'react';
 
 // Error Boundary component
@@ -83,6 +84,7 @@ function App() {
                             <Route path="/admin/blog" element={<BlogAdmin />} />
                             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                             <Route path="/terms-conditions" element={<TermsConditions />} />
+                            <Route path="/seo-tool" element={<SEOTool />} />
                             {/* Removed sitemap.xml route - let backend handle it */}
                             {/* Catch-all route for 404 */}
                             <Route path="*" element={<NotFound />} />
