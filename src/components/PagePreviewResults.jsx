@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { FiEye, FiChevronDown, FiChevronUp, FiExternalLink, FiCamera, FiRefreshCw } from 'react-icons/fi';
-import html2canvas from 'html2canvas';
 
 const PagePreviewResults = ({ data }) => {
     const { isDark } = useTheme();
@@ -9,10 +8,8 @@ const PagePreviewResults = ({ data }) => {
         screenshot: true,
         elements: false,
     });
-    const [screenshot, setScreenshot] = useState(null);
-    const [isCapturing, setIsCapturing] = useState(false);
-    const [captureError, setCaptureError] = useState(null);
-    const [iframeLoaded, setIframeLoaded] = useState(false);
+    const [screenshotError, setScreenshotError] = useState(false);
+    const [screenshotKey, setScreenshotKey] = useState(Date.now());
 
     const toggleSection = (section) => {
         setExpandedSections(prev => ({
@@ -21,65 +18,19 @@ const PagePreviewResults = ({ data }) => {
         }));
     };
 
-    // Capture screenshot when iframe loads
-    useEffect(() => {
-        if (iframeLoaded && !screenshot) {
-            captureScreenshot();
-        }
-    }, [iframeLoaded]);
+    // Generate screenshot URL using external API service
+    const getScreenshotUrl = () => {
+        // Using screenshot.rest API (free tier available)
+        // Alternative services:
+        // - https://image.thum.io/get/width/1200/crop/800/${encodeURIComponent(data.url)}
+        // - https://api.thumbnail.ws/api/${apiKey}/thumbnail/get?url=${encodeURIComponent(data.url)}&width=1200
 
-    const captureScreenshot = async () => {
-        setIsCapturing(true);
-        setCaptureError(null);
-
-        try {
-            // Create an iframe to load the page
-            const iframe = document.getElementById('preview-iframe');
-
-            if (!iframe || !iframe.contentWindow) {
-                throw new Error('Unable to access page content');
-            }
-
-            // Wait a bit for content to render
-            await new Promise(resolve => setTimeout(resolve, 2000));
-
-            // Capture screenshot using html2canvas
-            const canvas = await html2canvas(iframe.contentWindow.document.body, {
-                allowTaint: true,
-                useCORS: true,
-                scrollY: 0,
-                scrollX: 0,
-                width: iframe.contentWindow.document.body.scrollWidth,
-                height: Math.min(iframe.contentWindow.document.body.scrollHeight, 4000),
-                windowWidth: 1200,
-                windowHeight: 800,
-            });
-
-            // Convert to data URL
-            const screenshotData = canvas.toDataURL('image/png');
-            setScreenshot(screenshotData);
-        } catch (error) {
-            console.error('Screenshot capture error:', error);
-            setCaptureError(error.message || 'Failed to capture screenshot');
-        } finally {
-            setIsCapturing(false);
-        }
+        return `https://api.screenshotmachine.com/?key=demo&url=${encodeURIComponent(data.url)}&dimension=1024x768&cacheLimit=0&delay=2000&t=${screenshotKey}`;
     };
 
-    const handleIframeLoad = () => {
-        setIframeLoaded(true);
-    };
-
-    const retryCapture = () => {
-        setScreenshot(null);
-        setCaptureError(null);
-        setIframeLoaded(false);
-        // Reload iframe by changing src slightly
-        const iframe = document.getElementById('preview-iframe');
-        if (iframe) {
-            const currentSrc = iframe.src;
-            iframe.src = currentSrc + (currentSrc.includes('?') ? '&' : '?') + 'refresh=' + Date.now();
-        }
+    const handleRefreshScreenshot = () => {
+        setScreenshotError(false);
+        setScreenshotKey(Date.now()); // Force reload with new timestamp
     };
 
     const SectionHeader = ({ title, icon: Icon, isExpanded, onClick }) => (
@@ -239,17 +190,18 @@ const PagePreviewResults = ({ data }) => {
                         <div className={`rounded-lg border-2 overflow-hidden ${
                             isDark ? 'border-gray-700 bg-gray-900' : 'border-gray-300 bg-gray-100'
                         }`}>
-                            {screenshot ? (
-                                // Show captured screenshot
+                            {!screenshotError ? (
                                 <div className="relative">
                                     <img
-                                        src={screenshot}
+                                        src={getScreenshotUrl()}
                                         alt={`Screenshot of ${data.url}`}
                                         className="w-full h-auto"
+                                        onError={() => setScreenshotError(true)}
+                                        loading="lazy"
                                     />
                                     <div className="absolute top-2 right-2 flex gap-2">
                                         <button
-                                            onClick={retryCapture}
+                                            onClick={handleRefreshScreenshot}
                                             className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
                                                 isDark ? 'bg-gray-900/90 text-white hover:bg-gray-800' : 'bg-white/90 text-gray-900 hover:bg-gray-100'
                                             } shadow-lg transition-colors`}
@@ -270,25 +222,24 @@ const PagePreviewResults = ({ data }) => {
                                         </a>
                                     </div>
                                 </div>
-                            ) : captureError ? (
-                                // Show error with retry
+                            ) : (
                                 <div className={`p-8 text-center ${isDark ? 'bg-gray-800' : 'bg-gray-100'}`}>
-                                    <FiCamera className={`text-5xl mx-auto mb-4 ${isDark ? 'text-red-500' : 'text-red-600'}`} />
-                                    <p className={`mb-2 font-semibold ${isDark ? 'text-red-400' : 'text-red-600'}`}>
-                                        Screenshot capture failed
+                                    <FiCamera className={`text-5xl mx-auto mb-4 ${isDark ? 'text-gray-600' : 'text-gray-400'}`} />
+                                    <p className={`mb-2 font-semibold ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                                        Screenshot Preview Unavailable
                                     </p>
-                                    <p className={`mb-4 text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                                        {captureError}
+                                    <p className={`mb-4 text-sm ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
+                                        Some websites may block screenshot services. You can visit the page directly to view it.
                                     </p>
                                     <div className="flex gap-3 justify-center">
                                         <button
-                                            onClick={retryCapture}
+                                            onClick={handleRefreshScreenshot}
                                             className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
                                                 isDark ? 'bg-blue-600 hover:bg-blue-700' : 'bg-blue-600 hover:bg-blue-700'
                                             } text-white transition-colors`}
                                         >
                                             <FiRefreshCw size={16} />
-                                            Retry Capture
+                                            Try Again
                                         </button>
                                         <a
                                             href={data.url}
@@ -303,42 +254,6 @@ const PagePreviewResults = ({ data }) => {
                                         </a>
                                     </div>
                                 </div>
-                            ) : isCapturing ? (
-                                // Show loading state
-                                <div className={`p-8 text-center ${isDark ? 'bg-gray-800' : 'bg-gray-100'}`}>
-                                    <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-500 mx-auto mb-4"></div>
-                                    <p className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                                        Capturing Screenshot...
-                                    </p>
-                                    <p className={`text-sm mt-2 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                                        This may take a few seconds
-                                    </p>
-                                </div>
-                            ) : (
-                                // Show iframe preview while loading
-                                <div className="relative" style={{ height: '600px' }}>
-                                    <iframe
-                                        id="preview-iframe"
-                                        src={data.url}
-                                        onLoad={handleIframeLoad}
-                                        className="w-full h-full border-0"
-                                        title={`Preview of ${data.url}`}
-                                        sandbox="allow-same-origin allow-scripts"
-                                    />
-                                    <div className="absolute top-2 right-2">
-                                        <a
-                                            href={data.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
-                                                isDark ? 'bg-gray-900/90 text-white' : 'bg-white/90 text-gray-900'
-                                            } shadow-lg hover:scale-105 transition-transform`}
-                                        >
-                                            <FiExternalLink size={16} />
-                                            <span className="text-sm font-medium">Visit Page</span>
-                                        </a>
-                                    </div>
-                                </div>
                             )}
                         </div>
 
@@ -346,7 +261,7 @@ const PagePreviewResults = ({ data }) => {
                             isDark ? 'bg-gray-700/50 text-gray-400' : 'bg-gray-100 text-gray-600'
                         }`}>
                             <p>
-                                ℹ️ Screenshot is captured directly from the live page. {screenshot ? 'Click "Refresh" to update the screenshot.' : 'The page is loading...'}
+                                ℹ️ Screenshot is generated using an external service. Some websites may block screenshot services or take a moment to load. Click "Refresh" to reload the screenshot.
                             </p>
                         </div>
                     </div>
