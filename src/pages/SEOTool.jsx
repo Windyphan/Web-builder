@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import PagePreviewResults from '../components/PagePreviewResults';
 import VisualReportResults from '../components/VisualReportResults';
 import TechnicalSEOResults from '../components/TechnicalSEOResults';
 import ContentAnalysisResults from '../components/ContentAnalysisResults';
@@ -115,7 +116,8 @@ function SEOTool() {
 
         } catch (err) {
             console.error('Analysis error:', err);
-            setError(`Failed to analyze page: ${err.message}. This might be due to CORS restrictions or the page being unavailable.`);
+            // Use the detailed error message from the crawler
+            setError(err.message || 'Failed to analyze page. Please try again.');
         } finally {
             setIsAnalyzing(false);
             setAnalysisProgress('');
@@ -188,9 +190,22 @@ function SEOTool() {
                                     }`} />
                                 </div>
                                 {error && (
-                                    <p className="mt-2 text-sm text-red-500 flex items-center gap-1">
-                                        {error}
-                                    </p>
+                                    <div className={`mt-3 p-4 rounded-lg border ${
+                                        isDark 
+                                            ? 'bg-red-500/10 border-red-500/30' 
+                                            : 'bg-red-50 border-red-200'
+                                    }`}>
+                                        <p className={`text-sm font-semibold mb-2 ${
+                                            isDark ? 'text-red-400' : 'text-red-700'
+                                        }`}>
+                                            ⚠️ Analysis Failed
+                                        </p>
+                                        <p className={`text-sm whitespace-pre-line ${
+                                            isDark ? 'text-red-300' : 'text-red-600'
+                                        }`}>
+                                            {error}
+                                        </p>
+                                    </div>
                                 )}
                             </div>
 
@@ -300,6 +315,29 @@ function SEOTool() {
                         </ul>
                     </div>
 
+                    {/* CORS Information */}
+                    <div className={`rounded-lg p-6 ${
+                        isDark 
+                            ? 'bg-yellow-500/10 border border-yellow-500/20' 
+                            : 'bg-yellow-50 border border-yellow-200'
+                    }`}>
+                        <h3 className={`font-semibold mb-2 ${
+                            isDark ? 'text-yellow-300' : 'text-yellow-900'
+                        }`}>
+                            ℹ️ About CORS Restrictions
+                        </h3>
+                        <p className={`text-sm mb-2 ${
+                            isDark ? 'text-yellow-200' : 'text-yellow-800'
+                        }`}>
+                            Some websites may block analysis due to security policies. This tool uses multiple proxy services to bypass CORS restrictions.
+                        </p>
+                        <p className={`text-xs ${
+                            isDark ? 'text-yellow-300/70' : 'text-yellow-700'
+                        }`}>
+                            <strong>Best results:</strong> Analyzing your own websites or public pages. Some sites with strict security may still be inaccessible.
+                        </p>
+                    </div>
+
                     {/* Results Section */}
                     {results && (
                         <div id="results-section" className="mt-8">
@@ -320,6 +358,8 @@ function SEOTool() {
                                     {new Date(results.analyzedAt).toLocaleString()}
                                 </p>
                             </div>
+
+                            <PagePreviewResults data={results} />
 
                             <VisualReportResults data={results} />
 

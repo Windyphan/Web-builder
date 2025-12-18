@@ -9,34 +9,85 @@
  * @returns {Promise<Object>} - Parsed SEO data
  */
 export const analyzePage = async (url) => {
-    try {
-        // Use a CORS proxy for cross-origin requests
-        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+    // List of CORS proxies to try (in order)
+    const corsProxies = [
+        `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+        `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+        `https://corsproxy.io/?${encodeURIComponent(url)}`,
+    ];
 
-        const startTime = performance.now();
-        const response = await fetch(proxyUrl, {
-            method: 'GET',
-            headers: {
-                'Accept': 'text/html',
-            },
-        });
+    let lastError = null;
+    const startTime = performance.now();
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+    // Try each proxy in order
+    for (let i = 0; i < corsProxies.length; i++) {
+        try {
+            const proxyUrl = corsProxies[i];
+            console.log(`Attempting to fetch with proxy ${i + 1}/${corsProxies.length}...`);
+
+            const response = await fetch(proxyUrl, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'text/html',
+                },
+                signal: AbortSignal.timeout(15000), // 15 second timeout
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            const html = await response.text();
+
+            // Validate we got HTML content
+            if (!html || html.length < 100) {
+                throw new Error('Invalid response - content too short');
+            }
+
+            const endTime = performance.now();
+            const loadTime = endTime - startTime;
+
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            // Check if parsing was successful
+            if (!doc.body) {
+                throw new Error('Failed to parse HTML content');
+            }
+
+            console.log('✅ Successfully fetched and parsed page');
+            return extractSEOData(doc, url, html, loadTime);
+
+        } catch (error) {
+            console.warn(`Proxy ${i + 1} failed:`, error.message);
+            lastError = error;
+            // Continue to next proxy
         }
-
-        const html = await response.text();
-        const endTime = performance.now();
-        const loadTime = endTime - startTime;
-
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-
-        return extractSEOData(doc, url, html, loadTime);
-    } catch (error) {
-        console.error('Error analyzing page:', error);
-        throw error;
     }
+
+    // All proxies failed
+    console.error('All CORS proxies failed');
+
+    // Provide helpful error message
+    const errorMessage = `
+Unable to analyze this page due to CORS restrictions. 
+
+This happens when:
+• The website blocks cross-origin requests
+• The website requires authentication
+• The website blocks automated tools
+• All CORS proxy services are unavailable
+
+Solutions:
+1. Try analyzing your own website instead
+2. Use a browser extension to disable CORS temporarily
+3. Contact your server admin to set up a server-side proxy
+4. The website may have a robots.txt blocking crawlers
+
+Last error: ${lastError?.message || 'Unknown error'}
+    `.trim();
+
+    throw new Error(errorMessage);
 };
 
 /**
