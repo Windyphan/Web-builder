@@ -47,6 +47,8 @@ export const analyzePage = async (url) => {
             const endTime = performance.now();
             const loadTime = endTime - startTime;
 
+            console.log(`📄 HTML received: ${(html.length / 1024).toFixed(2)} KB`);
+
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
 
@@ -54,6 +56,16 @@ export const analyzePage = async (url) => {
             if (!doc.body) {
                 throw new Error('Failed to parse HTML content');
             }
+
+            // Debug: Log what we found
+            const imgCount = doc.querySelectorAll('img').length;
+            const bodyText = doc.body.textContent?.slice(0, 200) || '';
+            console.log(`🔍 Parsed document:`, {
+                imgTags: imgCount,
+                bodyLength: doc.body.innerHTML?.length || 0,
+                hasTitle: !!doc.querySelector('title'),
+                firstText: bodyText.trim(),
+            });
 
             console.log('✅ Successfully fetched and parsed page');
             return extractSEOData(doc, url, html, loadTime);
@@ -312,19 +324,40 @@ const extractHeadings = (doc) => {
  */
 const extractImages = (doc, baseUrl) => {
     const images = [];
+
+    // Method 1: Standard img tags (including lazy-loaded)
     const imgTags = doc.querySelectorAll('img');
+    console.log(`Found ${imgTags.length} <img> tags`);
 
     imgTags.forEach(img => {
-        const src = img.getAttribute('src') || '';
+        // Check multiple src attributes (lazy loading patterns)
+        const src = img.getAttribute('src') ||
+                   img.getAttribute('data-src') ||
+                   img.getAttribute('data-lazy-src') ||
+                   img.getAttribute('data-original') ||
+                   '';
         const alt = img.getAttribute('alt') || '';
         const loading = img.getAttribute('loading') || '';
+        const srcset = img.getAttribute('srcset') || '';
+
+        // Skip completely empty images
+        if (!src && !srcset) {
+            return;
+        }
 
         // Resolve relative URLs
         let fullUrl = src;
         try {
-            fullUrl = new URL(src, baseUrl).href;
+            if (src) {
+                fullUrl = new URL(src, baseUrl).href;
+            } else if (srcset) {
+                // Use first srcset URL if no src
+                fullUrl = srcset.split(',')[0]?.trim().split(' ')[0];
+                fullUrl = new URL(fullUrl, baseUrl).href;
+            }
         } catch (e) {
             // Keep original if URL resolution fails
+            fullUrl = src || srcset.split(',')[0]?.trim().split(' ')[0];
         }
 
         images.push({
@@ -332,10 +365,73 @@ const extractImages = (doc, baseUrl) => {
             alt,
             hasAlt: !!alt,
             loading,
-            isLazyLoaded: loading === 'lazy',
+            isLazyLoaded: loading === 'lazy' || !!img.getAttribute('data-src'),
+            hasSrcset: !!srcset,
         });
     });
 
+    // Method 2: Picture elements
+    const pictureTags = doc.querySelectorAll('picture source, picture img');
+    console.log(`Found ${pictureTags.length} <picture> source/img elements`);
+
+    pictureTags.forEach(elem => {
+        const srcset = elem.getAttribute('srcset') || '';
+        const src = elem.getAttribute('src') || '';
+
+        if (srcset || src) {
+            const url = srcset ? srcset.split(',')[0]?.trim().split(' ')[0] : src;
+            let fullUrl = url;
+            try {
+                fullUrl = new URL(url, baseUrl).href;
+            } catch (e) {
+                fullUrl = url;
+            }
+
+            // Check if not already added
+            if (!images.find(img => img.src === fullUrl)) {
+                images.push({
+                    src: fullUrl,
+                    alt: elem.getAttribute('alt') || '',
+                    hasAlt: !!elem.getAttribute('alt'),
+                    loading: elem.getAttribute('loading') || '',
+                    isLazyLoaded: elem.getAttribute('loading') === 'lazy',
+                    hasSrcset: !!srcset,
+                });
+            }
+        }
+    });
+
+    // Method 3: Background images (inline styles only)
+    const elementsWithBg = doc.querySelectorAll('[style*="background-image"]');
+    console.log(`Found ${elementsWithBg.length} elements with background images`);
+
+    elementsWithBg.forEach(elem => {
+        const style = elem.getAttribute('style') || '';
+        const bgMatch = style.match(/background-image:\s*url\(['"]?([^'"()]+)['"]?\)/);
+        if (bgMatch && bgMatch[1]) {
+            let fullUrl = bgMatch[1];
+            try {
+                fullUrl = new URL(bgMatch[1], baseUrl).href;
+            } catch (e) {
+                fullUrl = bgMatch[1];
+            }
+
+            // Avoid duplicates
+            if (!images.find(img => img.src === fullUrl)) {
+                images.push({
+                    src: fullUrl,
+                    alt: '',
+                    hasAlt: false,
+                    loading: '',
+                    isLazyLoaded: false,
+                    hasSrcset: false,
+                    isBackgroundImage: true,
+                });
+            }
+        }
+    });
+
+    console.log(`Total images extracted: ${images.length}`);
     return images;
 };
 
