@@ -20,12 +20,18 @@ const PagePreviewResults = ({ data }) => {
 
     // Generate screenshot URL using external API service
     const getScreenshotUrl = () => {
-        // Using screenshot.rest API (free tier available)
-        // Alternative services:
-        // - https://image.thum.io/get/width/1200/crop/800/${encodeURIComponent(data.url)}
-        // - https://api.thumbnail.ws/api/${apiKey}/thumbnail/get?url=${encodeURIComponent(data.url)}&width=1200
+        // Using multiple free screenshot services (no API key required)
+        // These are completely free and don't require registration
 
-        return `https://api.screenshotmachine.com/?key=demo&url=${encodeURIComponent(data.url)}&dimension=1024x768&cacheLimit=0&delay=2000&t=${screenshotKey}`;
+        // Option 1: Thum.io (free, reliable, no API key)
+        return `https://image.thum.io/get/width/1200/crop/900/noanimate/${encodeURIComponent(data.url)}?t=${screenshotKey}`;
+
+        // Alternative options if above fails:
+        // Option 2: ApiFlash alternative
+        // return `https://shot.screenshotapi.net/screenshot?url=${encodeURIComponent(data.url)}&width=1200&height=800&fresh=true`;
+
+        // Option 3: PagePeeker (backup)
+        // return `https://api.pagepeeker.com/v2/thumbs.php?size=l&url=${encodeURIComponent(data.url)}&refresh=${screenshotKey}`;
     };
 
     const handleRefreshScreenshot = () => {
