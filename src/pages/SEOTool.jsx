@@ -359,6 +359,55 @@ function SEOTool() {
                                 </p>
                             </div>
 
+                            {/* Data Quality Warning */}
+                            {results.dataQualityWarning && (
+                                <div className={`mb-6 p-5 rounded-lg border-2 ${
+                                    isDark 
+                                        ? 'bg-orange-500/10 border-orange-500/30' 
+                                        : 'bg-orange-50 border-orange-300'
+                                }`}>
+                                    <div className="flex items-start gap-3">
+                                        <span className="text-2xl">⚠️</span>
+                                        <div className="flex-1">
+                                            <h3 className={`font-bold text-lg mb-2 ${
+                                                isDark ? 'text-orange-400' : 'text-orange-700'
+                                            }`}>
+                                                Limited Data Received
+                                            </h3>
+                                            <p className={`text-sm mb-3 ${
+                                                isDark ? 'text-orange-200' : 'text-orange-800'
+                                            }`}>
+                                                The CORS proxy returned only <strong>{results.dataQualityWarning.htmlSize.toFixed(2)} KB</strong> of HTML
+                                                (body: {results.dataQualityWarning.bodySize} bytes). This is much smaller than a typical webpage.
+                                            </p>
+                                            <p className={`text-sm mb-3 ${
+                                                isDark ? 'text-orange-200' : 'text-orange-800'
+                                            }`}>
+                                                <strong>What this means:</strong> The analysis results below may be incomplete or inaccurate because
+                                                the proxy likely returned an error page or stripped version instead of the full website content.
+                                            </p>
+                                            <div className={`p-3 rounded ${
+                                                isDark ? 'bg-orange-500/20' : 'bg-orange-100'
+                                            }`}>
+                                                <p className={`text-sm font-semibold mb-2 ${
+                                                    isDark ? 'text-orange-300' : 'text-orange-900'
+                                                }`}>
+                                                    💡 Solutions:
+                                                </p>
+                                                <ul className={`text-sm space-y-1 list-disc list-inside ${
+                                                    isDark ? 'text-orange-200' : 'text-orange-800'
+                                                }`}>
+                                                    <li><strong>Recommended:</strong> Analyze your own website URL for accurate results</li>
+                                                    <li>Try a different public website that doesn't block proxies</li>
+                                                    <li>The site you entered may have strong anti-bot protection</li>
+                                                    <li>Open browser console (F12) to see detailed proxy logs</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
                             <PagePreviewResults data={results} />
 
                             <VisualReportResults data={results} />

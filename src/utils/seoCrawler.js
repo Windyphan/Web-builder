@@ -47,7 +47,8 @@ export const analyzePage = async (url) => {
             const endTime = performance.now();
             const loadTime = endTime - startTime;
 
-            console.log(`📄 HTML received: ${(html.length / 1024).toFixed(2)} KB`);
+            const htmlSizeKB = (html.length / 1024).toFixed(2);
+            console.log(`📄 HTML received: ${htmlSizeKB} KB`);
 
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
@@ -59,13 +60,35 @@ export const analyzePage = async (url) => {
 
             // Debug: Log what we found
             const imgCount = doc.querySelectorAll('img').length;
+            const bodyLength = doc.body.innerHTML?.length || 0;
             const bodyText = doc.body.textContent?.slice(0, 200) || '';
+
             console.log(`🔍 Parsed document:`, {
                 imgTags: imgCount,
-                bodyLength: doc.body.innerHTML?.length || 0,
+                bodyLength: bodyLength,
                 hasTitle: !!doc.querySelector('title'),
                 firstText: bodyText.trim(),
             });
+
+            // Check if we got a real page or just an error/proxy page
+            // Real pages are usually > 10KB and have substantial body content
+            if (html.length < 10000 || bodyLength < 1000) {
+                console.warn(`⚠️ Received suspiciously small HTML (${htmlSizeKB} KB, body: ${bodyLength} bytes)`);
+                console.warn(`This might be a proxy error page, not the actual website.`);
+
+                // Check for common proxy error indicators
+                const lowerHtml = html.toLowerCase();
+                if (lowerHtml.includes('error') ||
+                    lowerHtml.includes('blocked') ||
+                    lowerHtml.includes('access denied') ||
+                    lowerHtml.includes('403') ||
+                    lowerHtml.includes('captcha')) {
+                    throw new Error('Proxy returned error page instead of website content');
+                }
+
+                // Still try to continue, but log warning
+                console.warn(`Continuing with limited data - results may be incomplete`);
+            }
 
             console.log('✅ Successfully fetched and parsed page');
             return extractSEOData(doc, url, html, loadTime);
@@ -119,9 +142,22 @@ const extractSEOData = (doc, url, html, loadTime) => {
     const canonical = extractCanonical(doc, url);
     const robots = extractRobots(doc);
 
+    // Check data quality
+    const htmlSizeKB = html.length / 1024;
+    const bodyLength = doc.body?.innerHTML?.length || 0;
+    const isLikelyIncomplete = htmlSizeKB < 10 || bodyLength < 1000;
+
+    const dataQualityWarning = isLikelyIncomplete ? {
+        warning: true,
+        message: `⚠️ Limited data received (${htmlSizeKB.toFixed(2)} KB HTML, ${bodyLength} bytes body). The CORS proxy may have returned incomplete content. Results may not be accurate. Try analyzing your own website or a different URL for better results.`,
+        htmlSize: htmlSizeKB,
+        bodySize: bodyLength,
+    } : null;
+
     return {
         url,
         analyzedAt: new Date().toISOString(),
+        dataQualityWarning, // Add warning to results
         metaTags,
         openGraph: extractOpenGraph(doc),
         twitterCard: extractTwitterCard(doc),
