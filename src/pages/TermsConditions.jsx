@@ -225,7 +225,7 @@ const TermsConditions = () => {
                                     <ul className="list-none space-y-2 font-body ml-4">
                                         <li><strong>Email:</strong> info@theinnovationcurve.com</li>
                                         <li><strong>Phone:</strong> 07340764930</li>
-                                        <li><strong>Address:</strong> 1F23, Frenchay Campus, Coldharbour Ln, Bristol, United Kingdom BS16 1QY</li>
+                                        <li><strong>Address:</strong> 2X102, Team Entrepreneurship Hub, Frenchay Campus, Coldharbour Ln, Bristol, United Kingdom BS16 1QY</li>
                                     </ul>
                                 </div>
 

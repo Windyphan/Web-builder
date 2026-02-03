@@ -20,7 +20,7 @@ const Contact = ({ onNotification }) => {
         {
             icon: FiMapPin,
             title: 'Location',
-            content: '1F23, Frenchay Campus, Coldharbour Ln, Bristol, United Kingdom, BS16 1QY',
+            content: '2X102, Team Entrepreneurship Hub, Frenchay Campus, Coldharbour Ln, Bristol, United Kingdom, BS16 1QY',
             link: 'https://maps.google.com/?q=Frenchay+Campus+Coldharbour+Ln+Bristol+BS16+1QY'
         },
         {
