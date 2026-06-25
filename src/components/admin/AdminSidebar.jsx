@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
     FiGrid, FiFileText, FiCreditCard, FiClock, FiFolder,
     FiBarChart2, FiUsers, FiBriefcase, FiLogOut, FiMenu,
-    FiX, FiChevronLeft, FiChevronRight
+    FiX, FiChevronLeft, FiChevronRight, FiEdit
 } from 'react-icons/fi';
 
 const NAV_ITEMS = [
@@ -16,6 +16,7 @@ const NAV_ITEMS = [
     { label: 'Clients',      icon: FiUsers,     path: '/admin/clients'                },
     { label: 'Reports',      icon: FiBarChart2, path: '/admin/reports'                },
     { label: 'Payroll',      icon: FiBriefcase, path: '/admin/payroll'                },
+    { label: 'Blog',         icon: FiEdit,      path: '/admin/blog'                   },
 ];
 
 const AdminSidebar = ({ onLogout }) => {
@@ -190,6 +191,7 @@ const AdminSidebar = ({ onLogout }) => {
 };
 
 export default AdminSidebar;
+
 
 
 

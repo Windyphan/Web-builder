@@ -20,6 +20,8 @@ import TimeTracking   from './pages/admin/TimeTracking';
 import Projects       from './pages/admin/Projects';
 import Reports        from './pages/admin/Reports';
 import Payroll        from './pages/admin/Payroll';
+import ProtectedRoute from './components/admin/ProtectedRoute';
+import AdminLogin     from './pages/admin/AdminLogin';
 import React from 'react';
 
 // Error Boundary component
@@ -89,19 +91,20 @@ function App() {
                             <Route path="/contact" element={<Contact />} />
                             <Route path="/blog" element={<Blog />} />
                             <Route path="/blog/:slug" element={<BlogPost />} />
-                            <Route path="/admin/blog" element={<BlogAdmin />} />
+                            <Route path="/admin/blog" element={<ProtectedRoute><BlogAdmin /></ProtectedRoute>} />
                             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                             <Route path="/terms-conditions" element={<TermsConditions />} />
                             <Route path="/seo-tool" element={<SEOTool />} />
                             {/* ── ERP Admin ── */}
-                            <Route path="/admin"           element={<AdminDashboard />} />
-                            <Route path="/admin/invoices"  element={<Invoices />} />
-                            <Route path="/admin/expenses"  element={<Expenses />} />
-                            <Route path="/admin/time"      element={<TimeTracking />} />
-                            <Route path="/admin/projects"  element={<Projects />} />
-                            <Route path="/admin/clients"   element={<Clients />} />
-                            <Route path="/admin/reports"   element={<Reports />} />
-                            <Route path="/admin/payroll"   element={<Payroll />} />
+                            <Route path="/admin/login"     element={<AdminLogin />} />
+                            <Route path="/admin"           element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+                            <Route path="/admin/invoices"  element={<ProtectedRoute><Invoices /></ProtectedRoute>} />
+                            <Route path="/admin/expenses"  element={<ProtectedRoute><Expenses /></ProtectedRoute>} />
+                            <Route path="/admin/time"      element={<ProtectedRoute><TimeTracking /></ProtectedRoute>} />
+                            <Route path="/admin/projects"  element={<ProtectedRoute><Projects /></ProtectedRoute>} />
+                            <Route path="/admin/clients"   element={<ProtectedRoute><Clients /></ProtectedRoute>} />
+                            <Route path="/admin/reports"   element={<ProtectedRoute><Reports /></ProtectedRoute>} />
+                            <Route path="/admin/payroll"   element={<ProtectedRoute><Payroll /></ProtectedRoute>} />
                             {/* Catch-all route for 404 */}
                             <Route path="*" element={<NotFound />} />
                         </Routes>
