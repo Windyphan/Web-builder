@@ -12,6 +12,14 @@ import BlogAdmin from './pages/BlogAdmin';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsConditions from './pages/TermsConditions';
 import SEOTool from './pages/SEOTool';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import Invoices       from './pages/admin/Invoices';
+import Clients        from './pages/admin/Clients';
+import Expenses       from './pages/admin/Expenses';
+import TimeTracking   from './pages/admin/TimeTracking';
+import Projects       from './pages/admin/Projects';
+import Reports        from './pages/admin/Reports';
+import Payroll        from './pages/admin/Payroll';
 import React from 'react';
 
 // Error Boundary component
@@ -85,7 +93,15 @@ function App() {
                             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                             <Route path="/terms-conditions" element={<TermsConditions />} />
                             <Route path="/seo-tool" element={<SEOTool />} />
-                            {/* Removed sitemap.xml route - let backend handle it */}
+                            {/* ── ERP Admin ── */}
+                            <Route path="/admin"           element={<AdminDashboard />} />
+                            <Route path="/admin/invoices"  element={<Invoices />} />
+                            <Route path="/admin/expenses"  element={<Expenses />} />
+                            <Route path="/admin/time"      element={<TimeTracking />} />
+                            <Route path="/admin/projects"  element={<Projects />} />
+                            <Route path="/admin/clients"   element={<Clients />} />
+                            <Route path="/admin/reports"   element={<Reports />} />
+                            <Route path="/admin/payroll"   element={<Payroll />} />
                             {/* Catch-all route for 404 */}
                             <Route path="*" element={<NotFound />} />
                         </Routes>

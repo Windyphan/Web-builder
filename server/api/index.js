@@ -9,6 +9,7 @@ import { initDatabase } from '../config/postgres.js';
 import blogRoutes from '../routes/blogRoutes.js';
 import authRoutes from '../routes/authRoutes.js';
 import sitemapRoutes from '../routes/sitemapRoutes.js';
+import erpRoutes from '../routes/erpRoutes.js';
 
 dotenv.config();
 
@@ -83,6 +84,7 @@ initDB().catch(console.error);
 // Optimized routes - no database init per request
 app.use('/api/auth', authRoutes);
 app.use('/api/blog', blogRoutes);
+app.use('/api/erp',  erpRoutes);
 app.use('/', sitemapRoutes);
 
 // Fast health check without DB blocking

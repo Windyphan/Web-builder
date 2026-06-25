@@ -67,6 +67,121 @@ export async function initDatabase() {
       )
     `;
 
+    /* ── ERP Tables ─────────────────────────────────────────── */
+    await sql`
+      CREATE TABLE IF NOT EXISTS erp_clients (
+        id          SERIAL PRIMARY KEY,
+        name        TEXT NOT NULL,
+        email       TEXT UNIQUE,
+        company     TEXT,
+        phone       TEXT,
+        address     TEXT,
+        vat_number  TEXT,
+        currency    VARCHAR(3)  DEFAULT 'GBP',
+        created_at  TIMESTAMP   DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    await sql`
+      CREATE TABLE IF NOT EXISTS erp_invoices (
+        id               SERIAL PRIMARY KEY,
+        invoice_number   TEXT UNIQUE NOT NULL,
+        client_id        INTEGER REFERENCES erp_clients(id) ON DELETE SET NULL,
+        status           TEXT        DEFAULT 'draft',
+        issue_date       DATE        NOT NULL DEFAULT CURRENT_DATE,
+        due_date         DATE        NOT NULL,
+        subtotal         NUMERIC(12,2) DEFAULT 0,
+        vat_rate         NUMERIC(5,2)  DEFAULT 20.00,
+        vat_amount       NUMERIC(12,2) DEFAULT 0,
+        total            NUMERIC(12,2) DEFAULT 0,
+        notes            TEXT,
+        recurring        BOOLEAN     DEFAULT FALSE,
+        recurring_interval TEXT,
+        sent_at          TIMESTAMP,
+        paid_at          TIMESTAMP,
+        created_at       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
+        updated_at       TIMESTAMP   DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    await sql`
+      CREATE TABLE IF NOT EXISTS erp_invoice_items (
+        id           SERIAL PRIMARY KEY,
+        invoice_id   INTEGER REFERENCES erp_invoices(id) ON DELETE CASCADE,
+        description  TEXT          NOT NULL,
+        quantity     NUMERIC(10,2) DEFAULT 1,
+        unit_price   NUMERIC(12,2) NOT NULL,
+        amount       NUMERIC(12,2) NOT NULL
+      )
+    `;
+
+    await sql`
+      CREATE TABLE IF NOT EXISTS erp_expenses (
+        id           SERIAL PRIMARY KEY,
+        category     TEXT          NOT NULL,
+        description  TEXT,
+        amount       NUMERIC(12,2) NOT NULL,
+        currency     VARCHAR(3)    DEFAULT 'GBP',
+        vat_amount   NUMERIC(12,2) DEFAULT 0,
+        date         DATE          NOT NULL DEFAULT CURRENT_DATE,
+        receipt_url  TEXT,
+        vendor       TEXT,
+        billable     BOOLEAN       DEFAULT FALSE,
+        client_id    INTEGER REFERENCES erp_clients(id) ON DELETE SET NULL,
+        created_at   TIMESTAMP     DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    await sql`
+      CREATE TABLE IF NOT EXISTS erp_projects (
+        id           SERIAL PRIMARY KEY,
+        client_id    INTEGER REFERENCES erp_clients(id) ON DELETE SET NULL,
+        name         TEXT    NOT NULL,
+        description  TEXT,
+        status       TEXT    DEFAULT 'active',
+        budget       NUMERIC(12,2),
+        hourly_rate  NUMERIC(8,2),
+        deadline     DATE,
+        created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    await sql`
+      CREATE TABLE IF NOT EXISTS erp_time_entries (
+        id           SERIAL PRIMARY KEY,
+        client_id    INTEGER REFERENCES erp_clients(id)  ON DELETE SET NULL,
+        project_id   INTEGER REFERENCES erp_projects(id) ON DELETE SET NULL,
+        description  TEXT,
+        hours        NUMERIC(8,2)  NOT NULL,
+        hourly_rate  NUMERIC(8,2)  DEFAULT 0,
+        billable     BOOLEAN       DEFAULT TRUE,
+        invoiced     BOOLEAN       DEFAULT FALSE,
+        invoice_id   INTEGER REFERENCES erp_invoices(id) ON DELETE SET NULL,
+        date         DATE          NOT NULL DEFAULT CURRENT_DATE,
+        created_at   TIMESTAMP     DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    await sql`
+      CREATE TABLE IF NOT EXISTS erp_payroll (
+        id                  SERIAL PRIMARY KEY,
+        employee_name       TEXT          NOT NULL,
+        role                TEXT,
+        gross_salary        NUMERIC(12,2) NOT NULL,
+        national_insurance  NUMERIC(12,2) DEFAULT 0,
+        income_tax          NUMERIC(12,2) DEFAULT 0,
+        pension             NUMERIC(12,2) DEFAULT 0,
+        net_pay             NUMERIC(12,2) NOT NULL,
+        pay_period          TEXT          DEFAULT 'monthly',
+        payment_date        DATE,
+        status              TEXT          DEFAULT 'pending',
+        created_at          TIMESTAMP     DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    console.log('✅ ERP tables initialised');
+    /* ── End ERP Tables ─────────────────────────────────────────── */
+
     // Check if admin user exists
     const adminEmail = process.env.ADMIN_EMAIL;
     const adminPassword = process.env.ADMIN_PASSWORD;
