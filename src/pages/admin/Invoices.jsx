@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import html2canvas from 'html2canvas';
-import emailjs from '@emailjs/browser';
 import {
     FiPlus, FiEdit2, FiTrash2, FiDownload, FiSend, FiCheckCircle,
     FiX, FiSearch, FiFileText, FiMail,
@@ -9,11 +8,6 @@ import {
 } from 'react-icons/fi';
 import AdminSidebar from '../../components/admin/AdminSidebar';
 import adminAPI from '../../utils/adminAPI';
-
-/* ─── EmailJS Config (reuse existing project credentials) ─────── */
-const EJS_SERVICE  = 'service_4lbrwu9';
-const EJS_TEMPLATE = 'template_invoice';   // create this in your EmailJS dashboard
-const EJS_PUBLIC   = '_KGvnP1t8dVz7HVoB';
 
 /* ─── Constants ─────────────────────────────────────────────── */
 
@@ -175,31 +169,12 @@ const SendInvoiceModal = ({ open, invoiceData, onClose, onSent }) => {
         setSending(true);
         setResult(null);
         try {
-            /* Send via EmailJS */
-            await emailjs.send(
-                EJS_SERVICE,
-                EJS_TEMPLATE,
-                {
-                    to_email:       toEmail.trim(),
-                    to_name:        invoiceData.client_name || toEmail,
-                    from_name:      'The Innovation Curve',
-                    reply_to:       'info@theinnovationcurve.com',
-                    invoice_number: invoiceData.invoice_number,
-                    invoice_date:   fmtDate(invoiceData.issue_date),
-                    due_date:       fmtDate(invoiceData.due_date),
-                    items_list:     itemsSummary,
-                    subtotal:       fmt(invoiceData.subtotal),
-                    vat_rate:       `${invoiceData.vat_rate || 20}%`,
-                    vat_amount:     fmt(invoiceData.vat_amount),
-                    total_amount:   fmt(invoiceData.total),
-                    custom_message: message,
-                    notes:          invoiceData.notes || '',
-                },
-                EJS_PUBLIC
-            );
-
-            /* Mark invoice as sent in the backend */
-            await adminAPI.sendInvoice(invoiceData.id);
+            /* Send via backend (Nodemailer) — handles both email + DB status update */
+            await adminAPI.sendInvoice(invoiceData.id, {
+                to_email:       toEmail.trim(),
+                to_name:        invoiceData.client_name || toEmail,
+                custom_message: message,
+            });
 
             setResult('success');
             if (onSent) onSent(toEmail);
@@ -1043,6 +1018,9 @@ const Invoices = () => {
 };
 
 export default Invoices;
+
+
+
 
 
 

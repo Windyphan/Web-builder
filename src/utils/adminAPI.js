@@ -53,7 +53,7 @@ const adminAPI = {
     createInvoice: (body)      => post('/erp/invoices', body),
     updateInvoice: (id, body)  => put(`/erp/invoices/${id}`, body),
     deleteInvoice: (id)        => del(`/erp/invoices/${id}`),
-    sendInvoice:   (id)        => post(`/erp/invoices/${id}/send`, {}),
+    sendInvoice:   (id, payload) => post(`/erp/invoices/${id}/send`, payload || {}),
     markPaid:      (id)        => put(`/erp/invoices/${id}/paid`, {}),
 
     /* ── Expenses ──────────────────────────────────────────────── */
@@ -89,4 +89,5 @@ const adminAPI = {
 };
 
 export default adminAPI;
+
 
